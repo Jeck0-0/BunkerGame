@@ -63,7 +63,7 @@ public class VisualsDesigner : MonoBehaviour
             symbolPosYSlider.minValue = -100f;
             symbolPosYSlider.maxValue = 100f;
             symbolScaleSlider.minValue = 0.5f;
-            symbolScaleSlider.maxValue = 2f;
+            symbolScaleSlider.maxValue = 2.5f;
             symbolRotationSlider.minValue = 0f;
             symbolRotationSlider.maxValue = 360f;
 
@@ -193,13 +193,17 @@ public class VisualsDesigner : MonoBehaviour
     {
         ClearMenu(LayerButtonParent);
 
+        // for background layers
         for (int i = 0; i < activePattern.Layers.Length; i++)
         {
             int index = i;
             var btnObj = Instantiate(LayerButton, LayerButtonParent);
             var btn = btnObj.GetComponent<Button>();
             var txt = btnObj.GetComponentInChildren<TMP_Text>();
+            var img = btnObj.GetComponent<Image>();
+
             txt.text = $"Layer {i + 1}";
+            img.color = layerColors[index]; // display the current color
 
             btn.onClick.AddListener(() =>
             {
@@ -209,11 +213,14 @@ public class VisualsDesigner : MonoBehaviour
             });
         }
 
-        // for symbol
+        // Add one extra button for the symbol
         var symbolBtnObj = Instantiate(LayerButton, LayerButtonParent);
         var symbolBtn = symbolBtnObj.GetComponent<Button>();
         var symbolTxt = symbolBtnObj.GetComponentInChildren<TMP_Text>();
+        var symbolImg = symbolBtnObj.GetComponent<Image>();
+
         symbolTxt.text = "Symbol";
+        symbolImg.color = symbolImage.color; // show symbol color too
 
         symbolBtn.onClick.AddListener(() =>
         {
@@ -230,11 +237,13 @@ public class VisualsDesigner : MonoBehaviour
         for (int i = 0; i < LayerButtonParent.childCount; i++)
         {
             var btn = LayerButtonParent.GetChild(i).GetComponent<Button>();
+            var img = LayerButtonParent.GetChild(i).GetComponent<Image>();
             var colors = btn.colors;
 
             if (i == activeIndex || (activeIndex == -1 && i == LayerButtonParent.childCount - 1))
             {
-                colors.normalColor = new Color(0.8f, 0.8f, 1f); // light blue
+                colors.normalColor = Color.white;
+                img.color = new Color(img.color.r * 1.2f, img.color.g * 1.2f, img.color.b * 1.2f);
             }
             else
             {
@@ -280,6 +289,9 @@ public class VisualsDesigner : MonoBehaviour
         if (currentLayerIndex == -1) // for symbol
         {
             symbolImage.color = newColor;
+
+            var symbolBtn = LayerButtonParent.GetChild(LayerButtonParent.childCount - 1).GetComponent<Image>();
+            symbolBtn.color = newColor;
             return;
         }
 
@@ -287,6 +299,9 @@ public class VisualsDesigner : MonoBehaviour
 
         previewLayers[currentLayerIndex].color = newColor;
         layerColors[currentLayerIndex] = newColor;
+
+        var btnImg = LayerButtonParent.GetChild(currentLayerIndex).GetComponent<Image>();
+        btnImg.color = newColor;
     }
 
 
