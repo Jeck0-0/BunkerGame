@@ -61,12 +61,12 @@ public class VisualsDesigner : MonoBehaviour
         if (symbolImage != null)
         {
             var rect = symbolImage.rectTransform;
-            symbolPosXSlider.minValue = -100f;
-            symbolPosXSlider.maxValue = 100f;
-            symbolPosYSlider.minValue = -100f;
-            symbolPosYSlider.maxValue = 100f;
+            symbolPosXSlider.minValue = -150f;
+            symbolPosXSlider.maxValue = 150f;
+            symbolPosYSlider.minValue = -150f;
+            symbolPosYSlider.maxValue = 150f;
             symbolScaleSlider.minValue = 0.5f;
-            symbolScaleSlider.maxValue = 2.5f;
+            symbolScaleSlider.maxValue = 3.5f;
             symbolRotationSlider.minValue = 0f;
             symbolRotationSlider.maxValue = 360f;
 

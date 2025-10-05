@@ -7749,6 +7749,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b6df286f16734c94cbb749c41fb7a8e7, type: 2}
   - {fileID: 11400000, guid: cb7f665bf0f16134b8ca4bd28776ed3e, type: 2}
   - {fileID: 11400000, guid: eb59ac7684467f548aa9e9ffd3bf4ac2, type: 2}
+  - {fileID: 11400000, guid: 63f83a00291712c46b24efb96987f0d7, type: 2}
   nameInput: {fileID: 257808680}
   menuButtonPrefab: {fileID: 5193517130119302447, guid: 2fa287b92ba631d479dc4e5d4b23db90, type: 3}
   playerColors:
