@@ -14,7 +14,9 @@ public class VisualsDesigner : MonoBehaviour
     [SerializeField] GameObject menuButtonPrefab;
 
     [Header("Player Color")]
-    // TODO
+    [SerializeField] Color[] playerColors;
+    [SerializeField] Button colorButtonPrefab;
+    [SerializeField] Transform colorButtonParent;
 
     [Header("Emblem Color")]
     [SerializeField] Image emblemColorPreview;
@@ -51,6 +53,7 @@ public class VisualsDesigner : MonoBehaviour
 
     private Color playerColor = Color.white;
     private FactionData factionData;
+    private Image colorButtonOutline;
 
     private void Start()
     {
@@ -73,6 +76,16 @@ public class VisualsDesigner : MonoBehaviour
             symbolRotationSlider.value = rect.localEulerAngles.z;
         }
 
+        foreach (var PColor in playerColors)
+        {
+            var button = Instantiate(colorButtonPrefab, colorButtonParent);
+            var buttonOutline = button.GetComponent<Image>();
+            var images = button.GetComponentsInChildren<Image>();
+            var img = images.Length > 1 ? images[1] : images[0]; // remove the first image
+            button.onClick.AddListener(() => SetPlayerColor(PColor, buttonOutline));
+            img.color = PColor;
+        }
+
 
         rSlider.onValueChanged.AddListener(_ => UpdateActiveColor());
         gSlider.onValueChanged.AddListener(_ => UpdateActiveColor());
@@ -87,7 +100,9 @@ public class VisualsDesigner : MonoBehaviour
         symbolRotationSlider.onValueChanged.AddListener(_ => UpdateSymbolTransform());
 
         // Default background
-        if (availablePatterns.Count > 0) SelectBackground(0);
+        BuildBackgroundMenu();
+        SelectBackground(0);
+        SelectSymbol(0);
     }
 
     private void BuildBackgroundMenu()
@@ -257,6 +272,12 @@ public class VisualsDesigner : MonoBehaviour
 
     private void SelectSymbol(int index)
     {
+        if (availableSymbols[index].blank)
+        {
+            symbolImage.enabled = false;
+            return;
+        }
+        symbolImage.enabled = true;
         symbolImage.sprite = availableSymbols[index].SymbolSprite;
     }
 
@@ -325,6 +346,16 @@ public class VisualsDesigner : MonoBehaviour
 
         float rotationValue = symbolRotationSlider.value;
         rect.localEulerAngles = new Vector3(0f, 0f, rotationValue);
+    }
+
+    private void SetPlayerColor(Color color, Image image)
+    {
+        if (colorButtonOutline != null)
+        colorButtonOutline.enabled = false;
+
+        colorButtonOutline = image;
+        playerColor = color;
+        image.enabled = true;
     }
 
     public FactionData BuildFaction()
