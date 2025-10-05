@@ -54,6 +54,8 @@ public class VisualsDesigner : MonoBehaviour
     private Color playerColor = Color.white;
     private FactionData factionData;
     private Image colorButtonOutline;
+    private Image backgroundButtonOutline;
+    private Image symbolButtonOutline;
 
     private void Start()
     {
@@ -81,18 +83,22 @@ public class VisualsDesigner : MonoBehaviour
             var button = Instantiate(colorButtonPrefab, colorButtonParent);
             var buttonOutline = button.GetComponent<Image>();
             var images = button.GetComponentsInChildren<Image>();
-            var img = images.Length > 1 ? images[1] : images[0]; // remove the first image
+            var img = images.Length > 1 ? images[1] : images[0]; // skip the first image
             button.onClick.AddListener(() => SetPlayerColor(PColor, buttonOutline));
             img.color = PColor;
         }
+
+        backgroundButtonOutline = backgroundButton.GetComponent<Image>();
+        symbolButtonOutline = symbolButton.GetComponent<Image>();
+
+        backgroundButton.onClick.AddListener(() => BuildBackgroundMenu());
+        symbolButton.onClick.AddListener(() => BuildSymbolMenu());
 
 
         rSlider.onValueChanged.AddListener(_ => UpdateActiveColor());
         gSlider.onValueChanged.AddListener(_ => UpdateActiveColor());
         bSlider.onValueChanged.AddListener(_ => UpdateActiveColor());
 
-        backgroundButton.onClick.AddListener(() => BuildBackgroundMenu()); 
-        symbolButton.onClick.AddListener(() => BuildSymbolMenu());
 
         symbolPosXSlider.onValueChanged.AddListener(_ => UpdateSymbolTransform());
         symbolPosYSlider.onValueChanged.AddListener(_ => UpdateSymbolTransform());
@@ -108,6 +114,8 @@ public class VisualsDesigner : MonoBehaviour
     private void BuildBackgroundMenu()
     {
         ClearMenu(backgroundMenuParent);
+        symbolButtonOutline.enabled = false;
+        backgroundButtonOutline.enabled = true;
 
         for (int i = 0; i < availablePatterns.Count; i++)
         {
@@ -147,6 +155,8 @@ public class VisualsDesigner : MonoBehaviour
     private void BuildSymbolMenu()
     {
         ClearMenu(symbolMenuParent);
+        symbolButtonOutline.enabled = true;
+        backgroundButtonOutline.enabled = false;
 
         for (int i = 0; i < availableSymbols.Count; i++)
         {
@@ -215,7 +225,8 @@ public class VisualsDesigner : MonoBehaviour
             var btnObj = Instantiate(LayerButton, LayerButtonParent);
             var btn = btnObj.GetComponent<Button>();
             var txt = btnObj.GetComponentInChildren<TMP_Text>();
-            var img = btnObj.GetComponent<Image>();
+            var images = btnObj.GetComponentsInChildren<Image>();
+            var img = images.Length > 1 ? images[1] : images[0]; // skip the first image
 
             txt.text = $"Layer {i + 1}";
             img.color = layerColors[index]; // display the current color
@@ -232,7 +243,8 @@ public class VisualsDesigner : MonoBehaviour
         var symbolBtnObj = Instantiate(LayerButton, LayerButtonParent);
         var symbolBtn = symbolBtnObj.GetComponent<Button>();
         var symbolTxt = symbolBtnObj.GetComponentInChildren<TMP_Text>();
-        var symbolImg = symbolBtnObj.GetComponent<Image>();
+        var symbolImages = symbolBtnObj.GetComponentsInChildren<Image>();
+        var symbolImg = symbolImages.Length > 1 ? symbolImages[1] : symbolImages[0]; // skip the first image
 
         symbolTxt.text = "Symbol";
         symbolImg.color = symbolImage.color; // show symbol color too
@@ -253,19 +265,10 @@ public class VisualsDesigner : MonoBehaviour
         {
             var btn = LayerButtonParent.GetChild(i).GetComponent<Button>();
             var img = LayerButtonParent.GetChild(i).GetComponent<Image>();
-            var colors = btn.colors;
+            img.enabled = false;
 
             if (i == activeIndex || (activeIndex == -1 && i == LayerButtonParent.childCount - 1))
-            {
-                colors.normalColor = Color.white;
-                img.color = new Color(img.color.r * 1.2f, img.color.g * 1.2f, img.color.b * 1.2f);
-            }
-            else
-            {
-                colors.normalColor = Color.white;
-            }
-
-            btn.colors = colors;
+            img.enabled = true;
         }
     }
 
@@ -311,7 +314,8 @@ public class VisualsDesigner : MonoBehaviour
         {
             symbolImage.color = newColor;
 
-            var symbolBtn = LayerButtonParent.GetChild(LayerButtonParent.childCount - 1).GetComponent<Image>();
+            var symbolImages = LayerButtonParent.GetChild(LayerButtonParent.childCount - 1).GetComponentsInChildren<Image>();
+            var symbolBtn = symbolImages.Length > 1 ? symbolImages[1] : symbolImages[0]; // skip the first image
             symbolBtn.color = newColor;
             return;
         }
@@ -321,7 +325,8 @@ public class VisualsDesigner : MonoBehaviour
         previewLayers[currentLayerIndex].color = newColor;
         layerColors[currentLayerIndex] = newColor;
 
-        var btnImg = LayerButtonParent.GetChild(currentLayerIndex).GetComponent<Image>();
+        var images = LayerButtonParent.GetChild(currentLayerIndex).GetComponentsInChildren<Image>();
+        var btnImg = images.Length > 1 ? images[1] : images[0]; // skip the first image
         btnImg.color = newColor;
     }
 
