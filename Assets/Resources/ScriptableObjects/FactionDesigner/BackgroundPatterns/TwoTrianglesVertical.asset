@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: TwoTrianglesVertical
   m_EditorClassIdentifier: Assembly-CSharp::BackgroundPattern
   Layers:
-  - {fileID: -1136129256, guid: d1f10904dd801b3469a8269e6f77d1d4, type: 3}
-  - {fileID: 186199036, guid: d1f10904dd801b3469a8269e6f77d1d4, type: 3}
+  - {fileID: 1936483953, guid: 89a2a7abca876a044840dded4b495452, type: 3}
+  - {fileID: -2078631175, guid: fd42ff7f598202e419f45dd4bf53ad47, type: 3}

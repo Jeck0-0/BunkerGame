@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: c3f79d06702fbc14798a030de3db46db
+guid: c855d7720a1d4b14a8e4b9538c6c0ad8
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -34,7 +34,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 20
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -123,101 +123,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: UI_0
+      name: EmblemPatterns_Symbols_test_512x512_1
       rect:
         serializedVersion: 2
-        x: 6
-        y: 123
-        width: 4
-        height: 4
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 1, y: 1, z: 1, w: 1}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c515b71029db57a4a8ba1a95e165a2a1
-      internalID: -1649701470
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: UI_1
-      rect:
-        serializedVersion: 2
-        x: 12
-        y: 123
-        width: 4
-        height: 4
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 1, y: 1, z: 1, w: 1}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4346c6d5ab00a144f929fb9afedb1d99
-      internalID: -170915030
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: UI_2
-      rect:
-        serializedVersion: 2
-        x: 4
-        y: 115
-        width: 6
-        height: 6
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 2, y: 2, z: 2, w: 2}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 49be4edb0a5ac6a44bdb3919360f7b97
-      internalID: -313706109
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: UI_3
-      rect:
-        serializedVersion: 2
-        x: 12
-        y: 115
-        width: 6
-        height: 6
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 2, y: 2, z: 2, w: 2}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5d98c2266634840479f69b093a120060
-      internalID: 1856727695
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: UI_4
-      rect:
-        serializedVersion: 2
-        x: 4
-        y: 107
-        width: 6
-        height: 6
+        x: 512
+        y: 1536
+        width: 512
+        height: 512
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -226,96 +138,74 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7305e875324938744bfaa85cc7704383
-      internalID: -743947088
+      spriteID: b69e3677cb7895143b791346a3938cc3
+      internalID: -148552434
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_5
+      name: EmblemPatterns_Symbols_test_512x512_3
       rect:
         serializedVersion: 2
-        x: 12
-        y: 107
-        width: 6
-        height: 6
+        x: 1536
+        y: 1536
+        width: 512
+        height: 512
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 2, y: 2, z: 2, w: 2}
+      border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d94985e64939247438582ccef3f2128b
-      internalID: 81392317
+      spriteID: e25de4b14494c8c4bb7850d3f3d09ead
+      internalID: 48283042
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_6
+      name: EmblemPatterns_Symbols_test_512x512_4
       rect:
         serializedVersion: 2
-        x: 4
-        y: 99
-        width: 6
-        height: 6
+        x: 0
+        y: 1024
+        width: 512
+        height: 512
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 3, y: 3, z: 3, w: 3}
+      border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7df9fe169a9a96041af4b6f90963da7e
-      internalID: 1689199151
+      spriteID: ccd2ea966b8c99f45890f76e4ef59930
+      internalID: -13537697
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_7
+      name: EmblemPatterns_Symbols_test_512x512_6
       rect:
         serializedVersion: 2
-        x: 12
-        y: 97
-        width: 8
-        height: 8
+        x: 1024
+        y: 1024
+        width: 512
+        height: 512
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 4, y: 4, z: 4, w: 4}
+      border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6277a0ef5efa3ee40b9448c4540b8acc
-      internalID: -519263626
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: UI_8
-      rect:
-        serializedVersion: 2
-        x: 2
-        y: 86
-        width: 10
-        height: 10
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 5, y: 5, z: 5, w: 5}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e7e6080a7c9676b409050a00000fe2dd
-      internalID: -2036517991
+      spriteID: 4135ecfc68d61ab4598e036c511c3bdf
+      internalID: -1602652586
       vertices: []
       indices: 
       edges: []
@@ -324,7 +214,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 26e44c951a620d048a0e9a3e9c6642fa
+    spriteID: 7be9b009847a14842bbc50419aca3d71
     internalID: 0
     vertices: []
     indices: 
@@ -334,18 +224,20 @@ TextureImporter:
     spriteCustomMetadata:
       entries:
       - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":512.0,"y":512.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      UI_0: -1649701470
-      UI_1: -170915030
-      UI_2: -313706109
-      UI_3: 1856727695
-      UI_4: -743947088
-      UI_5: 81392317
-      UI_6: 1689199151
-      UI_7: -519263626
-      UI_8: -2036517991
-      UI_9: -622328578
+      EmblemPatterns_Symbols_test_512x512_0: 2051405370
+      EmblemPatterns_Symbols_test_512x512_1: -148552434
+      EmblemPatterns_Symbols_test_512x512_10: -1991508860
+      EmblemPatterns_Symbols_test_512x512_11: 1455269083
+      EmblemPatterns_Symbols_test_512x512_2: 1463046693
+      EmblemPatterns_Symbols_test_512x512_3: 48283042
+      EmblemPatterns_Symbols_test_512x512_4: -13537697
+      EmblemPatterns_Symbols_test_512x512_5: 1762237565
+      EmblemPatterns_Symbols_test_512x512_6: -1602652586
+      EmblemPatterns_Symbols_test_512x512_7: 491013729
+      EmblemPatterns_Symbols_test_512x512_8: 1232313225
+      EmblemPatterns_Symbols_test_512x512_9: -1905397490
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

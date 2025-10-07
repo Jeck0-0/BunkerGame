@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: d1f10904dd801b3469a8269e6f77d1d4
+guid: 89a2a7abca876a044840dded4b495452
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -123,353 +123,353 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: DefaultEmblemPattern
+      name: EmblemPatterns_Squares_16x16_0
       rect:
         serializedVersion: 2
-        x: 16
-        y: 432
-        width: 64
-        height: 64
+        x: 8
+        y: 104
+        width: 16
+        height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3e82ed5f52733fb41aa020417c9d999d
-      internalID: -1136129256
+      spriteID: 5a9a58fe404af354ea9bb0582b9d5648
+      internalID: 1936483953
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EmblemPatterns64x64_1
+      name: EmblemPatterns_Squares_16x16_1
       rect:
         serializedVersion: 2
-        x: 112
-        y: 432
-        width: 64
-        height: 64
+        x: 40
+        y: 104
+        width: 16
+        height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 82f746605d3e50b4e8be889188db7450
-      internalID: -18056765
+      spriteID: 3a29e815f7a5b2d458b06e65510198ca
+      internalID: 660930732
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EmblemPatterns64x64_2
+      name: EmblemPatterns_Squares_16x16_2
       rect:
         serializedVersion: 2
-        x: 208
-        y: 432
-        width: 64
-        height: 64
+        x: 72
+        y: 104
+        width: 16
+        height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a5267a135c92d324ba3d72c6173bd4d4
-      internalID: 715322161
+      spriteID: d10ef945f040b2043b47d42b4086acef
+      internalID: -224791827
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EmblemPatterns64x64_3
+      name: EmblemPatterns_Squares_16x16_3
       rect:
         serializedVersion: 2
-        x: 304
-        y: 432
-        width: 64
-        height: 64
+        x: 104
+        y: 104
+        width: 16
+        height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d37d06da633661443aa97ea86cc85b33
-      internalID: -1583983610
+      spriteID: afceaba71839d334fbe6bc1639aa966e
+      internalID: 2126434075
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EmblemPatterns64x64_4
+      name: EmblemPatterns_Squares_16x16_4
       rect:
         serializedVersion: 2
-        x: 400
-        y: 432
-        width: 64
-        height: 64
+        x: 8
+        y: 72
+        width: 16
+        height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: feed8a13a47768544a5c5eaa2732c20d
-      internalID: 1393797583
+      spriteID: a2d6880cb04935045b635fd1f63312ae
+      internalID: -1483605041
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EmblemPatterns64x64_5
+      name: EmblemPatterns_Squares_16x16_5
       rect:
         serializedVersion: 2
-        x: 16
-        y: 336
-        width: 64
-        height: 64
+        x: 40
+        y: 72
+        width: 16
+        height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2fc3d4bf2bf72d0488ef0dce986efb0f
-      internalID: -461978535
+      spriteID: c724682d32ef52b45bcc198304536f96
+      internalID: -1990774306
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EmblemPatterns64x64_6
+      name: EmblemPatterns_Squares_16x16_6
       rect:
         serializedVersion: 2
-        x: 112
-        y: 336
-        width: 64
-        height: 64
+        x: 72
+        y: 72
+        width: 16
+        height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 05934902b83eaf942a4f44ca80c1cdb4
-      internalID: 1175810641
+      spriteID: f6898a93fc891f647865afdf79aa5227
+      internalID: -1075426520
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EmblemPatterns64x64_7
+      name: EmblemPatterns_Squares_16x16_7
       rect:
         serializedVersion: 2
-        x: 208
-        y: 336
-        width: 64
-        height: 64
+        x: 104
+        y: 72
+        width: 16
+        height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4b020647c3753a54ba6c68d4654a39b9
-      internalID: 666726049
+      spriteID: 9ea026a5b738daf4184304359aeb433a
+      internalID: -1032064318
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EmblemPatterns64x64_8
+      name: EmblemPatterns_Squares_16x16_8
       rect:
         serializedVersion: 2
-        x: 304
-        y: 336
-        width: 64
-        height: 64
+        x: 8
+        y: 40
+        width: 16
+        height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e037a704fa452254c829efb50a1f647d
-      internalID: -1472258923
+      spriteID: ddfecb21722873245949df3e02776e29
+      internalID: 2002973911
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EmblemPatterns64x64_9
+      name: EmblemPatterns_Squares_16x16_9
       rect:
         serializedVersion: 2
-        x: 400
-        y: 336
-        width: 64
-        height: 64
+        x: 40
+        y: 40
+        width: 16
+        height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1a892ea921ca82e44983d97350c457f1
-      internalID: 561613822
+      spriteID: 33425a36045b03e4aad3671adfc88996
+      internalID: 957850928
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EmblemPatterns64x64_10
+      name: EmblemPatterns_Squares_16x16_10
       rect:
         serializedVersion: 2
-        x: 16
-        y: 240
-        width: 64
-        height: 64
+        x: 72
+        y: 40
+        width: 16
+        height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3fb65b31fb4a50847aac057b20c46461
-      internalID: 1749024929
+      spriteID: a1fc56cb1a663a74da74ae126aaf48b5
+      internalID: 2044842388
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EmblemPatterns64x64_11
+      name: EmblemPatterns_Squares_16x16_11
       rect:
         serializedVersion: 2
-        x: 112
-        y: 240
-        width: 64
-        height: 64
+        x: 104
+        y: 40
+        width: 16
+        height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9b6f7253783c1b448ae2eb3eff386da6
-      internalID: 1722282197
+      spriteID: f443a198613526c47a9df991b950e1a6
+      internalID: 1132038821
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EmblemPatterns64x64_12
+      name: EmblemPatterns_Squares_16x16_12
       rect:
         serializedVersion: 2
-        x: 208
-        y: 240
-        width: 64
-        height: 64
+        x: 8
+        y: 8
+        width: 16
+        height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 927ed6d554b6dd1478cb5ae7498f8bfb
-      internalID: -1995533761
+      spriteID: ad5297fd176eeb449a59f9871caf9f90
+      internalID: -975683433
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EmblemPatterns64x64_13
+      name: EmblemPatterns_Squares_16x16_13
       rect:
         serializedVersion: 2
-        x: 304
-        y: 240
-        width: 64
-        height: 64
+        x: 40
+        y: 8
+        width: 16
+        height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f4dd0a0488d7c2f4bbfd4903df8e2460
-      internalID: 347006937
+      spriteID: 2615a4374d1dc024caf14bf3c47f7fd5
+      internalID: -440468994
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EmblemPatterns64x64_14
+      name: EmblemPatterns_Squares_16x16_14
       rect:
         serializedVersion: 2
-        x: 400
-        y: 240
-        width: 64
-        height: 64
+        x: 72
+        y: 8
+        width: 16
+        height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a4675f4fc64f7914d9660a233b44ab0c
-      internalID: 186199036
+      spriteID: 9301c823f75132448a6867405ffe7389
+      internalID: -859410105
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EmblemPatterns64x64_15
+      name: EmblemPatterns_Squares_16x16_15
       rect:
         serializedVersion: 2
-        x: 16
-        y: 144
-        width: 64
-        height: 64
+        x: 104
+        y: 8
+        width: 16
+        height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0cfca8d06f4fd3643aa1d323b2425295
-      internalID: 152563154
+      spriteID: e9186f11672e2424fa50ac97eab736e6
+      internalID: -166403139
       vertices: []
       indices: 
       edges: []
@@ -478,7 +478,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 6ca389f47c107e84894d1cc2f49a9dfe
+    spriteID: 7907fc598490f4e45b178985cec9ee90
     internalID: 0
     vertices: []
     indices: 
@@ -486,26 +486,24 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries:
-      - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":16.0,"y":16.0},"gridSpritePadding":{"x":32.0,"y":32.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+      entries: []
     nameFileIdTable:
-      DefaultEmblemPattern: -1136129256
-      EmblemPatterns64x64_1: -18056765
-      EmblemPatterns64x64_10: 1749024929
-      EmblemPatterns64x64_11: 1722282197
-      EmblemPatterns64x64_12: -1995533761
-      EmblemPatterns64x64_13: 347006937
-      EmblemPatterns64x64_14: 186199036
-      EmblemPatterns64x64_15: 152563154
-      EmblemPatterns64x64_2: 715322161
-      EmblemPatterns64x64_3: -1583983610
-      EmblemPatterns64x64_4: 1393797583
-      EmblemPatterns64x64_5: -461978535
-      EmblemPatterns64x64_6: 1175810641
-      EmblemPatterns64x64_7: 666726049
-      EmblemPatterns64x64_8: -1472258923
-      EmblemPatterns64x64_9: 561613822
+      EmblemPatterns_Squares_16x16_0: 1936483953
+      EmblemPatterns_Squares_16x16_1: 660930732
+      EmblemPatterns_Squares_16x16_10: 2044842388
+      EmblemPatterns_Squares_16x16_11: 1132038821
+      EmblemPatterns_Squares_16x16_12: -975683433
+      EmblemPatterns_Squares_16x16_13: -440468994
+      EmblemPatterns_Squares_16x16_14: -859410105
+      EmblemPatterns_Squares_16x16_15: -166403139
+      EmblemPatterns_Squares_16x16_2: -224791827
+      EmblemPatterns_Squares_16x16_3: 2126434075
+      EmblemPatterns_Squares_16x16_4: -1483605041
+      EmblemPatterns_Squares_16x16_5: -1990774306
+      EmblemPatterns_Squares_16x16_6: -1075426520
+      EmblemPatterns_Squares_16x16_7: -1032064318
+      EmblemPatterns_Squares_16x16_8: 2002973911
+      EmblemPatterns_Squares_16x16_9: 957850928
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

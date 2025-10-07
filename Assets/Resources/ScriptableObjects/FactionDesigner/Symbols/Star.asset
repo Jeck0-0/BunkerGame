@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 60f6561884c48b04986b175ad401c5a0, type: 3}
-  m_Name: None
+  m_Name: Star
   m_EditorClassIdentifier: Assembly-CSharp::SymbolType
-  SymbolSprite: {fileID: 21300000, guid: 1e621567f74ef6a4ebe6a115b03275a5, type: 3}
-  blank: 1
+  SymbolSprite: {fileID: 48283042, guid: c855d7720a1d4b14a8e4b9538c6c0ad8, type: 3}
+  blank: 0

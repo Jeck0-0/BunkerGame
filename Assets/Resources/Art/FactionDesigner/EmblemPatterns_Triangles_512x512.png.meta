@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: c3f79d06702fbc14798a030de3db46db
+guid: fd42ff7f598202e419f45dd4bf53ad47
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -34,7 +34,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 20
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -123,101 +123,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: UI_0
+      name: EmblemPatterns_Triangles_512x512_1
       rect:
         serializedVersion: 2
-        x: 6
-        y: 123
-        width: 4
-        height: 4
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 1, y: 1, z: 1, w: 1}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c515b71029db57a4a8ba1a95e165a2a1
-      internalID: -1649701470
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: UI_1
-      rect:
-        serializedVersion: 2
-        x: 12
-        y: 123
-        width: 4
-        height: 4
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 1, y: 1, z: 1, w: 1}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4346c6d5ab00a144f929fb9afedb1d99
-      internalID: -170915030
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: UI_2
-      rect:
-        serializedVersion: 2
-        x: 4
-        y: 115
-        width: 6
-        height: 6
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 2, y: 2, z: 2, w: 2}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 49be4edb0a5ac6a44bdb3919360f7b97
-      internalID: -313706109
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: UI_3
-      rect:
-        serializedVersion: 2
-        x: 12
-        y: 115
-        width: 6
-        height: 6
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 2, y: 2, z: 2, w: 2}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5d98c2266634840479f69b093a120060
-      internalID: 1856727695
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: UI_4
-      rect:
-        serializedVersion: 2
-        x: 4
-        y: 107
-        width: 6
-        height: 6
+        x: 512
+        y: 1536
+        width: 512
+        height: 512
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -226,96 +138,162 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7305e875324938744bfaa85cc7704383
-      internalID: -743947088
+      spriteID: ac7b3fd5818b30e4488543811645331b
+      internalID: -546639489
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_5
+      name: EmblemPatterns_Triangles_512x512_3
       rect:
         serializedVersion: 2
-        x: 12
-        y: 107
-        width: 6
-        height: 6
+        x: 1536
+        y: 1536
+        width: 512
+        height: 512
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 2, y: 2, z: 2, w: 2}
+      border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d94985e64939247438582ccef3f2128b
-      internalID: 81392317
+      spriteID: a32eb046419c83b45822d11853aa7c01
+      internalID: -2132317030
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_6
+      name: EmblemPatterns_Triangles_512x512_4
       rect:
         serializedVersion: 2
-        x: 4
-        y: 99
-        width: 6
-        height: 6
+        x: 0
+        y: 1024
+        width: 512
+        height: 512
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 3, y: 3, z: 3, w: 3}
+      border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7df9fe169a9a96041af4b6f90963da7e
-      internalID: 1689199151
+      spriteID: e1a6c548bf625bf4e81ccb0a90a3f0b7
+      internalID: -1967876382
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_7
+      name: EmblemPatterns_Triangles_512x512_6
       rect:
         serializedVersion: 2
-        x: 12
-        y: 97
-        width: 8
-        height: 8
+        x: 1024
+        y: 1024
+        width: 512
+        height: 512
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 4, y: 4, z: 4, w: 4}
+      border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6277a0ef5efa3ee40b9448c4540b8acc
-      internalID: -519263626
+      spriteID: 2f6597739ffd3524799989f9371e971f
+      internalID: 343693171
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_8
+      name: EmblemPatterns_Triangles_512x512_9
       rect:
         serializedVersion: 2
-        x: 2
-        y: 86
-        width: 10
-        height: 10
+        x: 512
+        y: 512
+        width: 512
+        height: 512
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 5, y: 5, z: 5, w: 5}
+      border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e7e6080a7c9676b409050a00000fe2dd
-      internalID: -2036517991
+      spriteID: 5807eebb6a1db3c488d5759de6300b29
+      internalID: -2078631175
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EmblemPatterns_Triangles_512x512_11
+      rect:
+        serializedVersion: 2
+        x: 1536
+        y: 512
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 59466fcc29593744fb2ea3fece04b7c6
+      internalID: -1502850476
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EmblemPatterns_Triangles_512x512_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f0733518adce51f44b5cc05f00730e21
+      internalID: 249304253
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EmblemPatterns_Triangles_512x512_14
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 0
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 15dd4a75ea992ce4bb10747b2cbbea5d
+      internalID: -395109762
       vertices: []
       indices: 
       edges: []
@@ -324,7 +302,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 26e44c951a620d048a0e9a3e9c6642fa
+    spriteID: 86eb7b10e31c82744ab119d63b64a033
     internalID: 0
     vertices: []
     indices: 
@@ -334,18 +312,24 @@ TextureImporter:
     spriteCustomMetadata:
       entries:
       - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":512.0,"y":512.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      UI_0: -1649701470
-      UI_1: -170915030
-      UI_2: -313706109
-      UI_3: 1856727695
-      UI_4: -743947088
-      UI_5: 81392317
-      UI_6: 1689199151
-      UI_7: -519263626
-      UI_8: -2036517991
-      UI_9: -622328578
+      EmblemPatterns_Triangles_512x512_0: -981051911
+      EmblemPatterns_Triangles_512x512_1: -546639489
+      EmblemPatterns_Triangles_512x512_10: 1221553440
+      EmblemPatterns_Triangles_512x512_11: -1502850476
+      EmblemPatterns_Triangles_512x512_12: 249304253
+      EmblemPatterns_Triangles_512x512_13: 296823304
+      EmblemPatterns_Triangles_512x512_14: -395109762
+      EmblemPatterns_Triangles_512x512_15: -1808338354
+      EmblemPatterns_Triangles_512x512_2: 925171811
+      EmblemPatterns_Triangles_512x512_3: -2132317030
+      EmblemPatterns_Triangles_512x512_4: -1967876382
+      EmblemPatterns_Triangles_512x512_5: 268957689
+      EmblemPatterns_Triangles_512x512_6: 343693171
+      EmblemPatterns_Triangles_512x512_7: -1659185790
+      EmblemPatterns_Triangles_512x512_8: 1119191319
+      EmblemPatterns_Triangles_512x512_9: -2078631175
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

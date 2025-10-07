@@ -59,6 +59,10 @@ public class VisualsDesigner : MonoBehaviour
 
     private void Start()
     {
+        // limit the color sliders
+        rSlider.maxValue = 0.9f;
+        gSlider.maxValue = 0.9f;
+        bSlider.maxValue = 0.9f;
 
         if (symbolImage != null)
         {
@@ -135,10 +139,10 @@ public class VisualsDesigner : MonoBehaviour
                     // default palette
                     switch (j)
                     {
-                        case 0: images[j].color = Color.white; break;
+                        case 0: images[j].color = new Color(0.9f, 0.9f, 0.9f); break;
                         case 1: images[j].color = Color.gray; break;
                         case 2: images[j].color = Color.black; break;
-                        default: images[j].color = Color.white; break;
+                        default: images[j].color = new Color(0.9f, 0.9f, 0.9f); break;
                     }
                 }
                 else
@@ -169,6 +173,7 @@ public class VisualsDesigner : MonoBehaviour
 
             images[0].sprite = symbol.SymbolSprite;
             images[0].enabled = true;
+            images[1].enabled = true;
 
             int index = i;
             btn.onClick.AddListener(() => SelectSymbol(index));
@@ -199,10 +204,10 @@ public class VisualsDesigner : MonoBehaviour
             Color defaultColor;
             switch (i)
             {
-                case 0: defaultColor = Color.white; break;
+                case 0: defaultColor = new Color(0.9f, 0.9f, 0.9f); break;
                 case 1: defaultColor = Color.gray; break;
                 case 2: defaultColor = Color.black; break;
-                default: defaultColor = Color.white; break;
+                default: defaultColor = new Color(0.9f, 0.9f, 0.9f); break;
             }
 
             previewLayers[i].color = defaultColor;
