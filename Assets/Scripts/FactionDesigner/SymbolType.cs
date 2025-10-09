@@ -4,5 +4,5 @@ using UnityEngine;
 public class SymbolType : ScriptableObject
 {
     public Sprite SymbolSprite;
-    public bool blank = false;
+    public bool Blank = false;
 }
