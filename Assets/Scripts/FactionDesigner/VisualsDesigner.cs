@@ -13,6 +13,7 @@ public class VisualsDesigner : MonoBehaviour
     [Header("UI References")]
     [SerializeField] TMP_InputField nameInput;
     [SerializeField] GameObject menuButtonPrefab;
+    [SerializeField] Scrollbar backgroungAndSymbolScrollbar;
 
     [Header("Player Color")]
     [SerializeField] Color[] playerColors;
@@ -30,7 +31,7 @@ public class VisualsDesigner : MonoBehaviour
     [SerializeField] Transform backgroundMenuParent;
 
     [Header("Symbols Menu")]
-    [SerializeField] int maxSymbols = 3;
+    [SerializeField] int maxSymbols = 5;
     [SerializeField] Button symbolButton;
     [SerializeField] Transform symbolMenuParent;
 
@@ -100,7 +101,7 @@ public class VisualsDesigner : MonoBehaviour
                 var preview = FindChildImage(button.transform, "ColorPreview") ?? GetFirstChildImage(button.transform);
 
                 if (preview != null)
-                    preview.color = pColor;
+                preview.color = pColor;
 
                 var outlineImage = btnImg;
                 button.onClick.AddListener(() => SetPlayerColor(pColor, outlineImage));
@@ -188,6 +189,7 @@ public class VisualsDesigner : MonoBehaviour
         }
 
         BuildLayerButtons();
+        backgroungAndSymbolScrollbar.value = 1;
     }
 
     private void BuildSymbolMenu()
@@ -233,6 +235,7 @@ public class VisualsDesigner : MonoBehaviour
         }
 
         BuildLayerButtons();
+        backgroungAndSymbolScrollbar.value = 1;
     }
 
     public void AddSymbol()
@@ -330,10 +333,21 @@ public class VisualsDesigner : MonoBehaviour
 
     private void ApplySymbolTemplateToActive(int templateIndex)
     {
-        if (availableSymbols == null || templateIndex < 0 || templateIndex >= availableSymbols.Count || activeSymbolIndex < 0)
+        if (availableSymbols == null || templateIndex < 0)
         return;
 
         var tpl = availableSymbols[templateIndex];
+
+        // If no active symbol, create one first
+        if (activeSymbolIndex < 0)
+        {
+            if (symbolLayers.Count >= maxSymbols)
+            return;
+
+            AddSymbol();
+            activeSymbolIndex = symbolLayers.Count - 1;
+        }
+
         var layer = symbolLayers[activeSymbolIndex];
 
         if (tpl.Blank)
@@ -372,7 +386,7 @@ public class VisualsDesigner : MonoBehaviour
                 var label = btnObj.GetComponentInChildren<TMP_Text>();
                 var preview = FindChildImage(btnObj.transform, "ColorPreview") ?? GetFirstChildImage(btnObj.transform);
 
-                if (label != null) label.text = $"Layer {i + 1}";
+                if (label != null) label.text = "";
                 if (preview != null) preview.color = layerColors[index];
 
                 btn.onClick.AddListener(() =>
@@ -397,8 +411,11 @@ public class VisualsDesigner : MonoBehaviour
                 var label = btnObj.GetComponentInChildren<TMP_Text>();
                 var preview = FindChildImage(btnObj.transform, "ColorPreview") ?? GetFirstChildImage(btnObj.transform);
 
-                if (label != null) label.text = $"Symbol {i + 1}";
-                if (preview != null) preview.color = symbolLayers[i].Color;
+                if (preview != null)
+                {
+                    preview.color = symbolLayers[i].Color;
+                    preview.sprite = symbolLayers[i].Sprite;
+                }
 
                 btn.onClick.AddListener(() =>
                 {
@@ -415,7 +432,7 @@ public class VisualsDesigner : MonoBehaviour
                 var addBtnObj = Instantiate(LayerButton.gameObject, LayerButtonParent);
                 var addBtn = addBtnObj.GetComponent<Button>();
                 var addLabel = addBtnObj.GetComponentInChildren<TMP_Text>();
-                if (addLabel != null) addLabel.text = "Add Symbol";
+                if (addLabel != null) addLabel.text = "+";
                 addBtn.onClick.AddListener(AddSymbol);
             }
 
@@ -547,6 +564,14 @@ public class VisualsDesigner : MonoBehaviour
         symbolRotationSlider.value = rt.localEulerAngles.z;
 
         isSyncingSliders = false;
+    }
+
+    private void CheckIfFactionCanBeFinished()
+    {
+        if(playerColor != null && nameInput != null)
+        {
+
+        }
     }
 
     #region Utilities

@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6af871882b4f02f4b9ae8494e1dcc637, type: 3}
-  m_Name: Squares
+  m_Name: SlantMiddleRight
   m_EditorClassIdentifier: Assembly-CSharp::BackgroundPattern
   Layers:
   - {fileID: 1936483953, guid: 89a2a7abca876a044840dded4b495452, type: 3}
-  - {fileID: -440468994, guid: 89a2a7abca876a044840dded4b495452, type: 3}
+  - {fileID: -1488453267, guid: b34972c55a1d83b4389aa88517db5c96, type: 3}
