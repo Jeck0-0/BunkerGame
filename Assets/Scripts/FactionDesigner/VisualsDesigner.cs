@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class VisualsDesigner : MonoBehaviour
 {
+    public Transform temporaryTransform;
+
     [Header("Drop your designs here")]
     [SerializeField] List<BackgroundPattern> availablePatterns;
     [SerializeField] List<SymbolType> availableSymbols;
@@ -40,12 +42,15 @@ public class VisualsDesigner : MonoBehaviour
     [SerializeField] Image[] previewLayers;
     [SerializeField] Transform symbolParent;
     [SerializeField] Sprite defaultSymbolSprite;
+    [SerializeField] Button finishButton;
 
     [Header("Layer Controls")]
     [SerializeField] Transform LayerButtonParent;
     [SerializeField] Button LayerButton;
 
-    [Header("Symbol Transform Controls")]
+    [Header("Symbol Controls")]
+    [SerializeField] Button moveLayerUpButton;
+    [SerializeField] Button moveLayerDownButton;
     [SerializeField] Slider symbolPosXSlider;
     [SerializeField] Slider symbolPosYSlider;
     [SerializeField] Slider symbolScaleSlider;
@@ -59,7 +64,6 @@ public class VisualsDesigner : MonoBehaviour
     private int currentLayerIndex = 0;
 
     private Color playerColor = Color.white;
-    private FactionData factionData;
 
     // outlines for top menu buttons
     private Image backgroundButtonOutline;
@@ -68,6 +72,7 @@ public class VisualsDesigner : MonoBehaviour
 
     private bool editingSymbol = false;
     private bool isSyncingSliders = false;
+    private bool isRebuildingUI = false;
 
     private void Start()
     {
@@ -115,17 +120,20 @@ public class VisualsDesigner : MonoBehaviour
         // menu callbacks
         if (backgroundButton != null) backgroundButton.onClick.AddListener(BuildBackgroundMenu);
         if (symbolButton != null) symbolButton.onClick.AddListener(BuildSymbolMenu);
+        if (finishButton != null) finishButton.onClick.AddListener(FinishFaction);
 
         // color slider callbacks
         rSlider.onValueChanged.AddListener(_ => UpdateActiveColor());
         gSlider.onValueChanged.AddListener(_ => UpdateActiveColor());
         bSlider.onValueChanged.AddListener(_ => UpdateActiveColor());
 
-        // symbol transform callbacks
+        // symbol callbacks
         symbolPosXSlider.onValueChanged.AddListener(_ => UpdateSymbolTransform());
         symbolPosYSlider.onValueChanged.AddListener(_ => UpdateSymbolTransform());
         symbolScaleSlider.onValueChanged.AddListener(_ => UpdateSymbolTransform());
         symbolRotationSlider.onValueChanged.AddListener(_ => UpdateSymbolTransform());
+        if (moveLayerUpButton != null) moveLayerUpButton.onClick.AddListener(MoveLayerUp);
+        if (moveLayerDownButton != null) moveLayerDownButton.onClick.AddListener(MoveLayerDown);
 
         // initial menus
         if (availablePatterns != null && availablePatterns.Count > 0)
@@ -139,6 +147,7 @@ public class VisualsDesigner : MonoBehaviour
         if (backgroundMenuParent == null || menuButtonPrefab == null || availablePatterns == null)
         return;
 
+        isRebuildingUI = true;
         ClearMenu(backgroundMenuParent);
 
         editingSymbol = false;
@@ -190,6 +199,7 @@ public class VisualsDesigner : MonoBehaviour
 
         BuildLayerButtons();
         backgroungAndSymbolScrollbar.value = 1;
+        isRebuildingUI = false;
     }
 
     private void BuildSymbolMenu()
@@ -197,6 +207,7 @@ public class VisualsDesigner : MonoBehaviour
         if (symbolMenuParent == null || menuButtonPrefab == null || availableSymbols == null)
         return;
 
+        isRebuildingUI = true;
         ClearMenu(symbolMenuParent);
 
         editingSymbol = true;
@@ -236,6 +247,7 @@ public class VisualsDesigner : MonoBehaviour
 
         BuildLayerButtons();
         backgroungAndSymbolScrollbar.value = 1;
+        isRebuildingUI = false;
     }
 
     public void AddSymbol()
@@ -500,6 +512,10 @@ public class VisualsDesigner : MonoBehaviour
 
     private void UpdateActiveColor()
     {
+        if (isRebuildingUI) return;
+        // wait for old buttons to be destroyed
+        // because of the stupid unity index issues when destroying and Instantiating at the same frame
+
         Color newColor = new Color(rSlider.value, gSlider.value, bSlider.value);
         emblemColorPreview.color = newColor;
 
@@ -566,12 +582,54 @@ public class VisualsDesigner : MonoBehaviour
         isSyncingSliders = false;
     }
 
-    private void CheckIfFactionCanBeFinished()
+    private void MoveLayerUp()
     {
-        if(playerColor != null && nameInput != null)
-        {
+        if (activeSymbolIndex < 0 || activeSymbolIndex >= symbolLayers.Count - 1 | !editingSymbol)
+        return;
 
-        }
+        // swap list entries
+        var upperIndex = activeSymbolIndex + 1;
+        var temp = symbolLayers[activeSymbolIndex];
+        symbolLayers[activeSymbolIndex] = symbolLayers[upperIndex];
+        symbolLayers[upperIndex] = temp;
+
+        // swap hierarchy order
+        var currentTransform = symbolLayers[upperIndex].Image.transform;
+        currentTransform.SetSiblingIndex(currentTransform.GetSiblingIndex() + 1);
+
+        // update index
+        activeSymbolIndex = upperIndex;
+
+        BuildLayerButtons();
+        DelayedHighlightActiveLayerButton(activeSymbolIndex);
+    }
+
+    private void MoveLayerDown()
+    {
+        if (activeSymbolIndex <= 0 || activeSymbolIndex >= symbolLayers.Count | !editingSymbol)
+        return;
+
+        // swap list entries
+        var lowerIndex = activeSymbolIndex - 1;
+        var temp = symbolLayers[activeSymbolIndex];
+        symbolLayers[activeSymbolIndex] = symbolLayers[lowerIndex];
+        symbolLayers[lowerIndex] = temp;
+
+        // swap hierarchy order
+        var currentTransform = symbolLayers[lowerIndex].Image.transform;
+        currentTransform.SetSiblingIndex(currentTransform.GetSiblingIndex() - 1);
+
+        // update index
+        activeSymbolIndex = lowerIndex;
+
+        BuildLayerButtons();
+        DelayedHighlightActiveLayerButton(activeSymbolIndex);
+    }
+
+    private void FinishFaction()
+    {
+        EmblemBuilder builder = FindAnyObjectByType<EmblemBuilder>();
+        builder.BuildUIEmblem(BuildEmblemPacket(), temporaryTransform);
     }
 
     #region Utilities
@@ -637,6 +695,7 @@ public class VisualsDesigner : MonoBehaviour
     private IEnumerator DelayedHighlight(int activeIndex)
     {
         yield return null; // wait one frame
+        // yield return new WaitForSecondsRealtime(0.1f); this may look better
 
         if (LayerButtonParent == null) yield break;
 
@@ -655,11 +714,34 @@ public class VisualsDesigner : MonoBehaviour
 
     #endregion
 
-    public FactionData BuildFaction()
+    public EmblemData BuildEmblemPacket()
     {
+        var packet = new EmblemData();
 
+        // original scale
+        packet.originalEmblemSize = (emblemPreviewParent as RectTransform).rect.size;
 
-        return factionData;
+        // background
+        packet.PatternID = activePattern != null ? activePattern.name : "";
+        packet.LayerColors = new List<Color>(layerColors);
+        packet.PlayerColor = playerColor;
+
+        // symbols
+        foreach (var sym in symbolLayers)
+        {
+            var sp = new EmblemData.SymbolData
+            {
+                SymbolID = sym.Sprite != null ? sym.Sprite.name : "",
+                Color = sym.Color,
+                Position = sym.Position,
+                Scale = sym.Scale,
+                Rotation = sym.Rotation
+            };
+
+            packet.Symbols.Add(sp);
+        }
+
+        return packet;
     }
 }
 
