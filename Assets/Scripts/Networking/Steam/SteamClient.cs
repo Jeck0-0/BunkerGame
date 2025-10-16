@@ -1,0 +1,139 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Runtime.InteropServices;
+using System.Threading.Tasks;
+using Steamworks;
+using Steamworks.Data;
+using UnityEngine;
+
+[CreateAssetMenu(menuName = "ScriptableVariables/Networking/SteamClient", fileName = "SteamClient")]
+public class SteamClient : Client, IConnectionManager
+{
+    
+    private ConnectionManager _connectionManager;
+    private Connection Connection => _connectionManager.Connection;
+    private Dictionary<Type, List<Action<BasePacket>>> _subscribers = new();
+    
+    public bool IsConnected => Connection.Id != 0;
+    
+    public override void Connect()
+    {
+        if (!SteamManager.TryInitialize())
+        {
+            var go = new GameObject("SteamManager");
+            go.AddComponent<SteamManager>();
+            Debug.LogWarning("Steamworks not initialized");
+
+            if (!Steamworks.SteamClient.IsValid)
+            {
+                Debug.LogError("Steamworks could not be initialized");
+                return;
+            }
+        }
+        
+        
+        SteamLobby.Initialize();
+        SteamMatchmaking.OnLobbyEntered += OnJoinedLobby;
+    }
+
+    public override void Send(BasePacket packet)
+    {
+        if (!IsConnected)
+        {
+            Debug.LogWarning("Not connected to host!");
+            return;
+        }
+        
+        using var ms = new MemoryStream();
+        using var bw = new BinaryWriter(ms);
+        packet.Serialize(bw);
+        
+        byte[] data = ms.ToArray();
+        Connection.SendMessage(data, SendType.Reliable);
+    }
+
+    public override void Subscribe<T>(Action<BasePacket> callback)
+    {
+        var type = typeof(T);
+        if(!_subscribers.ContainsKey(type) || _subscribers[type] == null)
+            _subscribers[type] = new List<Action<BasePacket>>();
+        _subscribers[type].Add(callback);
+    }
+    public override void Unsubscribe<T>(Action<BasePacket> callback)
+    {
+        var type = typeof(T);
+        if(_subscribers.ContainsKey(type))
+            _subscribers[type].Remove(callback);
+    }
+
+    public override void Disconnect()
+    {
+        if (IsConnected)
+        {
+            Connection.Close();
+            _connectionManager = null;
+        }
+        
+        SteamLobby.Leave();
+    }
+
+    public override void Update() { }
+    
+    
+    
+    public void OnMessage(IntPtr data, int size, long messageNum, long recvTime, int channel)
+    {
+        byte[] buffer = new byte[size];
+        Marshal.Copy(data, buffer, 0, size);
+        
+        using var ms = new MemoryStream(buffer);
+        using var br = new BinaryReader(ms);
+        
+        while (ms.Position < ms.Length)
+        {
+            var packet = BasePacket.DeserializePacket(br);
+            HandlePacket(packet);
+        }
+    }
+    
+    private void HandlePacket(BasePacket packet)
+    {
+        if (_subscribers.TryGetValue(packet.GetType(), out var callbacks))
+            foreach (var callback in callbacks)
+                callback?.Invoke(packet);
+    }
+    
+    
+    private void OnJoinedLobby(Lobby lobby)
+    {
+        Debug.Log($"[CLIENT] Joined lobby, connecting to host...");
+        if (IsConnected)
+        {
+            Debug.LogWarning("Already connected!");
+            return;
+        }
+
+        var hostId = lobby.Owner.Id;
+        
+        _connectionManager = SteamNetworkingSockets.ConnectRelay(hostId, 3000, this);
+        
+        Debug.Log($"Connecting to host: {hostId}");
+    }
+    
+    public void OnConnecting(ConnectionInfo info)
+    {
+        Debug.Log($"[CLIENT] Connecting to server...");
+    }
+    
+    public void OnConnected(ConnectionInfo info)
+    {
+        Debug.Log($"[CLIENT] Connected to server! Connection ID: {Connection.Id}");
+    }
+    
+    public void OnDisconnected(ConnectionInfo info)
+    {
+        Debug.Log($"[CLIENT] Disconnected from server: {info.EndReason}");
+    }
+    
+}
