@@ -16,20 +16,28 @@ public class NetworkManager : Singleton<NetworkManager>
             Debug.LogWarning("No client assigned to network manager", this);
             return;
         }
-        
-        client.Connect();
     }
 
+    public void StopServerAndClient()
+    {
+        client.Disconnect();
+        StopServer();
+    }
     public void StopServer()
     {
         server.Disconnect();
         serverRunning = false;
     }
-    
-    public void StartServer()
+
+    public void StartClient()
+    {
+        client.Connect();
+    }
+    public void StartServerAndClient()
     {
         server.Connect(5);
         serverRunning = true;
+        client.Connect();
     }
     
     private void Update()

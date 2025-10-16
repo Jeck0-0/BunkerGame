@@ -13,8 +13,6 @@ public class SteamServer : Server, ISocketManager
     private SocketManager _socketManager;
     private Dictionary<uint, Connection> _clients = new(); // Connection.Id -> Connection
     private Dictionary<uint, SteamId> _clientSteamIds = new(); // Connection.Id -> SteamId
-    private Dictionary<Type, List<Action<uint, BasePacket>>> _subscribers = new();
-    private List<Action<uint, BasePacket>> _subscribedToAll = new();
     
     public bool IsRunning { get; private set; }
     public int ClientCount => _clients.Count;
@@ -202,42 +200,6 @@ public class SteamServer : Server, ISocketManager
             HandlePacket(connection.Id, packet);
         }
     }
-    
-    private void HandlePacket(uint connectionId, BasePacket packet)
-    {
-        Debug.Log($"[SERVER] Received packet from {connectionId}: {packet.Type}");
-        
-        if (_subscribers.TryGetValue(packet.GetType(), out var callbacks))
-            foreach (var callback in callbacks)
-                callback?.Invoke(connectionId, packet);
-        
-        foreach (var callback in _subscribedToAll)
-            callback?.Invoke(connectionId, packet);
-    }
-
-    public override void Subscribe<T>(Action<uint, BasePacket> callback)
-    {
-        var type = typeof(T);
-        if(!_subscribers.ContainsKey(type) || _subscribers[type] == null)
-            _subscribers[type] = new ();
-        _subscribers[type].Add(callback);
-    }
-    public override void SubscribeToAll(Action<uint, BasePacket> callback)
-    {
-        _subscribedToAll.Add(callback);
-    }
-    public override void UnsubscribeFromAll(Action<uint, BasePacket> callback)
-    {
-        _subscribedToAll.Remove(callback);
-    }
-    public override void Unsubscribe<T>(Action<uint, BasePacket> callback)
-    {
-        var type = typeof(T);
-        if(_subscribers.ContainsKey(type))
-            _subscribers[type].Remove(callback);
-    }
-    
-    
     
     
     

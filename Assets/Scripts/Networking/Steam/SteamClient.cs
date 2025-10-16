@@ -13,7 +13,6 @@ public class SteamClient : Client, IConnectionManager
     
     private ConnectionManager _connectionManager;
     private Connection Connection => _connectionManager.Connection;
-    private Dictionary<Type, List<Action<BasePacket>>> _subscribers = new();
     
     public bool IsConnected => Connection.Id != 0;
     
@@ -51,20 +50,6 @@ public class SteamClient : Client, IConnectionManager
         
         byte[] data = ms.ToArray();
         Connection.SendMessage(data, SendType.Reliable);
-    }
-
-    public override void Subscribe<T>(Action<BasePacket> callback)
-    {
-        var type = typeof(T);
-        if(!_subscribers.ContainsKey(type) || _subscribers[type] == null)
-            _subscribers[type] = new List<Action<BasePacket>>();
-        _subscribers[type].Add(callback);
-    }
-    public override void Unsubscribe<T>(Action<BasePacket> callback)
-    {
-        var type = typeof(T);
-        if(_subscribers.ContainsKey(type))
-            _subscribers[type].Remove(callback);
     }
 
     public override void Disconnect()
