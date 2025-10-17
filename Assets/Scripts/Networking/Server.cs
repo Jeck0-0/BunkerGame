@@ -18,6 +18,10 @@ public abstract class Server : ScriptableVariable<Client>
     public void Subscribe<T>(Action<uint, BasePacket> callback) where T : BasePacket
     {
         var type = typeof(T);
+     
+        if(type.ToString().StartsWith("STC"))
+            Debug.LogWarning("Subscribed to packet type " + type + " in Server, but that should be a Server To Client packet.", this);
+        
         if(!_subscribers.ContainsKey(type) || _subscribers[type] == null)
             _subscribers[type] = new ();
         _subscribers[type].Add(callback);

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 public abstract class Client : ScriptableVariable<Client>
 {
@@ -13,6 +14,10 @@ public abstract class Client : ScriptableVariable<Client>
     public void Subscribe<T>(Action<BasePacket> callback) where T : BasePacket
     {
         var type = typeof(T);
+        
+        if(type.ToString().StartsWith("CTS"))
+            Debug.LogWarning("Subscribed to packet type " + type + " in Client, but that should be a Client To Server packet.", this);
+        
         if(!_subscribers.ContainsKey(type) || _subscribers[type] == null)
             _subscribers[type] = new List<Action<BasePacket>>();
         _subscribers[type].Add(callback);
@@ -23,5 +28,14 @@ public abstract class Client : ScriptableVariable<Client>
         var type = typeof(T);
         if(_subscribers.ContainsKey(type))
             _subscribers[type].Remove(callback);
+    }
+    
+    protected void HandlePacket(BasePacket packet)
+    {
+        Debug.Log($"[Client] Received packet from server: {packet.Type}");
+        
+        if (_subscribers.TryGetValue(packet.GetType(), out var callbacks))
+            foreach (var callback in callbacks)
+                callback?.Invoke(packet);
     }
 }

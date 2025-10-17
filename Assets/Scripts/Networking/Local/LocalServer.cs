@@ -81,7 +81,7 @@ public class LocalServer : Server
                 connectionId = idCounter++
             };
             connectionInfos.Add(ci);
-            Debug.LogError("Client connected: ");
+            Debug.Log("[Server] Local client connected");
         }
         catch
         {
@@ -91,17 +91,19 @@ public class LocalServer : Server
         {
             for (int i = 0; i < connectionInfos.Count; i++)
             {
-                if (connectionInfos[i].socket.Available > 0)
+                while (connectionInfos[i].socket.Available > 0)
                 {
                     byte[] buffer = new byte[connectionInfos[i].socket.Available];
                     connectionInfos[i].socket.Receive(buffer);
 
                     var rms = new MemoryStream(buffer);
                     var br = new BinaryReader(rms);
-
-                    var packet = BasePacket.DeserializePacket(br);
-
-                    HandlePacket(connectionInfos[i].connectionId, packet);
+                    
+                    while (rms.Position < rms.Length)
+                    {
+                        var packet = BasePacket.DeserializePacket(br);
+                        HandlePacket(connectionInfos[i].connectionId, packet);
+                    }
                 }
             }
         }

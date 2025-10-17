@@ -11,7 +11,7 @@ public enum PacketType
 
 public abstract class BasePacket
 {
-    public abstract PacketType Type { get; protected set; }
+    public abstract PacketType Type { get; }
 
     public abstract void Serialize(BinaryWriter bw);
     protected abstract BasePacket Deserialize(BinaryReader br);
@@ -23,11 +23,9 @@ public abstract class BasePacket
         switch (type)
         {
             case PacketType.CTS_FactionInformation:
-                //decompile test1
-                return null;
+                return new CTS_FactionInformation().Deserialize(br);
             case PacketType.STC_FactionInformation:
-                //decompile test2
-                return null;
+                return new STC_FactionInformation().Deserialize(br);
         }
         Debug.Log("Unknown packet type: " + type);
         return null;

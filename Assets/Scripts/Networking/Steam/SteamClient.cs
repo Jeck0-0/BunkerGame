@@ -60,6 +60,7 @@ public class SteamClient : Client, IConnectionManager
             _connectionManager = null;
         }
         
+        SteamMatchmaking.OnLobbyEntered -= OnJoinedLobby;
         SteamLobby.Leave();
     }
 
@@ -82,12 +83,6 @@ public class SteamClient : Client, IConnectionManager
         }
     }
     
-    private void HandlePacket(BasePacket packet)
-    {
-        if (_subscribers.TryGetValue(packet.GetType(), out var callbacks))
-            foreach (var callback in callbacks)
-                callback?.Invoke(packet);
-    }
     
     
     private void OnJoinedLobby(Lobby lobby)

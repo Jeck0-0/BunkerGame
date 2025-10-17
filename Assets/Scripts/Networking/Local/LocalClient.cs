@@ -20,10 +20,11 @@ public class LocalClient : Client
         {
             socket.Connect("127.0.0.1", port);
             connected = true;
+            Debug.Log("[Client] Connected to local server");
         }
         catch (Exception e)
         {
-            Debug.LogError("Failed to connect to 127.0.0.1" + ": " + e.Message);
+            Debug.LogError("[Client] Failed to connect to local server: " + e.Message);
         }
     }
 
@@ -39,15 +40,15 @@ public class LocalClient : Client
 
     public override void Disconnect()
     {
+        connected = false;
         socket.Close();
     }
 
     public override void Update()
     {
-        
         if (!connected)
             return;
-
+        
         while (socket.Available > 0)
         {
             byte[] receivedBuffer = new byte[socket.Available];
@@ -59,9 +60,7 @@ public class LocalClient : Client
             while (rms.Position < rms.Length)
             {
                 var packet = BasePacket.DeserializePacket(br);
-                if(_subscribers.TryGetValue(packet.GetType(), out var callbacks))
-                    foreach (var callback in callbacks)
-                        callback?.Invoke(packet);
+                HandlePacket(packet);
             }
         }
     }

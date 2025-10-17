@@ -445,7 +445,7 @@ GameObject:
   - component: {fileID: 503446208}
   - component: {fileID: 503446207}
   m_Layer: 0
-  m_Name: DEBUG
+  m_Name: Debug
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -624,6 +624,7 @@ GameObject:
   m_Component:
   - component: {fileID: 563864667}
   - component: {fileID: 563864668}
+  - component: {fileID: 563864669}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -658,6 +659,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dafc96da77640c2901fbe1d6cb07e82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ConnectionMenu
+--- !u!114 &563864669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 563864665}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd7a5ec5bff94fef818f75f9d0425771, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NetworkTest
 --- !u!1 &690726981
 GameObject:
   m_ObjectHideFlags: 0
@@ -1403,8 +1416,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25ca430dad1a4c1c91927fe423557df2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NetworkManager
-  client: {fileID: 11400000, guid: 754532ec3d476a743b6163f4c055330c, type: 2}
-  server: {fileID: 11400000, guid: d8893a41e81a9cd4688ebf7221f1006d, type: 2}
+  client: {fileID: 0}
+  server: {fileID: 0}
 --- !u!4 &2144315331
 Transform:
   m_ObjectHideFlags: 0
@@ -1425,10 +1438,10 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1629039139}
+  - {fileID: 503446208}
   - {fileID: 1083884449}
   - {fileID: 690726985}
   - {fileID: 1667464387}
   - {fileID: 563864667}
   - {fileID: 2144315331}
   - {fileID: 438301738}
-  - {fileID: 503446208}

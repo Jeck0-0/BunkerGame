@@ -5,12 +5,14 @@ public class ConnectionMenu : MonoBehaviour
     public void JoinGame()
     {
         NetworkManager.Instance.StartClient();
-        //SteamLobby.OpenJoinOverlay();
+        if(NetworkManager.Client is SteamClient)
+            SteamLobby.OpenJoinOverlay();
     }
 
     public void HostGame()
     {
         NetworkManager.Instance.StartServerAndClient();
-        //SteamLobby.OpenInviteOverlay();
+        if(NetworkManager.Server is SteamServer)
+            SteamLobby.OpenInviteOverlay();
     }
 }

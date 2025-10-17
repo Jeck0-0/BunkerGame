@@ -58,7 +58,7 @@ public class SteamManager : MonoBehaviour
     
     private void OnApplicationQuit()
     {
-        if (IsInitialized)
+        if (Steamworks.SteamClient.IsValid)
             Steamworks.SteamClient.Shutdown();
     }
 }

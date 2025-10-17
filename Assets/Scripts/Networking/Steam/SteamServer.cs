@@ -10,15 +10,13 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "ScriptableVariables/Networking/SteamServer", fileName = "SteamServer")]
 public class SteamServer : Server, ISocketManager
 {
+    public bool IsRunning { get; private set; }
+    public int PlayerCount => _clients.Count;
+    
     private SocketManager _socketManager;
     private Dictionary<uint, Connection> _clients = new(); // Connection.Id -> Connection
     private Dictionary<uint, SteamId> _clientSteamIds = new(); // Connection.Id -> SteamId
-    
-    public bool IsRunning { get; private set; }
-    public int ClientCount => _clients.Count;
-    
-    private int maxClients = 5;
-    private bool _initialized = false;
+    private int maxClients;
     
     public override void Connect(int maxPlayers)
     {
@@ -27,14 +25,6 @@ public class SteamServer : Server, ISocketManager
     
     public async Task StartServer(int maxPlayers = 4)
     {
-        if (!_initialized)
-        {
-            SteamMatchmaking.OnLobbyCreated += OnLobbyCreated;
-            SteamMatchmaking.OnLobbyMemberJoined += OnLobbyMemberJoined;
-            SteamMatchmaking.OnLobbyMemberLeave += OnLobbyMemberLeft;
-            _initialized = true;
-        }
-        
         if (!SteamManager.TryInitialize())
         {
             Debug.LogError("Steam not initialized!");
@@ -60,7 +50,12 @@ public class SteamServer : Server, ISocketManager
             IsRunning = false;
             _socketManager.Close();
             _socketManager = null;
+            return;
         }
+        
+        SteamMatchmaking.OnLobbyCreated += OnLobbyCreated;
+        SteamMatchmaking.OnLobbyMemberJoined += OnLobbyMemberJoined;
+        SteamMatchmaking.OnLobbyMemberLeave += OnLobbyMemberLeft;
     }
     public override void Disconnect()
     {
@@ -76,6 +71,10 @@ public class SteamServer : Server, ISocketManager
         IsRunning = false;
         SteamLobby.Leave();
         
+        SteamMatchmaking.OnLobbyCreated += OnLobbyCreated;
+        SteamMatchmaking.OnLobbyMemberJoined += OnLobbyMemberJoined;
+        SteamMatchmaking.OnLobbyMemberLeave += OnLobbyMemberLeft;
+        
         Debug.Log("[SERVER] Server stopped");
     }
     
@@ -88,10 +87,6 @@ public class SteamServer : Server, ISocketManager
     {
         Debug.Log($"[SERVER] Lobby created! ID: {lobby.Id}");
         Debug.Log($"[SERVER] Players will connect via SteamId: {Steamworks.SteamClient.SteamId}");
-        
-        // Store game settings in lobby
-        lobby.SetData("game_mode", "deathmatch");
-        lobby.SetData("map", "dust2");
     }
     
     private void OnLobbyMemberJoined(Lobby lobby, Friend friend)

@@ -1,17 +1,19 @@
-using System;
 using UnityEngine;
 
 public class NetworkManager : Singleton<NetworkManager>
 {
-    public Client client;
-    public Server server;
+    [SerializeField] protected Client client;
+    [SerializeField] protected Server server;
+    
+    public static Server Server => Instance?.server;
+    public static Client Client => Instance?.client;
     
     bool serverRunning = false;
 
     protected override void Awake()
     {
         base.Awake();
-        if (client == null)
+        if (Client == null)
         {
             Debug.LogWarning("No client assigned to network manager", this);
             return;
@@ -20,36 +22,36 @@ public class NetworkManager : Singleton<NetworkManager>
 
     public void StopServerAndClient()
     {
-        client.Disconnect();
+        Client.Disconnect();
         StopServer();
     }
     public void StopServer()
     {
-        server.Disconnect();
+        Server.Disconnect();
         serverRunning = false;
     }
 
     public void StartClient()
     {
-        client.Connect();
+        Client.Connect();
     }
     public void StartServerAndClient()
     {
-        server.Connect(5);
+        Server.Connect(5);
         serverRunning = true;
-        client.Connect();
+        Client.Connect();
     }
     
     private void Update()
     {
-        client.Update();
+        Client.Update();
         if(serverRunning)
-            server.Update();
+            Server.Update();
     }
 
     private void OnDestroy()
     {
-        client.Disconnect();
-        server.Disconnect();
+        Client.Disconnect();
+        Server.Disconnect();
     }
 }
