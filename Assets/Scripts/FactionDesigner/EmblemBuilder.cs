@@ -13,18 +13,18 @@ public class EmblemBuilder : MonoBehaviour
     [SerializeField] List<SymbolType> availableSymbols;
 
     // Build an emblem inside existing UI
-    public GameObject BuildUIEmblem(EmblemData packet, Transform parent, float scale = 1f)
+    public GameObject BuildUIEmblem(EmblemData packet, Transform parent, float scaleX = 1f, float scaleY = 1f)
     {
         if (packet == null || emblemUIPrefab == null)
         return null;
 
         var root = Instantiate(emblemUIPrefab, parent);
-        ApplyEmblemToRoot(root, packet);
+        ApplyEmblemToRoot(root, packet, scaleX, scaleY);
         return root;
     }
 
     // Build a world-space emblem
-    public GameObject BuildWorldEmblem(EmblemData packet, Transform attachTo, Vector3 offset = default, float scale = 1f)
+    public GameObject BuildWorldEmblem(EmblemData packet, Transform attachTo, Vector3 offset = default, float scaleX = 1f, float scaleY = 1f)
     {
         if (packet == null || worldCanvasPrefab == null || emblemUIPrefab == null)
         return null;
@@ -34,17 +34,17 @@ public class EmblemBuilder : MonoBehaviour
         canvas.worldCamera = Camera.main;
 
         var rect = canvas.GetComponent<RectTransform>();
-        rect.sizeDelta = new Vector2(scale, scale);
+        rect.sizeDelta = new Vector2(410, 410);
         rect.position = attachTo.position + offset;
         rect.rotation = Quaternion.identity;
 
         var emblem = Instantiate(emblemUIPrefab, canvas.transform);
-        ApplyEmblemToRoot(emblem, packet);
+        ApplyEmblemToRoot(emblem, packet, scaleX, scaleY);
 
         return canvas.gameObject;
     }
 
-    private void ApplyEmblemToRoot(GameObject root, EmblemData packet)
+    private void ApplyEmblemToRoot(GameObject root, EmblemData packet, float scaleX = 1f, float scaleY = 1f)
     {
         var bgParent = root.transform.Find("BackgroundParent");
         var symbolParent = root.transform.Find("SymbolParent");
@@ -164,6 +164,9 @@ public class EmblemBuilder : MonoBehaviour
                 rt.localEulerAngles = new Vector3(0f, 0f, symbol.Rotation);
             }
         }
+
+        var scl = root.GetComponent<RectTransform>();
+        scl.localScale = new Vector3(scaleX, scaleY, 1f);
 
         // update layout
         var layout = root.GetComponentInChildren<LayoutGroup>();

@@ -87,8 +87,8 @@ public class VisualsDesigner : MonoBehaviour
         symbolPosYSlider.maxValue = 150f;
         symbolScaleSlider.minValue = 0.5f;
         symbolScaleSlider.maxValue = 3.5f;
-        symbolRotationSlider.minValue = 0f;
-        symbolRotationSlider.maxValue = 360f;
+        symbolRotationSlider.minValue = -180f;
+        symbolRotationSlider.maxValue = 180f;
 
         // initial slider values
         symbolPosXSlider.value = 0;
@@ -577,7 +577,10 @@ public class VisualsDesigner : MonoBehaviour
         symbolPosXSlider.value = rt.anchoredPosition.x;
         symbolPosYSlider.value = rt.anchoredPosition.y;
         symbolScaleSlider.value = rt.localScale.x;
-        symbolRotationSlider.value = rt.localEulerAngles.z;
+
+        float z = rt.localEulerAngles.z;
+        if (z > 180f) z -= 360f;
+        symbolRotationSlider.value = z;
 
         isSyncingSliders = false;
     }
@@ -629,7 +632,7 @@ public class VisualsDesigner : MonoBehaviour
     private void FinishFaction()
     {
         EmblemBuilder builder = FindAnyObjectByType<EmblemBuilder>();
-        builder.BuildUIEmblem(BuildEmblemPacket(), temporaryTransform);
+        builder.BuildUIEmblem(BuildEmblemPacket(), temporaryTransform, 1.2f, 1f);
     }
 
     #region Utilities
