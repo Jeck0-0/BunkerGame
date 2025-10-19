@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 60f6561884c48b04986b175ad401c5a0, type: 3}
-  m_Name: Box
+  m_Name: BoxVertical
   m_EditorClassIdentifier: Assembly-CSharp::SymbolType
-  SymbolSprite: {fileID: -461978535, guid: d1f10904dd801b3469a8269e6f77d1d4, type: 3}
-  blank: 0
+  SymbolSprite: {fileID: -1483605041, guid: 89a2a7abca876a044840dded4b495452, type: 3}
+  Blank: 0

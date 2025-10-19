@@ -49,6 +49,7 @@ public class VisualsDesigner : MonoBehaviour
     [SerializeField] Button LayerButton;
 
     [Header("Symbol Controls")]
+    [SerializeField] GameObject symbolControlsOverlay;
     [SerializeField] Button moveLayerUpButton;
     [SerializeField] Button moveLayerDownButton;
     [SerializeField] Slider symbolPosXSlider;
@@ -73,6 +74,7 @@ public class VisualsDesigner : MonoBehaviour
     private bool editingSymbol = false;
     private bool isSyncingSliders = false;
     private bool isRebuildingUI = false;
+    private bool canFinishFaction = false;
 
     private void Start()
     {
@@ -86,7 +88,7 @@ public class VisualsDesigner : MonoBehaviour
         symbolPosYSlider.minValue = -150f;
         symbolPosYSlider.maxValue = 150f;
         symbolScaleSlider.minValue = 0.5f;
-        symbolScaleSlider.maxValue = 3.5f;
+        symbolScaleSlider.maxValue = 3.9f;
         symbolRotationSlider.minValue = -180f;
         symbolRotationSlider.maxValue = 180f;
 
@@ -121,11 +123,13 @@ public class VisualsDesigner : MonoBehaviour
         if (backgroundButton != null) backgroundButton.onClick.AddListener(BuildBackgroundMenu);
         if (symbolButton != null) symbolButton.onClick.AddListener(BuildSymbolMenu);
         if (finishButton != null) finishButton.onClick.AddListener(FinishFaction);
+        if (finishButton != null) finishButton.interactable = false;
 
         // color slider callbacks
         rSlider.onValueChanged.AddListener(_ => UpdateActiveColor());
         gSlider.onValueChanged.AddListener(_ => UpdateActiveColor());
         bSlider.onValueChanged.AddListener(_ => UpdateActiveColor());
+        nameInput.onValueChanged.AddListener(_ => CheckFactionRequirements());
 
         // symbol callbacks
         symbolPosXSlider.onValueChanged.AddListener(_ => UpdateSymbolTransform());
@@ -151,6 +155,7 @@ public class VisualsDesigner : MonoBehaviour
         ClearMenu(backgroundMenuParent);
 
         editingSymbol = false;
+        symbolControlsOverlay.SetActive(true);
         if (symbolButtonOutline != null) symbolButtonOutline.enabled = false;
         if (backgroundButtonOutline != null) backgroundButtonOutline.enabled = true;
 
@@ -211,6 +216,7 @@ public class VisualsDesigner : MonoBehaviour
         ClearMenu(symbolMenuParent);
 
         editingSymbol = true;
+        symbolControlsOverlay.SetActive(false);
         if (symbolButtonOutline != null) symbolButtonOutline.enabled = true;
         if (backgroundButtonOutline != null) backgroundButtonOutline.enabled = false;
 
@@ -629,8 +635,24 @@ public class VisualsDesigner : MonoBehaviour
         DelayedHighlightActiveLayerButton(activeSymbolIndex);
     }
 
+    private void CheckFactionRequirements()
+    {
+        if (nameInput.text.Length > 0 && playerColor != Color.white)
+        {
+            finishButton.interactable = true;
+            canFinishFaction = true;
+        }
+        else
+        {
+            finishButton.interactable = false;
+            canFinishFaction = false;
+        }
+    }
+
     private void FinishFaction()
     {
+        if (!canFinishFaction) return;
+
         EmblemBuilder builder = FindAnyObjectByType<EmblemBuilder>();
         builder.BuildUIEmblem(BuildEmblemPacket(), temporaryTransform, 1.2f, 1f);
     }
@@ -688,6 +710,7 @@ public class VisualsDesigner : MonoBehaviour
         colorButtonOutline = outlineImage;
         playerColor = color;
         if (outlineImage != null) outlineImage.enabled = true;
+        CheckFactionRequirements();
     }
 
     private void DelayedHighlightActiveLayerButton(int activeIndex) // Have to wait one frame for unity to instantiate the buttons
@@ -721,13 +744,15 @@ public class VisualsDesigner : MonoBehaviour
     {
         var packet = new EmblemData();
 
+        packet.FactionName = nameInput.text;
+        packet.PlayerColor = playerColor;
+
         // original scale
         packet.originalEmblemSize = (emblemPreviewParent as RectTransform).rect.size;
 
         // background
         packet.PatternID = activePattern != null ? activePattern.name : "";
         packet.LayerColors = new List<Color>(layerColors);
-        packet.PlayerColor = playerColor;
 
         // symbols
         foreach (var sym in symbolLayers)
