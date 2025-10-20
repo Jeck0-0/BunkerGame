@@ -24,7 +24,7 @@ public class EmblemBuilder : MonoBehaviour
     }
 
     // Build a world-space emblem
-    public GameObject BuildWorldEmblem(EmblemData packet, Transform attachTo, Vector3 offset = default, float scaleX = 1f, float scaleY = 1f)
+    public GameObject BuildWorldEmblem(EmblemData packet, Transform attachTo, float scaleX = 1f, float scaleY = 1f, Vector3 offset = default)
     {
         if (packet == null || worldCanvasPrefab == null || emblemUIPrefab == null)
         return null;

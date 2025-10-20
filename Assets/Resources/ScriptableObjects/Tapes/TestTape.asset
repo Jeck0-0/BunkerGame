@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7576ae5199cad1f46bcc88ccd84fcb9a, type: 3}
+  m_Name: TestTape
+  m_EditorClassIdentifier: Assembly-CSharp::Tape
+  TapeName: TestTape
+  Artist: LinkinPark, Slipknot, Starset, FuturePalace
+  CoverArt: {fileID: 1698978917, guid: 497fada1ea7402445a3a9c6f24178506, type: 3}
+  Tracks:
+  - {fileID: 8300000, guid: e7b9de5d7cd236d409c7a340de0c13a3, type: 3}
+  - {fileID: 8300000, guid: ad3ba4755e6528f41aef98374b1dec74, type: 3}
+  - {fileID: 8300000, guid: f6e903c87da8e174f90e7c09e58d928f, type: 3}
+  - {fileID: 8300000, guid: 647e43fb09d260f4b817309507dbcba1, type: 3}
+  - {fileID: 8300000, guid: 5d6c22bd327a6c247967bc6c7b7cdc1e, type: 3}
+  - {fileID: 8300000, guid: 7df9fa5b15fe06945920f567a282ad5a, type: 3}
