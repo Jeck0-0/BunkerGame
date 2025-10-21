@@ -15,6 +15,7 @@ public class MusicManager : MonoBehaviour
     private AudioClip currentTrack;
     private Coroutine fadeCoroutine;
     private bool loopTrack = false;
+    private TapePlayer player;
 
 
     public void PauseMusic() => musicSource.Pause();
@@ -34,21 +35,22 @@ public class MusicManager : MonoBehaviour
         PrepareTapeQueue(currentTape, shuffle);
     }
 
-
-    private void Awake()
-    {
-        if (musicSource == null)
-        Debug.LogWarning("No music source");
-    }
-
-    public void InsertTape(Tape newTape)
+    public void InsertTape(Tape newTape, TapePlayer tapePlayer = null)
     {
         StopAllCoroutines();
         StopCurrentMusic(0f);
 
         currentTape = newTape;
         PrepareTapeQueue(newTape);
+        if (tapePlayer != null)
+        player = tapePlayer;
         PlayNextTrack();
+    }
+
+    private void Awake()
+    {
+        if (musicSource == null)
+            Debug.LogWarning("No music source");
     }
 
     private void PrepareTapeQueue(Tape tape, bool shuffle = true)
@@ -97,6 +99,7 @@ public class MusicManager : MonoBehaviour
 
         currentTrack = musicQue.Dequeue();
         StartMusic(currentTrack, 1f, defaultFadeTime, loop: false);
+        player.SetSong(currentTrack);
 
         StartCoroutine(WaitForTrackEnd(currentTrack.length, () => PlayNextTrack()));
     }
