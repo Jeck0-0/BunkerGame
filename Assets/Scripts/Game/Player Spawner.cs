@@ -4,7 +4,7 @@ public class PlayerSpawner : MonoBehaviour
 {
     [SerializeField]private GameObject PlayerObj;
     [SerializeField] private GameObject PlayerPlaque;
-    [SerializeField] private Transform[] Waypoints;
+    [SerializeField] private Transform[] Spawnpoints;
 
     private int currentWaypointIndex = 0;
     private int PlayerCount = 0;
@@ -31,19 +31,19 @@ public class PlayerSpawner : MonoBehaviour
             Debug.Log($"Max player of {MaxPlayers} reached");
             return;
         }
-        if (Waypoints.Length == 0)
+        if (Spawnpoints.Length == 0)
         {
             Debug.LogWarning("No waypoints assigned to PlayerSpawner!");
             return;
         }
 
-        Transform Waypoint = Waypoints[currentWaypointIndex];
+        Transform Waypoint = Spawnpoints[currentWaypointIndex];
         Instantiate(PlayerObj, Waypoint.position, Waypoint.rotation);
 
         currentWaypointIndex++;
 
         
-        if (currentWaypointIndex >= Waypoints.Length)
+        if (currentWaypointIndex >= Spawnpoints.Length)
         {
             currentWaypointIndex = 0;
         }
