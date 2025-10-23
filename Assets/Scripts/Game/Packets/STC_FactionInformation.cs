@@ -1,5 +1,6 @@
 using System.IO;
 using UnityEngine;
+using Networking;
 
 public class STC_FactionInformation : BasePacket
 {
@@ -27,7 +28,7 @@ public class STC_FactionInformation : BasePacket
         bw.Write(color.b);
     }
 
-    protected override BasePacket Deserialize(BinaryReader br)
+    public override BasePacket Deserialize(BinaryReader br)
     {
         playerId = br.ReadUInt32();
         name = br.ReadString();
