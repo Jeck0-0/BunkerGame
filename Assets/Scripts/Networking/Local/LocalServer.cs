@@ -6,117 +6,120 @@ using System.Net;
 using System.Net.Sockets;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "ScriptableVariables/Networking/LocalServer", fileName = "LocalServer")]
-public class LocalServer : Server
+namespace Networking
 {
-    Socket serverSocket;
-    int port = 6969;
-
-    private List<ConnectionInfo> connectionInfos = new();
-
-    private string currentLevel;
-    private List<string> winners;
-    private float levelStartTime;
-    protected int maxPlayers;
-
-    protected static uint idCounter;
-    
-    public override void Connect(int maxPlayers)
+    [CreateAssetMenu(menuName = "ScriptableVariables/Networking/LocalServer", fileName = "LocalServer")]
+    public class LocalServer : Server
     {
-        this.maxPlayers = maxPlayers;
-        serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-        serverSocket.Blocking = false;
-        serverSocket.Bind(new IPEndPoint(IPAddress.Any, port));
-        serverSocket.Listen(5);
-    }
+        Socket serverSocket;
+        int port = 6969;
 
-    public override void SendTo(uint user, BasePacket packet)
-    {
-        using var ms = new MemoryStream();
-        using var bw = new BinaryWriter(ms);
-        packet.Serialize(bw);
-        var data = ms.ToArray();
+        private List<ConnectionInfo> connectionInfos = new();
 
-        connectionInfos.FirstOrDefault(x => x.connectionId == user)?.socket.Send(data);
-    }
+        private string currentLevel;
+        private List<string> winners;
+        private float levelStartTime;
+        protected int maxPlayers;
 
-    public override void SendToAll(BasePacket packet)
-    {
-        using var ms = new MemoryStream();
-        using var bw = new BinaryWriter(ms);
-        packet.Serialize(bw);
-        var data = ms.ToArray();
-        
-        foreach (ConnectionInfo connection in connectionInfos)
-            connection.socket.Send(data);
-    }
+        protected static uint idCounter;
 
-    public override void SendToAllExcept(uint user, BasePacket packet)
-    {
-        using var ms = new MemoryStream();
-        using var bw = new BinaryWriter(ms);
-        packet.Serialize(bw);
-        var data = ms.ToArray();
-        
-        foreach (ConnectionInfo connection in connectionInfos)
-            if (connection.connectionId != user)
+        public override void Connect(int maxPlayers)
+        {
+            this.maxPlayers = maxPlayers;
+            serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            serverSocket.Blocking = false;
+            serverSocket.Bind(new IPEndPoint(IPAddress.Any, port));
+            serverSocket.Listen(5);
+        }
+
+        public override void SendTo(uint user, BasePacket packet)
+        {
+            using var ms = new MemoryStream();
+            using var bw = new BinaryWriter(ms);
+            packet.Serialize(bw);
+            var data = ms.ToArray();
+
+            connectionInfos.FirstOrDefault(x => x.connectionId == user)?.socket.Send(data);
+        }
+
+        public override void SendToAll(BasePacket packet)
+        {
+            using var ms = new MemoryStream();
+            using var bw = new BinaryWriter(ms);
+            packet.Serialize(bw);
+            var data = ms.ToArray();
+
+            foreach (ConnectionInfo connection in connectionInfos)
                 connection.socket.Send(data);
-    }
-
-    public override void Disconnect()
-    {
-        foreach (var connection in connectionInfos)
-            connection.socket.Close();
-        serverSocket.Close();
-        connectionInfos.Clear();
-    }
-
-    public override void Update()
-    {
-        try
-        {
-            ConnectionInfo ci = new ConnectionInfo
-            {
-                socket = serverSocket.Accept(), 
-                connectionId = idCounter++
-            };
-            connectionInfos.Add(ci);
-            Debug.Log("[Server] Local client connected");
-        }
-        catch
-        {
         }
 
-        try
+        public override void SendToAllExcept(uint user, BasePacket packet)
         {
-            for (int i = 0; i < connectionInfos.Count; i++)
+            using var ms = new MemoryStream();
+            using var bw = new BinaryWriter(ms);
+            packet.Serialize(bw);
+            var data = ms.ToArray();
+
+            foreach (ConnectionInfo connection in connectionInfos)
+                if (connection.connectionId != user)
+                    connection.socket.Send(data);
+        }
+
+        public override void Disconnect()
+        {
+            foreach (var connection in connectionInfos)
+                connection.socket.Close();
+            serverSocket.Close();
+            connectionInfos.Clear();
+        }
+
+        public override void Update()
+        {
+            try
             {
-                while (connectionInfos[i].socket.Available > 0)
+                ConnectionInfo ci = new ConnectionInfo
                 {
-                    byte[] buffer = new byte[connectionInfos[i].socket.Available];
-                    connectionInfos[i].socket.Receive(buffer);
+                    socket = serverSocket.Accept(),
+                    connectionId = idCounter++
+                };
+                connectionInfos.Add(ci);
+                Debug.Log("[Server] Local client connected");
+            }
+            catch
+            {
+            }
 
-                    var rms = new MemoryStream(buffer);
-                    var br = new BinaryReader(rms);
-                    
-                    while (rms.Position < rms.Length)
+            try
+            {
+                for (int i = 0; i < connectionInfos.Count; i++)
+                {
+                    while (connectionInfos[i].socket.Available > 0)
                     {
-                        var packet = BasePacket.DeserializePacket(br);
-                        HandlePacket(connectionInfos[i].connectionId, packet);
+                        byte[] buffer = new byte[connectionInfos[i].socket.Available];
+                        connectionInfos[i].socket.Receive(buffer);
+
+                        var rms = new MemoryStream(buffer);
+                        var br = new BinaryReader(rms);
+
+                        while (rms.Position < rms.Length)
+                        {
+                            var packet = BasePacket.DeserializePacket(br);
+                            HandlePacket(connectionInfos[i].connectionId, packet);
+                        }
                     }
                 }
             }
+            catch (Exception e)
+            {
+                Debug.LogError(e.Message);
+            }
         }
-        catch (Exception e)
+
+
+        public class ConnectionInfo
         {
-            Debug.LogError(e.Message);
+            public Socket socket;
+            public uint connectionId;
         }
-    }
-
-
-    public class ConnectionInfo
-    {
-        public Socket socket;
-        public uint connectionId;
     }
 }

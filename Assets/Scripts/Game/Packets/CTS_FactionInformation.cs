@@ -1,5 +1,6 @@
 using System.IO;
 using UnityEngine;
+using Networking;
 
 public class CTS_FactionInformation : BasePacket
 {
@@ -24,7 +25,7 @@ public class CTS_FactionInformation : BasePacket
         bw.Write(color.b);
     }
 
-    protected override BasePacket Deserialize(BinaryReader br)
+    public override BasePacket Deserialize(BinaryReader br)
     {
         name = br.ReadString();
         color = new Color(br.ReadSingle(), br.ReadSingle(), br.ReadSingle());

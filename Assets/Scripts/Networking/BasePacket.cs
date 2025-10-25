@@ -1,35 +1,37 @@
 using System.IO;
 using UnityEngine;
 
-public enum PacketType
+namespace Networking
 {
-    None, 
-    CTS_FactionInformation, 
-    STC_FactionInformation, 
-    STC_ProduceResource
-}
-
-public abstract class BasePacket
-{
-    public abstract PacketType Type { get; }
-
-    public abstract void Serialize(BinaryWriter bw);
-    protected abstract BasePacket Deserialize(BinaryReader br);
-    
-    public static BasePacket DeserializePacket(BinaryReader br)
+    public enum PacketType
     {
-        var type = (PacketType)br.ReadInt32();
-
-        switch (type)
-        {
-            case PacketType.CTS_FactionInformation:
-                return new CTS_FactionInformation().Deserialize(br);
-            case PacketType.STC_FactionInformation:
-                return new STC_FactionInformation().Deserialize(br);
-        }
-        Debug.Log("Unknown packet type: " + type);
-        return null;
+        None,
+        CTS_FactionInformation,
+        STC_FactionInformation,
+        STC_ProduceResource
     }
-    
-    
+
+    public abstract class BasePacket
+    {
+        public abstract PacketType Type { get; }
+
+        public abstract void Serialize(BinaryWriter bw);
+        public abstract BasePacket Deserialize(BinaryReader br);
+
+        public static BasePacket DeserializePacket(BinaryReader br)
+        {
+            var type = (PacketType)br.ReadInt32();
+
+            switch (type)
+            {
+                case PacketType.CTS_FactionInformation:
+                    return new CTS_FactionInformation().Deserialize(br);
+                case PacketType.STC_FactionInformation:
+                    return new STC_FactionInformation().Deserialize(br);
+            }
+
+            Debug.Log("Unknown packet type: " + type);
+            return null;
+        }
+    }
 }
