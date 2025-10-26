@@ -159,7 +159,7 @@ namespace Client
 
             var crisis = activeCrisis.CrisisDef;
             // success points
-            var accepted = new HashSet<ResourceType>(crisis.AcceptedResourceTypes);
+            var accepted = new HashSet<ResourceType>(crisis.RequiredResources);
 
             var perPlayerSuccessPoints = new Dictionary<string, int>(StringComparer.Ordinal);
             var perPlayerTotals = new Dictionary<string, int>(StringComparer.Ordinal);

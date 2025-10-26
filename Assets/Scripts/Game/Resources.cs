@@ -18,6 +18,7 @@ public enum ResourceType : byte
 public class ResourceAmount
 {
     public Dictionary<ResourceType, int> Amount;
+    public ResourceAmount() { }
     public ResourceAmount(Dictionary<ResourceType, int> amount) { Amount = amount; }
     public ResourceAmount(ResourceType type, int amount) { Amount = new Dictionary<ResourceType, int> {{type, amount}}; }
 
@@ -27,27 +28,36 @@ public class ResourceAmount
     public bool Has(ResourceAmount amount)
         => amount.Amount.All(x => Has(x.Key, x.Value));
 
-    public void Add(ResourceType type, int amount)
+    
+    public ResourceAmount Add(ResourceType type, int amount)
     {
         Amount.TryAdd(type, 0);
         Amount[type] += amount;
+        return this;
     }
-    public void Add(ResourceAmount amount)
+    public ResourceAmount Add(ResourceAmount amount)
     {
         foreach (var x in Amount.Keys)
             Add(x, amount.Amount[x]);
+        return this;
     }
 
-    public void Subtract(ResourceType type, int amount)
+    public ResourceAmount Subtract(ResourceType type, int amount)
     {
         Amount.TryAdd(type, 0);
         Amount[type] -= amount;
-        Debug.LogWarning($"Resource below zero: {type.ToString()} {Amount[type]}");
+        if (Amount[type] <= 0)
+            Debug.LogWarning($"Resource below zero: {type.ToString()} {Amount[type]}");
+        return this;
     }
-    public void Subtract(ResourceAmount amount)
+    public ResourceAmount Subtract(ResourceAmount amount)
     {
         foreach (var x in Amount.Keys)
             Subtract(x, amount.Amount[x]);
+        return this;
     }
+    
+    public static ResourceAmount operator - (ResourceAmount a, ResourceAmount b) => a.Subtract(b);
+    public static ResourceAmount operator + (ResourceAmount a, ResourceAmount b) => a.Add(b);
     
 }

@@ -38,6 +38,6 @@ namespace Client
         public int PlayerSuccessPoints;
         public bool WasHighestBidder;
         public bool WasLowestBidder;
-        public ResourceAmount[] ResourceDeltas; // amounts to apply to this player
+        public ResourceAmount ResourceDeltas; // amounts to apply to this player
     }
 }
