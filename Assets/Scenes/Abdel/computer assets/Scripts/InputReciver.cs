@@ -42,7 +42,7 @@ public class InputReciver : MonoBehaviour
         }
 
         foreach (var result in results)
-        {//Debug.Log(result.gameObject.name);
+        {Debug.Log(result.gameObject.name);
             GameObject hoveredObject = result.gameObject;
 
             PointerEventData EventData = new PointerEventData(EventSystem.current);
@@ -54,7 +54,7 @@ public class InputReciver : MonoBehaviour
 
             if (SendMouseDown)
             {
-                ExecuteEvents.Execute(result.gameObject, EventData, ExecuteEvents.pointerDownHandler);
+                ExecuteEvents.ExecuteHierarchy(result.gameObject, EventData, ExecuteEvents.pointerClickHandler);
                 ExecuteEvents.ExecuteHierarchy(result.gameObject, EventData, ExecuteEvents.initializePotentialDrag);
             }
 

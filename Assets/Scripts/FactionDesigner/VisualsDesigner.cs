@@ -146,7 +146,7 @@ public class VisualsDesigner : MonoBehaviour
         BuildBackgroundMenu();
     }
 
-    private void BuildBackgroundMenu()
+    public void BuildBackgroundMenu()
     {
         if (backgroundMenuParent == null || menuButtonPrefab == null || availablePatterns == null)
         return;
@@ -207,7 +207,7 @@ public class VisualsDesigner : MonoBehaviour
         isRebuildingUI = false;
     }
 
-    private void BuildSymbolMenu()
+    public void BuildSymbolMenu()
     {
         if (symbolMenuParent == null || menuButtonPrefab == null || availableSymbols == null)
         return;
