@@ -17,16 +17,10 @@ public class InputReciver : MonoBehaviour
         graphicRaycaster = GetComponent<GraphicRaycaster>();
     }
 
-    void Update()
-    {
-
-    }
-
     public void OnCursorInput(Vector2 normalisedPosition)
     {
         Vector3 MousePosition = new Vector3(CanvasTransform.sizeDelta.x * normalisedPosition.x,
                                             CanvasTransform.sizeDelta.y * normalisedPosition.y, 0f);
-        //Debug.Log(MousePosition);
 
         PointerEventData MouseEvent = new PointerEventData(EventSystem.current);
         MouseEvent.position = MousePosition;
@@ -42,65 +36,72 @@ public class InputReciver : MonoBehaviour
         {
             foreach (var target in DragTargets)
             {
-                ExecuteEvents.Execute(target, MouseEvent, ExecuteEvents.endDragHandler);    
+                ExecuteEvents.Execute(target, MouseEvent, ExecuteEvents.endDragHandler);
             }
             DragTargets.Clear();
         }
 
-
-
         foreach (var result in results)
-        {
+        {//Debug.Log(result.gameObject.name);
             GameObject hoveredObject = result.gameObject;
 
             PointerEventData EventData = new PointerEventData(EventSystem.current);
             EventData.position = MousePosition;
             EventData.pointerCurrentRaycast = EventData.pointerPressRaycast = result;
 
+            EventData.button = PointerEventData.InputButton.Left;
+            EventData.useDragThreshold = false;
+
             if (SendMouseDown)
             {
                 ExecuteEvents.Execute(result.gameObject, EventData, ExecuteEvents.pointerDownHandler);
+                ExecuteEvents.ExecuteHierarchy(result.gameObject, EventData, ExecuteEvents.initializePotentialDrag);
             }
 
             if (SendMouseDown)
             {
-                DragTargets.Add(result.gameObject);
-                ExecuteEvents.Execute(result.gameObject, EventData, ExecuteEvents.beginDragHandler);
+                var dragHandler = ExecuteEvents.GetEventHandler<IDragHandler>(result.gameObject);
+                if (dragHandler != null && !DragTargets.Contains(dragHandler))
+                {
+                    DragTargets.Add(dragHandler);
+                    ExecuteEvents.Execute(dragHandler, EventData, ExecuteEvents.beginDragHandler);
+                }
             }
-            else if (DragTargets.Contains(result.gameObject))
+            else if (IsMouseDown && DragTargets.Count > 0)
             {
-                EventData.dragging=true;
-                ExecuteEvents.Execute(result.gameObject, EventData, ExecuteEvents.dragHandler);
+                EventData.dragging = true;
+                foreach (var t in DragTargets)
+                    ExecuteEvents.Execute(t, EventData, ExecuteEvents.dragHandler);
             }
+
 
             if (IsMouseDown)
             {
                 EventData.button = PointerEventData.InputButton.Left;
             }
-            //Debug.Log(result.gameObject.name);
-
             else if (SendMouseUp)
             {
                 ExecuteEvents.Execute(result.gameObject, EventData, ExecuteEvents.pointerUpHandler);
                 ExecuteEvents.Execute(result.gameObject, EventData, ExecuteEvents.pointerClickHandler);
             }
+
             if (hoveredObject != lastHoveredObject)
             {
-                if (lastHoveredObject != null)
-                    ExecuteEvents.Execute(lastHoveredObject, EventData, ExecuteEvents.pointerExitHandler);
+                if (lastHoveredObject)
+                {
+                    ExecuteEvents.ExecuteHierarchy(lastHoveredObject, EventData, ExecuteEvents.pointerExitHandler);
+                }
 
                 if (hoveredObject != null)
-                    ExecuteEvents.Execute(hoveredObject, EventData, ExecuteEvents.pointerEnterHandler);
+                    ExecuteEvents.ExecuteHierarchy(hoveredObject, EventData, ExecuteEvents.pointerEnterHandler);
 
                 lastHoveredObject = hoveredObject;
             }
         }
-
+        
+        //Debug.Log(MousePosition);
     }
 
-    public void Buttontest()
-    {
-        Debug.Log($"PRESSED!!");
-    }
+    public void Buttontest() => Debug.Log("PRESSED!!");
 
 }
