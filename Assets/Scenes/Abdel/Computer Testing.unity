@@ -2273,7 +2273,7 @@ GameObject:
   - component: {fileID: 524889512}
   - component: {fileID: 524889511}
   m_Layer: 3
-  m_Name: Button (2)
+  m_Name: QuitB
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2286,17 +2286,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 524889509}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1125455737}
-  m_Father: {fileID: 1517458433}
+  m_Father: {fileID: 980729381}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -291, y: -44}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 173.692, y: 52.0115}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &524889511
@@ -2343,9 +2343,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1517458437}
-        m_TargetAssemblyTypeName: InputReciver, Assembly-CSharp
-        m_MethodName: Buttontest
+      - m_Target: {fileID: 250668037}
+        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
+        m_MethodName: QuitGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4012,6 +4012,45 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e8082e2c60ffefa409ecb88827570c72, type: 3}
   m_PrefabInstance: {fileID: 964158539}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &980729380
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 980729381}
+  m_Layer: 3
+  m_Name: Mainmenu
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &980729381
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 980729380}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1126780653}
+  - {fileID: 1319196462}
+  - {fileID: 1939214923}
+  - {fileID: 524889510}
+  m_Father: {fileID: 1517458433}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -291, y: -44}
+  m_SizeDelta: {x: 173.69202, y: 52.011505}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &994180925
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4853,7 +4892,7 @@ GameObject:
   - component: {fileID: 1126780655}
   - component: {fileID: 1126780654}
   m_Layer: 3
-  m_Name: Text (TMP) (1)
+  m_Name: title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4871,12 +4910,12 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1517458433}
+  m_Father: {fileID: 980729381}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -288, y: 183}
-  m_SizeDelta: {x: -626.308, y: -547.9885}
+  m_AnchoredPosition: {x: 3, y: 227}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1126780654
 MonoBehaviour:
@@ -5492,7 +5531,7 @@ GameObject:
   - component: {fileID: 1319196464}
   - component: {fileID: 1319196463}
   m_Layer: 3
-  m_Name: Button
+  m_Name: StartB
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5505,17 +5544,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1319196461}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 416511384}
-  m_Father: {fileID: 1517458433}
+  m_Father: {fileID: 980729381}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -291, y: 101}
+  m_AnchoredPosition: {x: 0, y: 145}
   m_SizeDelta: {x: 173.692, y: 52.0115}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1319196463
@@ -5562,9 +5601,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1517458437}
-        m_TargetAssemblyTypeName: InputReciver, Assembly-CSharp
-        m_MethodName: Buttontest
+      - m_Target: {fileID: 250668037}
+        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
+        m_MethodName: StartGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6685,10 +6724,7 @@ RectTransform:
   m_Children:
   - {fileID: 525027500}
   - {fileID: 365774377}
-  - {fileID: 1319196462}
-  - {fileID: 1939214923}
-  - {fileID: 524889510}
-  - {fileID: 1126780653}
+  - {fileID: 980729381}
   m_Father: {fileID: 233727903}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -8168,7 +8204,7 @@ GameObject:
   - component: {fileID: 1939214925}
   - component: {fileID: 1939214924}
   m_Layer: 3
-  m_Name: Button (1)
+  m_Name: FactionB
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8181,17 +8217,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1939214922}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2059501009}
-  m_Father: {fileID: 1517458433}
+  m_Father: {fileID: 980729381}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -268, y: 27}
+  m_AnchoredPosition: {x: 23, y: 71}
   m_SizeDelta: {x: 211.6021, y: 52.011}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1939214924
@@ -8238,9 +8274,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1517458437}
-        m_TargetAssemblyTypeName: InputReciver, Assembly-CSharp
-        m_MethodName: Buttontest
+      - m_Target: {fileID: 250668037}
+        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
+        m_MethodName: FactionDesigning
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

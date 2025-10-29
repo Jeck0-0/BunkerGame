@@ -42,7 +42,7 @@ public class InputReciver : MonoBehaviour
         }
 
         foreach (var result in results)
-        {Debug.Log(result.gameObject.name);
+        {//Debug.Log(result.gameObject.name);
             GameObject hoveredObject = result.gameObject;
 
             PointerEventData EventData = new PointerEventData(EventSystem.current);
