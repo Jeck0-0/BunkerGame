@@ -23,7 +23,7 @@ public class InputRelay : MonoBehaviour
             }    
             InputReciver.Instance.OnCursorInput(HitResault.textureCoord);
             //Debug.Log(HitResault.textureCoord);
-            Debug.Log(HitResault.transform.gameObject);
+            //Debug.Log(HitResault.transform.gameObject);
         }
     }
 }

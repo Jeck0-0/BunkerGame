@@ -28,7 +28,6 @@ public class InputReciver : Singleton<InputReciver>
 
         List<RaycastResult> results = new List<RaycastResult>();
         graphicRaycaster.Raycast(MouseEvent, results);
-        Debug.Log(results[0]);
 
         bool SendMouseDown = Input.GetMouseButtonDown(0);
         bool SendMouseUp = Input.GetMouseButtonUp(0);
@@ -101,7 +100,7 @@ public class InputReciver : Singleton<InputReciver>
             }
         }
         
-        Debug.Log(MousePosition);
+        //Debug.Log(MousePosition);
     }
 
     public void Buttontest() => Debug.Log("PRESSED!!");
