@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class InputReciver : MonoBehaviour
+public class InputReciver : Singleton<InputReciver>
 {
     [SerializeField] RectTransform CanvasTransform;
     GraphicRaycaster graphicRaycaster;
@@ -19,6 +19,7 @@ public class InputReciver : MonoBehaviour
 
     public void OnCursorInput(Vector2 normalisedPosition)
     {
+        Debug.Log("In On input");
         Vector3 MousePosition = new Vector3(CanvasTransform.sizeDelta.x * normalisedPosition.x,
                                             CanvasTransform.sizeDelta.y * normalisedPosition.y, 0f);
 
@@ -27,6 +28,7 @@ public class InputReciver : MonoBehaviour
 
         List<RaycastResult> results = new List<RaycastResult>();
         graphicRaycaster.Raycast(MouseEvent, results);
+        Debug.Log(results[0]);
 
         bool SendMouseDown = Input.GetMouseButtonDown(0);
         bool SendMouseUp = Input.GetMouseButtonUp(0);
@@ -42,7 +44,7 @@ public class InputReciver : MonoBehaviour
         }
 
         foreach (var result in results)
-        {//Debug.Log(result.gameObject.name);
+        {Debug.Log(result.gameObject.name);
             GameObject hoveredObject = result.gameObject;
 
             PointerEventData EventData = new PointerEventData(EventSystem.current);
@@ -99,7 +101,7 @@ public class InputReciver : MonoBehaviour
             }
         }
         
-        //Debug.Log(MousePosition);
+        Debug.Log(MousePosition);
     }
 
     public void Buttontest() => Debug.Log("PRESSED!!");

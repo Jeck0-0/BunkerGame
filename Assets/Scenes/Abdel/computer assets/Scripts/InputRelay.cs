@@ -7,10 +7,6 @@ public class InputRelay : MonoBehaviour
     [SerializeField] LayerMask RaycastMask = ~0;
     [SerializeField] float RaycastDistance = 5f;
     [SerializeField] UnityEvent<Vector2> OnCursorInput = new UnityEvent<Vector2>();
-    void Start()
-    {
-
-    }
 
     void Update()
     {
@@ -25,8 +21,9 @@ public class InputRelay : MonoBehaviour
             {
                 return;
             }    
-            OnCursorInput.Invoke(HitResault.textureCoord);
+            InputReciver.Instance.OnCursorInput(HitResault.textureCoord);
             //Debug.Log(HitResault.textureCoord);
+            Debug.Log(HitResault.transform.gameObject);
         }
     }
 }
