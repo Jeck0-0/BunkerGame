@@ -159,7 +159,7 @@ namespace Client
 
             var crisis = activeCrisis.CrisisDef;
             // success points
-            var accepted = new HashSet<ResourceType>(crisis.RequiredResources);
+            //var accepted = new HashSet<ResourceType>(crisis.RequiredResources);
 
             var perPlayerSuccessPoints = new Dictionary<string, int>(StringComparer.Ordinal);
             var perPlayerTotals = new Dictionary<string, int>(StringComparer.Ordinal);
@@ -180,9 +180,9 @@ namespace Client
                 for (int i = 0; i < contribution.CommittedResources.Count; i++)
                 {
                     var resourceAmount = contribution.CommittedResources[i];
-                    totalUnits += Mathf.Max(0, resourceAmount.Amount);
-                    if (accepted.Contains(resourceAmount.Type))
-                        successUnits += Mathf.Max(0, resourceAmount.Amount);
+                    //totalUnits += Mathf.Max(0, resourceAmount.Amount);
+                    //if (accepted.Contains(resourceAmount.Type))
+                        //successUnits += Mathf.Max(0, resourceAmount.Amount);
                 }
 
                 perPlayerTotals[playerId] = totalUnits;
@@ -190,7 +190,7 @@ namespace Client
             }
 
             int totalSuccessPoints = perPlayerSuccessPoints.Values.Sum();
-            bool globalSuccess = totalSuccessPoints >= crisis.SuccessPointsRequiredPerPlayer * currentPlayers.Count;
+            bool globalSuccess = true;//totalSuccessPoints >= crisis.SuccessPointsRequiredPerPlayer * currentPlayers.Count;
 
             // highest bidder (ties dealt randomly for now)
             string highestBidder = null;
@@ -218,8 +218,8 @@ namespace Client
                 // highest bidder gets reward
                 if (!string.IsNullOrEmpty(highestBidder))
                 {
-                    foreach (var r in crisis.HighestBidderReward)
-                        perPlayerChanges[highestBidder].Add(r);
+                    //foreach (var r in crisis.HighestBidderReward)
+                       // perPlayerChanges[highestBidder].Add(r);
                 }
             }
             else
@@ -229,15 +229,15 @@ namespace Client
 
                 foreach (var player in currentPlayers)
                 {
-                    foreach (var r in crisis.FailurePenalty)
-                        perPlayerChanges[player].Add(r);
+                   // foreach (var r in crisis.FailurePenalty)
+                       // perPlayerChanges[player].Add(r);
                 }
 
                 // lowest bidder gets penalty 
                 if (!string.IsNullOrEmpty(lowestBidder))
                 {
-                    foreach (var r in crisis.LowestBidderPenalty)
-                        perPlayerChanges[lowestBidder].Add(new ResourceAmount(r.Type, -Mathf.Abs(r.Amount)));
+                    //foreach (var r in crisis.LowestBidderPenalty)
+                       // perPlayerChanges[lowestBidder].Add(new ResourceAmount(r.Type, -Mathf.Abs(r.Amount)));
                 }
             }
 
@@ -266,7 +266,7 @@ namespace Client
             var publicDto = new CrisisPublicResultDTO
             {
                 CrisisId = crisis.CrisisId,
-                Success = globalSuccess,
+               // Success = globalSuccess,
                 HighestBidderId = highestBidder ?? string.Empty,
                 LowestBidderId = lowestBidder ?? string.Empty,
                 TotalSuccessPoints = totalSuccessPoints,
@@ -281,13 +281,13 @@ namespace Client
                 var playerDto = new PlayerResolveDTO
                 {
                     PlayerId = player,
-                    GlobalSuccess = globalSuccess,
+                    //GlobalSuccess = globalSuccess,
                     PlayerTotalCommitted = perPlayerTotals.ContainsKey(player) ? perPlayerTotals[player] : 0,
                     PlayerSuccessPoints =
                         perPlayerSuccessPoints.ContainsKey(player) ? perPlayerSuccessPoints[player] : 0,
                     WasHighestBidder = player == highestBidder,
                     WasLowestBidder = player == lowestBidder,
-                    ResourceDeltas = perPlayerChanges[player].ToArray()
+                    //ResourceDeltas = perPlayerChanges[player].ToArray()
                 };
                 OnPlayerResolved?.Invoke(playerDto);
             }
@@ -346,8 +346,8 @@ namespace Client
         public int TotalCommittedUnits()
         {
             int sum = 0;
-            for (int i = 0; i < CommittedResources.Count; i++)
-                sum += Mathf.Max(0, CommittedResources[i].Amount);
+            //for (int i = 0; i < CommittedResources.Count; i++)
+                //sum += Mathf.Max(0, CommittedResources[i].Amount);
             return sum;
         }
     }

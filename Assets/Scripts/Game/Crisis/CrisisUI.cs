@@ -37,23 +37,7 @@ public class CrisisUI : Singleton<CrisisUI>
             $"Success per Player: {crisis.SuccessPointsRequiredPerPlayer}\n" +
             $"Time Limit: {crisis.TimeToResolve}s\n" +
             $"Damage on Fail: {crisis.BunkerDamageOnFail}";
-
-        //rewardsText.text =
-            //BuildRewardText("Highest Bidder", crisis.HighestBidderReward) + "\n" +
-            //BuildRewardText("Lowest Bidder", crisis.LowestBidderPenalty) + "\n" +
-            //BuildRewardText("Failure", crisis.FailurePenalty);
         */
-    }
-
-    private string BuildRewardText(string title)
-    {
-        return title;
-    }
-
-    private void Update()
-    {
-        //if (signature.OnSignatureComplete())
-        //SubmitContribution();
     }
 
     public void SubmitContribution()
