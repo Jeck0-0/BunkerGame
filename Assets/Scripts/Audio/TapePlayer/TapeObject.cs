@@ -1,8 +1,10 @@
+using TMPro;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
 public class TapeObject : MonoBehaviour
 {
+    [SerializeField] TextMeshPro tapeLabel;
     [SerializeField] TapePlayer tapePlayer;
     [SerializeField] Tape tape;
 
@@ -21,6 +23,7 @@ public class TapeObject : MonoBehaviour
 
         mat = buttonRenderer.material;
         defaultColor = mat.color;
+        tapeLabel.text = tape.name;
     }
 
     public void OnHoverEnter()

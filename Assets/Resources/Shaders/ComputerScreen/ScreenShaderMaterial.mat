@@ -38,7 +38,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _RenderTexture:
-        m_Texture: {fileID: 8600000, guid: 57e18ed86883adf4091387bec1d180b6, type: 2}
+        m_Texture: {fileID: 8400000, guid: aeb1d0f5820a6d944bde420a3bdadeb3, type: 2}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Scanlines:
@@ -59,14 +59,14 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Brightnes: 2.2
+    - _Brightnes: 3
     - _Noise: 0
-    - _NoiseResponse: 5
-    - _NoiseScale: 1
+    - _NoiseResponse: 22.2
+    - _NoiseScale: 3.43
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ScanlinesResponse: 7
-    - _scanlinesTiling: 0.27
+    - _scanlinesTiling: 5
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []

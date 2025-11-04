@@ -46,8 +46,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a56558d4bbefac14a8025d7655939b4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TapeObject
+  tapeLabel: {fileID: 9075073929233957131}
   tapePlayer: {fileID: 0}
-  tape: {fileID: 11400000, guid: 8f028806fbfab554488de06909cb4c7a, type: 2}
+  tape: {fileID: 11400000, guid: 45cce556099e87b468c696f3402b8d00, type: 2}
   buttonRenderer: {fileID: 7622774457379522301}
   hoverColor: {r: 0, g: 1, b: 1, a: 1}
 --- !u!65 &8612605099476004726
@@ -118,7 +119,7 @@ GameObject:
   - component: {fileID: 969037890294469060}
   - component: {fileID: 9075073929233957131}
   m_Layer: 0
-  m_Name: Mix
+  m_Name: Label
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
