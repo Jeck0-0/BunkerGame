@@ -28,7 +28,7 @@ public class CrisisUI : Singleton<CrisisUI>
     {
         UI.SetActive(true);
 
-        crisisNameText.text = crisis.CrisisName;
+        crisisNameText.text = crisis.Title;
         descriptionText.text = crisis.Description;
 
         /*
