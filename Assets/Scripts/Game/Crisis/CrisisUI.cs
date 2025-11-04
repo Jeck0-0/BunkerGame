@@ -17,7 +17,13 @@ public class CrisisUI : Singleton<CrisisUI>
     [SerializeField] TextMeshProUGUI infoText;
     [SerializeField] TextMeshProUGUI rewardsText;
     [SerializeField] SignatureDrawer signature;
+    [SerializeField] TMP_InputField contributionField;
 
+    void Start()
+    {
+        contributionField.contentType = TMP_InputField.ContentType.IntegerNumber;
+        contributionField.ForceLabelUpdate();
+    }
     public void DisplayCrisis(Crisis crisis)
     {
         UI.SetActive(true);

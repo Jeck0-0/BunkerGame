@@ -15,7 +15,7 @@ MonoBehaviour:
   active: 1
   intensity:
     m_OverrideState: 1
-    m_Value: 0.1
+    m_Value: 0.05
 --- !u!114 &-7532386142686506698
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -57,59 +57,12 @@ MonoBehaviour:
   m_Name: ComputerPostProcessing Profile
   m_EditorClassIdentifier: Unity.RenderPipelines.Core.Runtime::UnityEngine.Rendering.VolumeProfile
   components:
-  - {fileID: 3413555343794821394}
   - {fileID: 5116821401051276567}
   - {fileID: -7532386142686506698}
   - {fileID: 7461668294861155890}
   - {fileID: -7983839982660001588}
   - {fileID: 5392560734555934287}
---- !u!114 &3413555343794821394
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b2db86121404754db890f4c8dfe81b2, type: 3}
-  m_Name: Bloom
-  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.Bloom
-  active: 1
-  skipIterations:
-    m_OverrideState: 0
-    m_Value: 1
-  threshold:
-    m_OverrideState: 1
-    m_Value: 0.9
-  intensity:
-    m_OverrideState: 1
-    m_Value: 1
-  scatter:
-    m_OverrideState: 0
-    m_Value: 0.7
-  clamp:
-    m_OverrideState: 0
-    m_Value: 65472
-  tint:
-    m_OverrideState: 0
-    m_Value: {r: 1, g: 1, b: 1, a: 1}
-  highQualityFiltering:
-    m_OverrideState: 0
-    m_Value: 0
-  downscale:
-    m_OverrideState: 0
-    m_Value: 0
-  maxIterations:
-    m_OverrideState: 0
-    m_Value: 6
-  dirtTexture:
-    m_OverrideState: 0
-    m_Value: {fileID: 0}
-    dimension: 1
-  dirtIntensity:
-    m_OverrideState: 0
-    m_Value: 0
+  - {fileID: 8160088598263523551}
 --- !u!114 &5116821401051276567
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -131,7 +84,7 @@ MonoBehaviour:
     m_Value: {x: 0.5, y: 0.5}
   intensity:
     m_OverrideState: 1
-    m_Value: 0.4
+    m_Value: 0.3
   smoothness:
     m_OverrideState: 0
     m_Value: 0.2
@@ -153,13 +106,13 @@ MonoBehaviour:
   active: 1
   lift:
     m_OverrideState: 1
-    m_Value: {x: 1, y: 1, z: 1, w: 0.057471443}
+    m_Value: {x: 1, y: 1, z: 1, w: 0.08045999}
   gamma:
     m_OverrideState: 1
-    m_Value: {x: 1, y: 1, z: 1, w: -0.32183892}
+    m_Value: {x: 1, y: 1, z: 1, w: -0.35632166}
   gain:
     m_OverrideState: 1
-    m_Value: {x: 1, y: 1, z: 1, w: -0.41379312}
+    m_Value: {x: 1, y: 1, z: 1, w: -0.19540247}
 --- !u!114 &7461668294861155890
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -185,3 +138,43 @@ MonoBehaviour:
   texture:
     m_OverrideState: 0
     m_Value: {fileID: 0}
+--- !u!114 &8160088598263523551
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdfbdbb87d3286943a057f7791b43141, type: 3}
+  m_Name: ChannelMixer
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.ChannelMixer
+  active: 1
+  redOutRedIn:
+    m_OverrideState: 1
+    m_Value: 60
+  redOutGreenIn:
+    m_OverrideState: 1
+    m_Value: -10
+  redOutBlueIn:
+    m_OverrideState: 1
+    m_Value: -10
+  greenOutRedIn:
+    m_OverrideState: 1
+    m_Value: -10
+  greenOutGreenIn:
+    m_OverrideState: 1
+    m_Value: 60
+  greenOutBlueIn:
+    m_OverrideState: 1
+    m_Value: -10
+  blueOutRedIn:
+    m_OverrideState: 1
+    m_Value: -10
+  blueOutGreenIn:
+    m_OverrideState: 1
+    m_Value: -10
+  blueOutBlueIn:
+    m_OverrideState: 1
+    m_Value: 60

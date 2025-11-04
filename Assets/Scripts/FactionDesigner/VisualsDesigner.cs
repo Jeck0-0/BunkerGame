@@ -156,6 +156,8 @@ public class VisualsDesigner : MonoBehaviour
 
         editingSymbol = false;
         symbolControlsOverlay.SetActive(true);
+        SetSlidersInteractivity(false);
+
         if (symbolButtonOutline != null) symbolButtonOutline.enabled = false;
         if (backgroundButtonOutline != null) backgroundButtonOutline.enabled = true;
 
@@ -183,9 +185,9 @@ public class VisualsDesigner : MonoBehaviour
                     // default palette for menu preview
                     switch (j)
                     {
-                        case 0: childImages[j].color = new Color(0.9f, 0.9f, 0.9f); break;
-                        case 1: childImages[j].color = Color.gray; break;
-                        case 2: childImages[j].color = Color.black; break;
+                        case 0: childImages[j].color = new Color(0.8f, 0.8f, 0.8f); break;
+                        case 1: childImages[j].color = new Color(0.6f, 0.6f, 0.6f); break;
+                        case 2: childImages[j].color = new Color(0.4f, 0.4f, 0.4f); break;
                         default: childImages[j].color = new Color(0.9f, 0.9f, 0.9f); break;
                     }
                 }
@@ -217,6 +219,8 @@ public class VisualsDesigner : MonoBehaviour
 
         editingSymbol = true;
         symbolControlsOverlay.SetActive(false);
+        SetSlidersInteractivity(true);
+
         if (symbolButtonOutline != null) symbolButtonOutline.enabled = true;
         if (backgroundButtonOutline != null) backgroundButtonOutline.enabled = false;
 
@@ -334,9 +338,9 @@ public class VisualsDesigner : MonoBehaviour
             Color defaultColor;
             switch (i)
             {
-                case 0: defaultColor = new Color(0.9f, 0.9f, 0.9f); break;
-                case 1: defaultColor = Color.gray; break;
-                case 2: defaultColor = Color.black; break;
+                case 0: defaultColor = new Color(0.8f, 0.8f, 0.8f); break;
+                case 1: defaultColor = new Color(0.6f, 0.6f, 0.6f); break;
+                case 2: defaultColor = new Color(0.4f, 0.4f, 0.4f); break;
                 default: defaultColor = new Color(0.9f, 0.9f, 0.9f); break;
             }
 
@@ -658,6 +662,16 @@ public class VisualsDesigner : MonoBehaviour
     }
 
     #region Utilities
+
+    private void SetSlidersInteractivity(bool on)
+    {
+        moveLayerUpButton.interactable = on;
+        moveLayerDownButton.interactable = on;
+        symbolPosXSlider.interactable = on;
+        symbolPosYSlider.interactable = on;
+        symbolRotationSlider.interactable = on;
+        symbolScaleSlider.interactable = on;
+    }
 
     private Image FindChildImage(Transform parent, string childName)
     {
