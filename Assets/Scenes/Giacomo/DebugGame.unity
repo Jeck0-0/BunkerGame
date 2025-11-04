@@ -149,6 +149,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Server.PhaseManager
   crisisPhase: {fileID: 0}
+  economyPhase: {fileID: 0}
   economyDuration: 60
   crisisDuration: 60
 --- !u!4 &310013982

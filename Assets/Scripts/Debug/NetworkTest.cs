@@ -6,7 +6,7 @@ public class NetworkTest : MonoBehaviour
 {
     private void Start()
     {
-        NetworkManager.Client.Subscribe<STC_FactionInformation>(ReceiveFactionInfo);
+        NetworkManager.Client.Subscribe<STC_PlayerJoined>(ReceiveFactionInfo);
         NetworkManager.Server.Subscribe<CTS_FactionInformation>(ServerSendsInfoBack);
     }
 
@@ -15,7 +15,7 @@ public class NetworkTest : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.T))
         {
             //CLIENT sends test packet
-            var factionInfoPacket = new CTS_FactionInformation("Test", Color.orange);
+            var factionInfoPacket = new CTS_FactionInformation("Test", new EmblemData {FactionName = "test"});
             NetworkManager.Client.Send(factionInfoPacket);
         }
     }
@@ -25,14 +25,14 @@ public class NetworkTest : MonoBehaviour
         //SERVER sends packet back
         CTS_FactionInformation packet = p as CTS_FactionInformation;
         
-        var responsePacket = new STC_FactionInformation(playerId, packet.name, packet.color);
+        var responsePacket = new STC_PlayerJoined(playerId, packet.username, packet.emblemData);
         NetworkManager.Server.SendToAllExcept(playerId, responsePacket);
     }
 
     private void ReceiveFactionInfo(BasePacket p)
     {
         //CLIENT prints received packet
-        STC_FactionInformation packet = p as STC_FactionInformation;
-        Debug.Log($"## [Client] Received Faction Info > [{packet.playerId}] {packet.name} #{packet.color}");
+        STC_PlayerJoined packet = p as STC_PlayerJoined;
+        Debug.Log($"## [Client] Received Faction Info > [{packet.playerId}] {packet.username} #{packet.emblemData.FactionName}");
     }
 }

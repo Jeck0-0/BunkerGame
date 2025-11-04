@@ -1,11 +1,11 @@
-using System;
+/*using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 namespace Client 
 {
-    public class CrisisManager : MonoBehaviour
+    public class OldCrisisManager : MonoBehaviour
     {
         [Header("Crisis Scheduling")] public List<Crisis> CrisisPool = new List<Crisis>();
         public float MinTimeBetweenCrises = 120f;
@@ -236,7 +236,7 @@ namespace Client
                 // lowest bidder gets penalty 
                 if (!string.IsNullOrEmpty(lowestBidder))
                 {
-                    foreach (var r in crisis.LowestBidderPenalty)
+                    foreach (var r in crisis.LowestBidderReward)
                         perPlayerChanges[lowestBidder].Add(new ResourceAmount(r.Type, -Mathf.Abs(r.Amount)));
                 }
             }
@@ -351,4 +351,4 @@ namespace Client
             return sum;
         }
     }
-}
+}*/

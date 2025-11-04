@@ -10,9 +10,9 @@ namespace Networking
         CTS_FactionInformation = 0,
         CTS_ContributeToCrisis = 1,
         
-        STC_FactionInformation = 100,
+        STC_PlayerJoined = 100,
         STC_StartEconomyPhase = 101,
-        STC_StartCrisisPhase = 102,
+        STC_StartEmergency = 102,
         STC_CrisisResult = 103
     }
 
@@ -30,8 +30,8 @@ namespace Networking
             switch (type)
             {
                 case PacketType.CTS_FactionInformation: return new CTS_FactionInformation().Deserialize(br);
-                case PacketType.STC_FactionInformation: return new STC_FactionInformation().Deserialize(br);
-                case PacketType.STC_StartCrisisPhase:   return new STC_StartCrisisPhase().Deserialize(br);
+                case PacketType.STC_PlayerJoined: return new STC_PlayerJoined().Deserialize(br);
+                case PacketType.STC_StartEmergency:   return new STC_StartEmergency().Deserialize(br);
                 case PacketType.CTS_ContributeToCrisis: return new CTS_ContributeToCrisis().Deserialize(br);
                     
             }

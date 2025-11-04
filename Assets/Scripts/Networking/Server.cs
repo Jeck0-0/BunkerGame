@@ -9,7 +9,11 @@ namespace Networking
     {
         protected Dictionary<Type, List<Action<uint, BasePacket>>> _subscribers = new();
         protected List<Action<uint, BasePacket>> _subscribedToAll = new();
-
+        public event Action<uint> OnPlayerConnected;
+        public event Action<uint> OnPlayerDisconnected;
+        protected void InvokePlayerConnected(uint playerId) => OnPlayerConnected?.Invoke(playerId);
+        protected void InvokePlayerDisconnected(uint playerId) => OnPlayerDisconnected?.Invoke(playerId);
+        
         public abstract void Connect(int maxPlayers);
         public abstract void SendTo(uint user, BasePacket packet);
         public abstract void SendToAll(BasePacket packet);

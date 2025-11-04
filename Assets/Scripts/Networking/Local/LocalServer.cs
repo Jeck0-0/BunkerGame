@@ -83,6 +83,7 @@ namespace Networking
                     connectionId = idCounter++
                 };
                 connectionInfos.Add(ci);
+                InvokePlayerConnected(ci.connectionId);
                 Debug.Log("[Server] Local client connected");
             }
             catch

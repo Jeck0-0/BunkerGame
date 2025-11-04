@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Client;
 using Networking;
 using Packets;
@@ -11,54 +12,97 @@ namespace Server
 {
     public class CrisisPhase : MonoBehaviour
     {
-        public List<Crisis> crisisPool = new ();
+        public Crisis[] crisisPool;
 
-        private Dictionary<uint, ResourceAmount> contributions = new ();
-        
+        protected Dictionary<uint, TrackAmount> contributions = new ();
+        protected Crisis CurrentEmergency;
+
+        private void Awake()
+        {
+            crisisPool = Resources.LoadAll<Crisis>("ScriptableObjects/Emergencies/Crisis");
+        }
+
         public IEnumerator PlayPhase()
         {
+            StartRandomCrisis();
+            
+            // Wait for all contributions or timer end
+            NetworkManager.Server.Subscribe<CTS_ContributeToCrisis>(ReceiveContribution);
+            float endTime = Time.time + CurrentEmergency.TimeToResolve;
+            yield return new WaitUntil(() => contributions.Count > 1 || Time.time > endTime);
+            NetworkManager.Server.Unsubscribe<CTS_ContributeToCrisis>(ReceiveContribution);
+            
+            CalculateCrisisResult();
+        }
+
+        protected void StartRandomCrisis()
+        {
             // Get random crisis
-            if (crisisPool == null || crisisPool.Count == 0) Debug.LogError("No crisis in pool");
-            var crisis = crisisPool[Random.Range(0, crisisPool.Count)];
+            if (crisisPool == null || crisisPool.Length == 0) Debug.LogError("No crisis in pool");
+            CurrentEmergency = crisisPool[Random.Range(0, crisisPool.Length)];
             
             // Send crisis start packet
-            STC_StartCrisisPhase packet = new STC_StartCrisisPhase(DateTime.Now.Ticks, crisis.TimeToResolve);
+            STC_StartEmergency packet = new STC_StartEmergency(CurrentEmergency, DateTime.Now.Ticks);
             NetworkManager.Server.SendToAll(packet);
             
             // Prepare to receive contributions
             contributions.Clear();
-            NetworkManager.Server.Subscribe<CTS_ContributeToCrisis>(ReceiveContribution);
-
-            // Wait for all contribution or timer end
-            float endTime = Time.time + crisis.TimeToResolve;
-            yield return new WaitUntil(() => contributions.Count > 1 || Time.time > endTime);
-            
-            NetworkManager.Server.Unsubscribe<CTS_ContributeToCrisis>(ReceiveContribution);
-            
-            //crisis result
-            
-            yield return null;
         }
-
+        
         protected void ReceiveContribution(uint player, BasePacket packet)
         {
-            CTS_ContributeToCrisis info = packet as CTS_ContributeToCrisis;
+            CTS_ContributeToCrisis contributionPacket = packet as CTS_ContributeToCrisis;
             if (contributions.ContainsKey(player))
             {
                 Debug.LogWarning($"Player {player} sent multiple contributions (not allowed smh)");
                 return;
             }
-            if (!GameManager.Players[player].resources.Has(info.resourceAmount))
+            if (!GameManager.Players[player].Tracks.Has(contributionPacket.TrackAmount))
             {
-                Debug.LogWarning($"Player {player} tried to contribute more resources than they have {info.resourceAmount}");
+                Debug.LogWarning($"Player {player} tried to contribute more resources than they have {contributionPacket.TrackAmount}");
                 return;
             }
             
-            // Store contribution
-            contributions[player] = info.resourceAmount;
+            contributions[player] = contributionPacket.TrackAmount;
+            
+            // Check if the player contributed unnecessary resources (shouldn't be able to)
+            if (contributionPacket.TrackAmount.Values.Keys.All(x => CurrentEmergency.requiredTracks.Values.ContainsKey(x)))
+                Debug.LogWarning("Player contributed unnecessary resources: " + player);
             
             // Remove resources from player inv
-            GameManager.Players[player].resources -= info.resourceAmount;
+            GameManager.Players[player].Tracks -= contributionPacket.TrackAmount;
+        }
+
+        protected void CalculateCrisisResult()
+        {
+            //crisis result
+            TrackAmount totalContributions = new TrackAmount();
+            foreach (var contribution in contributions.Values)
+                totalContributions += contribution;
+
+            bool success = totalContributions.Has(CurrentEmergency.requiredTracks);
+
+            // highest and lowest bidders
+			/*int highestContribution = contributions.Values.Max(x=>x.Amount.Values.Sum());
+			int lowestContribution = contributions.Values.Min(x=>x.Amount.Values.Sum());
+
+            IEnumerable<uint> highestContributors = contributions
+                .Where(x => x.Value.Amount.Values.Sum() == highestContribution)
+                .Select(x => x.Key);
+            IEnumerable<uint> lowestContributors = contributions
+                .Where(x => x.Value.Amount.Values.Sum() == lowestContribution)
+                .Select(x => x.Key);*/
+            
+            if (success)
+            {
+                 STC_CrisisResult result = new STC_CrisisResult(true, CurrentEmergency.SuccessReward);
+                 NetworkManager.Server.SendToAll(result);
+            }
+            else 
+            {
+                STC_CrisisResult result = new STC_CrisisResult(false, null);
+                NetworkManager.Server.SendToAll(result);
+            }
         }
     }
 }

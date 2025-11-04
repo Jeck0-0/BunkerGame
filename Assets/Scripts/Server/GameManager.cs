@@ -15,7 +15,7 @@ namespace Server
 
         public class PlayerInfo
         {
-            public ResourceAmount resources;
+            public TrackAmount Tracks;
             
         }
     }
