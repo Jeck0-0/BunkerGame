@@ -1,0 +1,90 @@
+using UnityEngine;
+
+public class TapePlayerInteractor : MonoBehaviour // for testing
+{
+    [SerializeField] private Camera playerCamera;
+
+    private TapePlayerButton hoveredButton;
+    private TapeObject hoveredTape;
+
+    void Update()
+    {
+        Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
+
+        if (Physics.Raycast(ray, out RaycastHit hit, 99f))
+        {
+            TapePlayerButton button = hit.collider.GetComponent<TapePlayerButton>();
+            TapeObject tape = hit.collider.GetComponent<TapeObject>();
+
+            if (button != null)
+            {
+                HandleButtonHover(button);
+
+                if (Input.GetMouseButtonDown(0))
+                button.OnPressed();
+            }
+            else if (tape != null)
+            {
+                HandleTapeHover(tape);
+
+                if (Input.GetMouseButtonDown(0))
+                tape.InsertTape();
+            }
+            else
+            {
+                ClearHover();
+            }
+        }
+        else
+        {
+            ClearHover();
+        }
+    }
+
+    private void HandleButtonHover(TapePlayerButton button)
+    {
+        if (hoveredButton != button)
+        {
+            hoveredButton?.OnHoverExit();
+            hoveredButton = button;
+            hoveredButton.OnHoverEnter();
+        }
+
+        if (hoveredTape != null)
+        {
+            hoveredTape.OnHoverExit();
+            hoveredTape = null;
+        }
+    }
+
+    private void HandleTapeHover(TapeObject tape)
+    {
+        if (hoveredTape != tape)
+        {
+            hoveredTape?.OnHoverExit();
+            hoveredTape = tape;
+            hoveredTape.OnHoverEnter();
+        }
+
+        if (hoveredButton != null)
+        {
+            hoveredButton.OnHoverExit();
+            hoveredButton = null;
+        }
+    }
+
+    private void ClearHover()
+    {
+        if (hoveredButton != null)
+        {
+            hoveredButton.OnHoverExit();
+            hoveredButton = null;
+        }
+
+        if (hoveredTape != null)
+        {
+            hoveredTape.OnHoverExit();
+            hoveredTape = null;
+        }
+    }
+}
