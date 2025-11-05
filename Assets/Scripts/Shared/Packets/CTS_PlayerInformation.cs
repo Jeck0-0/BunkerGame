@@ -2,15 +2,15 @@ using System.IO;
 using UnityEngine;
 using Networking;
 
-public class CTS_FactionInformation : BasePacket
+public class CTS_PlayerInformation : BasePacket
 {
     public override PacketType Type => PacketType.CTS_FactionInformation;
 
     public string username;
     public EmblemData emblemData;
 
-    public CTS_FactionInformation() { }
-    public CTS_FactionInformation(string username, EmblemData emblemData)
+    public CTS_PlayerInformation() { }
+    public CTS_PlayerInformation(string username, EmblemData emblemData)
     {
         this.username = username;
         this.emblemData = emblemData;

@@ -57,7 +57,7 @@ namespace Server
                 Debug.LogWarning($"Player {player} sent multiple contributions (not allowed smh)");
                 return;
             }
-            if (!GameManager.Players[player].Tracks.Has(contributionPacket.TrackAmount))
+            if (false)  //![player].Tracks.Has(contributionPacket.TrackAmount)) DOESNT HAVE RESOURCES
             {
                 Debug.LogWarning($"Player {player} tried to contribute more resources than they have {contributionPacket.TrackAmount}");
                 return;
@@ -70,7 +70,7 @@ namespace Server
                 Debug.LogWarning("Player contributed unnecessary resources: " + player);
             
             // Remove resources from player inv
-            GameManager.Players[player].Tracks -= contributionPacket.TrackAmount;
+            //GameManager.Players[player].Tracks -= contributionPacket.TrackAmount; REMOVE RESOURCES
         }
 
         protected void CalculateCrisisResult()

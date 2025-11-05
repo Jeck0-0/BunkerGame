@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Server
 {
-    public class EconomyPhase : MonoBehaviour
+    public class DilemmaPhase : MonoBehaviour
     {
         public IEnumerator PlayPhase()
         {

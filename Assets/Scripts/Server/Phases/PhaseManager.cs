@@ -9,7 +9,7 @@ namespace Server
     public class PhaseManager : Singleton<PhaseManager>
     {
         public CrisisPhase crisisPhase;
-        public EconomyPhase economyPhase;
+        public DilemmaPhase dilemmaPhase;
         
         public float economyDuration;
         public float crisisDuration;
@@ -18,7 +18,7 @@ namespace Server
         {
             base.Awake();
             if (!crisisPhase) crisisPhase = GetComponent<CrisisPhase>();
-            if (!economyPhase) economyPhase = GetComponent<EconomyPhase>();
+            if (!dilemmaPhase) dilemmaPhase = GetComponent<DilemmaPhase>();
         }
         
         [Button]
@@ -41,7 +41,7 @@ namespace Server
                 int economyPhases = UnityEngine.Random.Range(3, 5);
                 for (int i = 0; i < economyPhases; i++)
                 {                
-                    yield return economyPhase.PlayPhase();
+                    yield return dilemmaPhase.PlayPhase();
                     yield return Helpers.GetWait(economyDuration);
                 }
 
