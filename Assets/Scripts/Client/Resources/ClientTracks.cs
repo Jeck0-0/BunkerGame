@@ -1,10 +1,9 @@
-using System;
 using System.Collections.Generic;
-using Sirenix.Utilities;
+using System;
 
 namespace Client
 {
-    public class TrackManager : Singleton<TrackManager>
+    public class ClientTracks : Singleton<ClientTracks>
     {
         public int startValue = 5;
         public int maxValue = 10;
@@ -35,8 +34,6 @@ namespace Client
             values[type] += amount;
             if (values[type] >= maxValue) values[type] = maxValue;
             if (values[type] <= 0) ResourceReachedZero?.Invoke(type);
-        }
-        
-        
+        }        
     }
 }
