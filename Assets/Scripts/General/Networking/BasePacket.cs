@@ -9,11 +9,14 @@ namespace Networking
         None,
         CTS_FactionInformation = 0,
         CTS_ContributeToCrisis = 1,
-        
+        CTS_VoteOnDilemma = 2,
+
+
         STC_PlayerJoined = 100,
         STC_StartEconomyPhase = 101,
         STC_StartEmergency = 102,
-        STC_CrisisResult = 103
+        STC_CrisisResult = 103,
+        STC_DilemmaResult = 104
     }
 
     public abstract class BasePacket

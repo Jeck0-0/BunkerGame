@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class AudioManager : Singleton<AudioManager>
 {
-    [SerializeField] AudioSource soundFXPrefab;
-    private List<AudioSource> loopSources;
+    [HideInInspector] public List<AudioSource> loopSources;
     private List<AudioSource> audioPool = new List<AudioSource>();
+
+    [SerializeField] AudioSource soundFXPrefab;
     [SerializeField] int maxSoundsPlaying = 25;
     private int currentSoundsPlaying = 0;
 
@@ -115,15 +116,25 @@ public class AudioManager : Singleton<AudioManager>
     }
     public IEnumerator FadeOutSound(AudioClip audioClip, float duration)
     {
-        AudioSource audioSource = loopSources.Find(sources => sources.clip == audioClip);
-        float startVolume = audioSource.volume;
+        AudioSource audioSource = loopSources.Find(s => s != null && s.clip == audioClip);
+        if (audioSource == null)yield break;
 
-        while (audioSource.volume > 0)
+        float startVolume = audioSource.volume;
+        float elapsed = 0f;
+
+        while (elapsed < duration && audioSource != null)
         {
-            audioSource.volume -= startVolume * Time.deltaTime / duration;
+            elapsed += Time.deltaTime;
+            audioSource.volume = Mathf.Lerp(startVolume, 0f, elapsed / duration);
             yield return null;
         }
-        Destroy(audioSource.gameObject);
+
+        if (audioSource != null)
+        {
+            audioSource.Stop();
+            loopSources.Remove(audioSource);
+            Destroy(audioSource.gameObject);
+        }
     }
     public void StopAllLoopSources(float fadeDuration = 1f)
     {
@@ -131,16 +142,33 @@ public class AudioManager : Singleton<AudioManager>
     }
     public IEnumerator FadeOutAllLoopSources(float duration)
     {
-        foreach (AudioSource audioSource in loopSources)
-        {
-            float startVolume = audioSource.volume;
+        // to avoid directly modifying the list
+        var sources = new List<AudioSource>(loopSources);
 
-            while (audioSource.volume > 0)
-            {
-                audioSource.volume -= startVolume * Time.deltaTime / duration;
-                yield return null;
-            }
-            Destroy(audioSource.gameObject);
+        foreach (AudioSource audioSource in sources)
+        {
+            if (audioSource == null) continue;
+            yield return FadeOutSingleSource(audioSource, duration);
+        }
+
+        loopSources.Clear();
+    }
+    private IEnumerator FadeOutSingleSource(AudioSource source, float duration)
+    {
+        float startVolume = source.volume;
+        float elapsed = 0f;
+
+        while (elapsed < duration && source != null)
+        {
+            elapsed += Time.deltaTime;
+            source.volume = Mathf.Lerp(startVolume, 0f, elapsed / duration);
+            yield return null;
+        }
+
+        if (source != null)
+        {
+            source.Stop();
+            Destroy(source.gameObject);
         }
     }
 }

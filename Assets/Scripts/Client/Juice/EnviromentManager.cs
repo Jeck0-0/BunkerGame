@@ -16,7 +16,7 @@ public class EnviromentManager : MonoBehaviour
     {
         if (Crisis) return;
 
-        //if (AudioManager.Instance) AudioManager.Instance.PlaySound(siren, 1, null, true);
+        if (siren) AudioManager.Instance.PlaySound(siren, 0.3f, null, true);
         crisisLights.SetActive(true);
         dilemmaLights.SetActive(false);
         Crisis = true;
@@ -25,7 +25,7 @@ public class EnviromentManager : MonoBehaviour
     {
         if (!Crisis) return;
 
-        //if (AudioManager.Instance) AudioManager.Instance.StopSoundGradually(siren, 0f);
+        if (siren) AudioManager.Instance.StopSoundGradually(siren, 0f);
         crisisLights.SetActive(false);
         dilemmaLights.SetActive(true);
         Crisis = false;

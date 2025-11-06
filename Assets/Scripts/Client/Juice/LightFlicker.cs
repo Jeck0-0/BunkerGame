@@ -6,7 +6,7 @@ public class LightFlicker : MonoBehaviour
     [SerializeField] float baseIntensity = 2f;
     [SerializeField] float flickerAmount = 0.5f;
     [SerializeField] float flickerSpeed = 5f;
-    [SerializeField] float randomness = 1f;
+    [SerializeField] float randomness = 0.01f;
 
     private float[] _phaseOffsets;
 
@@ -35,8 +35,8 @@ public class LightFlicker : MonoBehaviour
             float intensity = baseIntensity + (noise - 0.5f) * 2f * flickerAmount;
             lights[i].intensity = Mathf.Max(0f, intensity);
 
-            if (Random.value < 0.005f)
-            lights[i].intensity *= Random.Range(0.4f, 0.8f);
+            if (Random.value < randomness)
+            lights[i].intensity *= Random.Range(0.6f, 0.9f);
         }
     }
 }
