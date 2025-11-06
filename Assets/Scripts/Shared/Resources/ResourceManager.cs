@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class ResourceManager : Singleton<ResourceManager>
+public abstract class ResourceManager<T> : Singleton<T> where T : ResourceManager<T>
 {
     protected int influence;
     protected int materials;

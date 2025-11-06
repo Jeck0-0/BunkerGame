@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Server
 {
-    public class ServerResources : ResourceManager
+    public class ServerResources : ResourceManager<ServerResources>
     {
         
     }
