@@ -14,7 +14,7 @@ namespace Server
     {
         public Crisis[] crisisPool;
 
-        protected Dictionary<uint, TrackAmount> contributions = new ();
+        protected Dictionary<uint, int> contributions = new ();
         protected Crisis CurrentEmergency;
 
         private void Awake()
@@ -57,30 +57,24 @@ namespace Server
                 Debug.LogWarning($"Player {player} sent multiple contributions (not allowed smh)");
                 return;
             }
-            if (false)  //![player].Tracks.Has(contributionPacket.TrackAmount)) DOESNT HAVE RESOURCES
+            if (ServerPlayers.Get(player).resources.Materials < contributionPacket.materials)  //![player].Tracks.Has(contributionPacket.TrackAmount)) DOESNT HAVE RESOURCES
             {
-                Debug.LogWarning($"Player {player} tried to contribute more resources than they have {contributionPacket.TrackAmount}");
+                Debug.LogWarning($"Player {player} tried to contribute more materials than they have {contributionPacket.materials}");
                 return;
             }
             
-            contributions[player] = contributionPacket.TrackAmount;
-            
-            // Check if the player contributed unnecessary resources (shouldn't be able to)
-            if (contributionPacket.TrackAmount.Values.Keys.All(x => CurrentEmergency.requiredTracks.Values.ContainsKey(x)))
-                Debug.LogWarning("Player contributed unnecessary resources: " + player);
-            
-            // Remove resources from player inv
-            //GameManager.Players[player].Tracks -= contributionPacket.TrackAmount; REMOVE RESOURCES
+            contributions[player] = contributionPacket.materials;
+            ServerPlayers.Get(player).resources.ModifyMaterials(-contributionPacket.materials);
         }
 
         protected void CalculateCrisisResult()
         {
             //crisis result
-            TrackAmount totalContributions = new TrackAmount();
+            int totalContributions = 0;
             foreach (var contribution in contributions.Values)
                 totalContributions += contribution;
 
-            bool success = totalContributions.Has(CurrentEmergency.requiredTracks);
+            bool success = totalContributions > CurrentEmergency.requiredMaterials;
 
             // highest and lowest bidders
 			/*int highestContribution = contributions.Values.Max(x=>x.Amount.Values.Sum());
@@ -95,12 +89,12 @@ namespace Server
             
             if (success)
             {
-                 STC_CrisisResult result = new STC_CrisisResult(true, CurrentEmergency.SuccessReward);
+                 STC_CrisisResult result = new STC_CrisisResult(true, CurrentEmergency.SuccessReward, CurrentEmergency.SuccessTrackMod);
                  NetworkManager.Server.SendToAll(result);
             }
             else 
             {
-                STC_CrisisResult result = new STC_CrisisResult(false, null);
+                STC_CrisisResult result = new STC_CrisisResult(false, 0, null);
                 NetworkManager.Server.SendToAll(result);
             }
         }

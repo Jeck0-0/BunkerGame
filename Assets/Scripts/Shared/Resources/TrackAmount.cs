@@ -1,16 +1,18 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
 
 [Serializable]
 public class TrackAmount
 {
-    public Dictionary<TrackType, int> Values;
+    
+    protected Dictionary<TrackType, int> values = new ();
+    public Dictionary<TrackType, int> Values => values;
+    
     public TrackAmount() { }
-    public TrackAmount(Dictionary<TrackType, int> values) { Values = values; }
-    public TrackAmount(TrackType type, int amount) { Values = new Dictionary<TrackType, int> {{type, amount}}; }
+    public TrackAmount(Dictionary<TrackType, int> values) { this.values = values; }
+    public TrackAmount(TrackType type, int amount) { this.values = new Dictionary<TrackType, int> {{type, amount}}; }
 
     
     public bool Has(TrackType type) => Values.ContainsKey(type);
@@ -29,7 +31,7 @@ public class TrackAmount
     }
     public TrackAmount Add(TrackAmount amount) 
     {
-        foreach (var x in Values.Keys)
+        foreach (var x in amount.Values.Keys)
             Add(x, amount.Values[x]);
         return this;
     }
@@ -42,7 +44,7 @@ public class TrackAmount
     }
     public TrackAmount Subtract(TrackAmount amount)
     {
-        foreach (var x in Values.Keys)
+        foreach (var x in amount.Values.Keys)
             Subtract(x, amount.Values[x]);
         return this;
     }

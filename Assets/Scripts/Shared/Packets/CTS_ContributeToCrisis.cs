@@ -7,23 +7,23 @@ namespace Packets
     {
         public override PacketType Type => PacketType.CTS_ContributeToCrisis;
 
-        public TrackAmount TrackAmount;
+        public int materials;
 
         public CTS_ContributeToCrisis() { }
-        public CTS_ContributeToCrisis(TrackAmount trackAmount)
+        public CTS_ContributeToCrisis(int materials)
         {
-            this.TrackAmount = trackAmount;
+            this.materials = materials;
         }
     
         public override void Serialize(BinaryWriter bw)
         {
-            PacketUtils.SerializeTrackAmount(bw, TrackAmount);
             bw.Write((int)Type);
+            bw.Write(materials);
         }
 
         public override BasePacket Deserialize(BinaryReader br)
         {
-            TrackAmount = PacketUtils.DeserializeTrackAmount(br);
+            materials = br.ReadInt32();
             return this;
         }
     }

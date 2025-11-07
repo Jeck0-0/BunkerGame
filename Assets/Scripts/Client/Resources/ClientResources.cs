@@ -2,8 +2,18 @@ using UnityEngine;
 
 namespace Client
 {
-    public class ClientResources : ResourceManager<ClientResources>
+    public class ClientResources : Singleton<ClientResources>,  IPlayerResources
     {
-        
+        private PlayerResources resources;
+        public int Influence => resources.Influence;
+        public int Materials => resources.Materials;
+        public void ModifyInfluence(int amount)
+        {
+            resources.ModifyInfluence(amount);
+        }
+        public void ModifyMaterials(int amount)
+        {
+            resources.ModifyMaterials(amount);
+        }
     }
 }

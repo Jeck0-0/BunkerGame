@@ -10,6 +10,7 @@ namespace Server
         protected Dictionary<uint, Player> players = new();
 
         public static Player Get(uint id) => Instance.players[id];
+        public static IEnumerable<Player> GetAll() => Instance.players.Values;
 
         public event Action<Player> OnPlayerQuit;
         
@@ -59,7 +60,7 @@ namespace Server
             public uint id;
             public string username;
             public EmblemData emblemData;
-            //resources
+            public PlayerResources resources = new PlayerResources();
 
             public Player(uint id)
             {

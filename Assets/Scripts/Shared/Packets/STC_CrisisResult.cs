@@ -7,28 +7,32 @@ public class STC_CrisisResult : BasePacket
     public override PacketType Type => PacketType.STC_CrisisResult;
 
     public bool success;
-    public TrackAmount TrackReward; // subtract if crisis failed
+    public int materialsMod;
+    public TrackAmount TrackMod; // subtract if crisis failed
     //public bool highestBidder;
     //public bool lowestBidder;
     
     public STC_CrisisResult() { }
-    public STC_CrisisResult(bool success, TrackAmount trackReward)
+    public STC_CrisisResult(bool success, int materialsMod, TrackAmount trackMod)
     {
         this.success = success;
-        this.TrackReward = trackReward;
+        this.materialsMod = materialsMod;
+        this.TrackMod = trackMod;
     }
     
     public override void Serialize(BinaryWriter bw)
     {
         bw.Write((int)Type);
         bw.Write(success);
-        PacketUtils.SerializeTrackAmount(bw, TrackReward);
+        bw.Write(materialsMod);
+        PacketUtils.SerializeTrackAmount(bw, TrackMod);
     }
 
     public override BasePacket Deserialize(BinaryReader br)
     {
         success = br.ReadBoolean();
-        TrackReward = PacketUtils.DeserializeTrackAmount(br);
+        materialsMod = br.ReadInt32();
+        TrackMod = PacketUtils.DeserializeTrackAmount(br);
         return this;
     }
 }
