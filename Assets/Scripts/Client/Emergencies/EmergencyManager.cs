@@ -21,6 +21,7 @@ namespace Client
             switch (_currentEmergency.Type)
             {
                 case EmergencyType.Crisis: //start crisis
+                    StartCoroutine(CrisisManager.Instance.CrisisPhase(_currentEmergency as Crisis));
                     break;
                 case EmergencyType.Dilemma: //start dilemma
                     break;
