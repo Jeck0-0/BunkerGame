@@ -47,7 +47,6 @@ public class DilemmaUI : Singleton<DilemmaUI>
     private void SubmitVote(int optionIndex)
     {
         if (votingLocked) return;
-        votingLocked = true;
 
         int influenceSpent = int.TryParse(influenceField.text, out int inf) ? inf : 0;
         if (ClientResources.Instance.Influence < influenceSpent)
@@ -55,6 +54,8 @@ public class DilemmaUI : Singleton<DilemmaUI>
             Debug.Log("Not enough influence!");
             return;
         }
+
+        votingLocked = true;
 
         ClientResources.Instance.ModifyInfluence(-influenceSpent);
         NetworkManager.Client.Send(new CTS_VoteOnDilemma(optionIndex, influenceSpent));

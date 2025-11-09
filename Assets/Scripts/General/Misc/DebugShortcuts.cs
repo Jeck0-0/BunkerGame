@@ -1,3 +1,5 @@
+using Networking;
+using Packets;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -100,6 +102,21 @@ public class DebugShortcuts : MonoBehaviour
                     Debug.Log("Resumed");
                 }
             }
+
+            //To test stuff without lobby
+            if (Input.GetKeyDown(KeyCode.H))
+            {
+                Debug.Log("Hosting");
+                NetworkManager.Instance.StartServerAndClient();
+                SendMyInfo();
+            }
         }
+    }
+    protected void SendMyInfo()
+    {
+        CTS_PlayerInformation myInfo = new CTS_PlayerInformation();
+        myInfo.username = "me";
+        myInfo.emblemData = new EmblemData();
+        NetworkManager.Client.Send(myInfo);
     }
 }

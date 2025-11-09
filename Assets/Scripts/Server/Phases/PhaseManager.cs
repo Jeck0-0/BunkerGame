@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using Networking;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -11,12 +9,20 @@ namespace Server
         public CrisisPhase crisisPhase;
         public DilemmaPhase dilemmaPhase;
 
+        [Header("Game Settings")]
         public int totalCrises = 5;
+        public int minTurnsBetweenCrises = 1;
+        public float baseCrisisChance = 0.2f;
+        public float crisisChanceGrowth = 0.15f;
+        public float maxCrisisChance = 1f;
 
+        [Header("Phase Durations")]
         public float economyDuration;
-        public float emergencyDuration;
+        public float emergencyDelay;
 
         protected int crisesCompleted = 0;
+        private int turnsSinceLastCrisis = 0;
+        private float currentCrisisChance;
 
         protected override void Awake()
         {
@@ -49,6 +55,8 @@ namespace Server
         protected IEnumerator GameLoop()
         {
             crisesCompleted = 0;
+            turnsSinceLastCrisis = 0;
+            currentCrisisChance = baseCrisisChance;
 
             while (crisesCompleted < totalCrises)
             {
@@ -58,17 +66,9 @@ namespace Server
                 yield return Helpers.GetWait(economyDuration);
 
                 // emergency phase
-                // Randomly chose dilemma or crisis phases
-                Debug.Log("Dilemma phase started");
-                yield return dilemmaPhase.PlayPhase();
+                yield return PlayRandomEmergencyPhase();
 
-                yield return Helpers.GetWait(1f);
-
-                Debug.Log("Crisis phase started");
-                yield return crisisPhase.PlayPhase();
-
-                crisesCompleted++;
-                yield return Helpers.GetWait(emergencyDuration);
+                yield return Helpers.GetWait(emergencyDelay);
             }
 
             // If no crisis left end game
@@ -84,6 +84,36 @@ namespace Server
             }
 
             // Let clients know about resource changes
+        }
+        IEnumerator PlayRandomEmergencyPhase()
+        {
+            bool canTriggerCrisis = turnsSinceLastCrisis >= minTurnsBetweenCrises;
+            bool chooseCrisis = false;
+
+            if (canTriggerCrisis)
+            {
+                float R = UnityEngine.Random.value;
+                chooseCrisis = R < currentCrisisChance;
+            }
+
+            if (chooseCrisis)
+            {
+                Debug.Log($"Crisis Phase (chance: {currentCrisisChance})");
+                yield return crisisPhase.PlayPhase();
+
+                crisesCompleted++;
+                turnsSinceLastCrisis = 0;
+                currentCrisisChance = baseCrisisChance;
+            }
+            else
+            {
+                Debug.Log($"Dilemma Phase (chance: {currentCrisisChance})");
+                yield return dilemmaPhase.PlayPhase();
+
+                turnsSinceLastCrisis++;
+                if (canTriggerCrisis)
+                    currentCrisisChance = Mathf.Min(currentCrisisChance + crisisChanceGrowth, maxCrisisChance);
+            }
         }
 
         void EndGame()

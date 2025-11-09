@@ -18,7 +18,7 @@ namespace Client
         protected void OnCrisisStart(BasePacket p)
         {
             STC_StartEmergency packet = (STC_StartEmergency)p;
-            _currentEmergency = Resources.Load<Emergency>("ScriptableObjects/Crisis/" + packet.emergencyType + "/" + packet.crisisId);
+            _currentEmergency = Resources.Load<Emergency>("ScriptableObjects/Emergencies/" + packet.emergencyType.ToString() + "/" + packet.crisisId);
 
             switch (_currentEmergency.Type)
             {

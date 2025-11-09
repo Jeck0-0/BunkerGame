@@ -19,9 +19,9 @@ namespace Packets
 
         public override void Serialize(BinaryWriter bw)
         {
+            bw.Write((int)Type);
             bw.Write(OptionIndex);
             bw.Write(InfluenceSpent);
-            bw.Write((int)Type);
         }
 
         public override BasePacket Deserialize(BinaryReader br)
