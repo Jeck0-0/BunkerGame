@@ -13,18 +13,16 @@ namespace Client
 
         [Tooltip("Damage applied to bunker on failure")]
         public int BunkerDamageOnFail = 1;
-        
-        
+       
         
         //to rebalance
         [Header("Rewards/Penalties")] 
         public int HighestBidderReward;
         public int SuccessReward;
         public TrackAmount SuccessTrackMod;
-        public int LowestBidderReward;
+        public int LowestBidderPenalty;
         
         public int FailurePenalty;
         public TrackAmount FailureTrackMod;
-        ////////////
     }
 }

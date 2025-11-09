@@ -14,12 +14,12 @@ namespace Client
         
         protected override void Awake()
         {
-            base.Awake();
             values.Add(TrackType.Energy, startValue);
             values.Add(TrackType.Food, startValue);
             values.Add(TrackType.Moral, startValue);
             values.Add(TrackType.Order, startValue);
             values.Add(TrackType.Population, startValue);
+            base.Awake();
         }
 
 
@@ -34,6 +34,13 @@ namespace Client
             values[type] += amount;
             if (values[type] >= maxValue) values[type] = maxValue;
             if (values[type] <= 0) ResourceReachedZero?.Invoke(type);
-        }        
+        }
+
+        public int GetTrackValue(TrackType type)
+        {
+            if (values.TryGetValue(type, out int val))
+                return val;
+            return 0;
+        }
     }
 }

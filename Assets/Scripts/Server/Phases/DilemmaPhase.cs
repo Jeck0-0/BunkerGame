@@ -4,13 +4,14 @@ using Packets;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Server
 {
     public class DilemmaPhase : MonoBehaviour
     {
-        protected Dilemma[] dilemmaPool;
+        public Dilemma[] dilemmaPool;
         protected Dilemma CurrentDilemma;
 
         protected struct Vote
@@ -32,10 +33,16 @@ namespace Server
         {
             StartRandomDilemma();
 
+            if (CurrentDilemma == null)
+            {
+                Debug.LogError("No accessible dilemma found");
+                yield break;
+            }
+
             // Wait for all votes or timer end
             NetworkManager.Server.Subscribe<CTS_VoteOnDilemma>(ReceiveVote);
             float endTime = Time.time + CurrentDilemma.TimeToResolve;
-            yield return new WaitUntil(() => AllPlayersVoted() || Time.time > endTime);
+            yield return new WaitUntil(() => votes.Count >= ServerPlayers.GetAll().Count() || Time.time > endTime);
             NetworkManager.Server.Unsubscribe<CTS_VoteOnDilemma>(ReceiveVote);
 
             CalculateDilemmaResult();
@@ -93,12 +100,11 @@ namespace Server
                 return;
             }
 
-            // OptionIndex, -1 means withold
+            // Option, -1 means withold
             bool withheld = votePacket.OptionIndex == -1;
 
+            int available = ServerPlayers.Get(player).resources.Influence;
 
-            int available = 10;   // Replace with actual player influence later
-            //![player].Tracks.Has(contributionPacket.TrackAmount)) DOESNT HAVE RESOURCES
             if (votePacket.InfluenceSpent < 0)
             {
                 Debug.LogWarning($"Player {player} sent negative influence.");
@@ -106,7 +112,7 @@ namespace Server
             }
             if (!withheld && votePacket.InfluenceSpent > available)
             {
-                Debug.LogWarning($"Player {player} tried to spend more influence ({votePacket.InfluenceSpent}) than available ({available}).");
+                Debug.LogWarning($"Player {player} tried to contribute more materials than they have {votePacket.InfluenceSpent}");
                 // clamp to available
                 votePacket.InfluenceSpent = available;
             }
@@ -125,6 +131,8 @@ namespace Server
                 sideTotal[votePacket.OptionIndex] = 0;
 
                 sideTotal[votePacket.OptionIndex] += votePacket.InfluenceSpent;
+
+                ServerPlayers.Get(player).resources.ModifyInfluence(-votePacket.InfluenceSpent);
             }
         }
 
@@ -133,7 +141,6 @@ namespace Server
         {
             if (sideTotal.Count == 0)
             {
-                // add tie breaker
                 Debug.LogWarning("No votes received");
                 sideTotal[1] = 0;
             }
@@ -158,15 +165,11 @@ namespace Server
                 }
             }
 
-            int winningOption = bestOptions[0];
-            if (bestOptions.Count > 1) winningOption = 0; // add tie-breaker
+            int winningOption = bestOptions.Count > 1 ? TieBreaker(bestOptions) : bestOptions[0];
 
             // Apply modifiers
-            TrackAmount modifier = CurrentDilemma.NoTrackModifier;
-            if (winningOption == 0) modifier = CurrentDilemma.YesTrackModifier;
-
+            TrackAmount modifier = winningOption == 0 ? CurrentDilemma.YesTrackModifier  : CurrentDilemma.NoTrackModifier;
             ServerTracks.Instance?.ApplyModifier(modifier);
-
             ApplyKeywordChanges(CurrentDilemma, winningOption == 0);
 
             // Send results
@@ -187,16 +190,12 @@ namespace Server
                 KeywordManager.Instance.RemoveMultiple(dilemma.NoKeywordsToRemove);
             }
         }
-
-        protected bool AllPlayersVoted()
+        protected virtual int TieBreaker(List<int> tiedOptions)
         {
-            /*
-            var all = ServerPlayers.Instance;
-            if (all == null) return false;
-
-            return votes.Count >= all.players.count; // simple version
-            */
-            return false;
+            int result = UnityEngine.Random.Range(0, tiedOptions.Count);
+            int chosen = tiedOptions[result];
+            Debug.Log($"[DilemmaPhase] Tie between options {string.Join(",", tiedOptions)}, {chosen} is chosen");
+            return chosen;
         }
     }
 }

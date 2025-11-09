@@ -14,6 +14,7 @@ public class SignatureDrawer : MonoBehaviour
     private Vector2 prevUV;
     private RectTransform rectTransform;
     private Plane drawPlane;
+    private bool signed = false;
 
     void Start()
     {
@@ -49,7 +50,7 @@ public class SignatureDrawer : MonoBehaviour
         if (Input.GetMouseButtonUp(0) && isSigning)
         {
             isSigning = false;
-            OnSignatureComplete();
+            signed = true;
         }
     }
 
@@ -110,10 +111,11 @@ public class SignatureDrawer : MonoBehaviour
         for (int i = 0; i < clearPixels.Length; i++) clearPixels[i] = Color.white;
         texture.SetPixels(clearPixels);
         texture.Apply();
+        signed = false;
     }
 
-    void OnSignatureComplete()
+    public bool OnSignatureComplete()
     {
-        Debug.Log("Signed!");
+        return signed;
     }
 }

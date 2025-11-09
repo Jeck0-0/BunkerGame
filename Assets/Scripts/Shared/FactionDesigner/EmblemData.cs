@@ -5,9 +5,9 @@ using UnityEngine;
 public class EmblemData
 {
     public string FactionName = "";
-    public Color PlayerColor;
+    public Color PlayerColor= Color.white;
     public Vector2 originalEmblemSize = new Vector2(400, 400); // for scalling
-    public string PatternID;
+    public string PatternID = "";
     public List<Color> LayerColors = new List<Color>();
 
     public List<SymbolData> Symbols = new List<SymbolData>();

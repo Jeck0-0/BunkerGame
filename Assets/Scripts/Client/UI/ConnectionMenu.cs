@@ -1,6 +1,8 @@
+using Networking;
+using Packets;
 using System;
 using UnityEngine;
-using Networking;
+using UnityEngine.SceneManagement;
 
 public class ConnectionMenu : MonoBehaviour
 {
@@ -18,6 +20,10 @@ public class ConnectionMenu : MonoBehaviour
         if(NetworkManager.Server is SteamServer)
             SteamLobby.OpenInviteOverlay();
         SendMyInfo();
+    }
+    public void StartGame()
+    {
+        SceneManager.LoadScene("MeetingRoom");
     }
 
     protected void SendMyInfo()
