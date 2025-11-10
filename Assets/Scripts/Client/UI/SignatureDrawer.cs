@@ -13,7 +13,6 @@ public class SignatureDrawer : MonoBehaviour
     private bool isSigning;
     private Vector2 prevUV;
     private RectTransform rectTransform;
-    private Plane drawPlane;
     private bool signed = false;
 
     void Start()
@@ -26,7 +25,6 @@ public class SignatureDrawer : MonoBehaviour
         signatureDisplay.texture = texture;
 
         Vector3 planeOrigin = rectTransform.TransformPoint(rectTransform.rect.center);
-        drawPlane = new Plane(rectTransform.forward, planeOrigin);
     }
 
     void Update()
@@ -102,14 +100,6 @@ public class SignatureDrawer : MonoBehaviour
                 if (px >= 0 && py >= 0 && px < texture.width && py < texture.height)
                     texture.SetPixel(px, py, drawColor);
             }
-    }
-    public void RefreshDrawPlane()
-    {
-        if (signatureDisplay == null) return;
-        rectTransform = signatureDisplay.rectTransform;
-
-        Vector3 planeOrigin = rectTransform.TransformPoint(rectTransform.rect.center);
-        drawPlane = new Plane(rectTransform.forward, planeOrigin);
     }
 
     public void ClearSignature()

@@ -4,7 +4,6 @@ using Networking;
 using Packets;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class DilemmaUI : Singleton<DilemmaUI>
 {
@@ -20,8 +19,8 @@ public class DilemmaUI : Singleton<DilemmaUI>
     [SerializeField] TextMeshProUGUI titleText;
     [SerializeField] TextMeshProUGUI descriptionText;
     [SerializeField] TMP_InputField influenceField;
-    [SerializeField] Button yesButton;
-    [SerializeField] Button noButton;
+    [SerializeField] SignatureDrawer yesCheckBox;
+    [SerializeField] SignatureDrawer noCheckBox;
 
 
     private bool votingLocked;
@@ -29,10 +28,13 @@ public class DilemmaUI : Singleton<DilemmaUI>
 
     void Start()
     {
-        yesButton.onClick.AddListener(() => SubmitVote(0));
-        noButton.onClick.AddListener(() => SubmitVote(1));
         influenceField.contentType = TMP_InputField.ContentType.IntegerNumber;
         UI.SetActive(false);
+    }
+    private void Update()
+    {
+        if (yesCheckBox.OnSignatureComplete()) SubmitVote(0);
+        if (noCheckBox.OnSignatureComplete()) SubmitVote(1);
     }
 
     public void DisplayDilemma(Dilemma dilemma)
@@ -41,7 +43,8 @@ public class DilemmaUI : Singleton<DilemmaUI>
         titleText.text = dilemma.Title;
         descriptionText.text = dilemma.Description;
         SlideIn();
-        votingLocked = false;
+
+        ClearUI();
     }
 
     private void SubmitVote(int optionIndex)
@@ -59,14 +62,21 @@ public class DilemmaUI : Singleton<DilemmaUI>
 
         ClientResources.Instance.ModifyInfluence(-influenceSpent);
         NetworkManager.Client.Send(new CTS_VoteOnDilemma(optionIndex, influenceSpent));
-
-        yesButton.interactable = false;
-        noButton.interactable = false;
         influenceField.interactable = false;
+    }
+
+    private void ClearUI()
+    {
+        votingLocked = false;
+        influenceField.interactable = true;
+
+        yesCheckBox.ClearSignature();
+        noCheckBox.ClearSignature();
     }
 
     public void DisplayResult(STC_DilemmaResult result)
     {
+        // change later
         ClientTracks.Instance.ApplyModifier(result.TrackModifier);
         descriptionText.text += $"Winning Option: {result.WinningOption}";
         SlideOut();

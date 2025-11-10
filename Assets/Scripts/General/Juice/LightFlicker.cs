@@ -14,7 +14,7 @@ public class LightFlicker : MonoBehaviour
     {
         if (lights == null || lights.Length == 0)
         {
-            Debug.LogWarning($"{nameof(LightFlicker)}: No lights assigned.");
+            Debug.LogWarning("No light assigned");
             return;
         }
 

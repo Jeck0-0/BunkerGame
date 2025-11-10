@@ -16,7 +16,8 @@ namespace Networking
         STC_StartEconomyPhase = 101,
         STC_StartEmergency = 102,
         STC_CrisisResult = 103,
-        STC_DilemmaResult = 104
+        STC_DilemmaResult = 104,
+        STC_UpdateResources = 105
     }
 
     public abstract class BasePacket
@@ -40,11 +41,12 @@ namespace Networking
                 case PacketType.STC_StartEmergency:   return new STC_StartEmergency().Deserialize(br);
                 case PacketType.STC_CrisisResult: return new STC_CrisisResult().Deserialize(br);
                 case PacketType.STC_DilemmaResult: return new STC_DilemmaResult().Deserialize(br);
+                case PacketType.STC_UpdateResources: return new STC_UpdateResources().Deserialize(br);
+
+                default: Debug.LogError("Unknown packet type: " + type);
+                return null;
 
             }
-
-            Debug.Log("Unknown packet type: " + type);
-            return null;
         }
     }
 }

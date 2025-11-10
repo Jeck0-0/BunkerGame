@@ -1,5 +1,7 @@
-using System.Collections;
+using Networking;
+using Packets;
 using Sirenix.OdinInspector;
+using System.Collections;
 using UnityEngine;
 
 namespace Server
@@ -35,8 +37,8 @@ namespace Server
         [Button]
         public void GameStart()
         {
-            StartCoroutine(GameLoop());
             Debug.Log("Game started");
+            StartCoroutine(GameLoop());
         }
 
         private void OnDestroy()
@@ -81,9 +83,10 @@ namespace Server
             {
                 p.resources.ModifyMaterials(1);
                 p.resources.ModifyInfluence(2);
-            }
 
-            // Let clients know about resource changes
+                // update clients about resource changes
+                NetworkManager.Server.SendTo(p.id, new STC_UpdateResources(p.resources.Materials, p.resources.Influence));
+            }
         }
         IEnumerator PlayRandomEmergencyPhase()
         {
@@ -92,7 +95,7 @@ namespace Server
 
             if (canTriggerCrisis)
             {
-                float R = UnityEngine.Random.value;
+                float R = Random.value;
                 chooseCrisis = R < currentCrisisChance;
             }
 

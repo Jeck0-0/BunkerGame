@@ -115,6 +115,5 @@ public class CrisisUI : Singleton<CrisisUI>
 
         UI.transform.position = to;
         UI.SetActive(visible);
-        if (visible) signature.RefreshDrawPlane();
     }
 }

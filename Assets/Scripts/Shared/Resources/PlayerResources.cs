@@ -25,6 +25,8 @@ public class PlayerResources : IPlayerResources
             materials = 0;
         }
     }
+    public void SetInfluence(int amount) => influence = amount;
+    public void SetMaterials(int amount) => materials = amount;
 }
 
 public interface IPlayerResources

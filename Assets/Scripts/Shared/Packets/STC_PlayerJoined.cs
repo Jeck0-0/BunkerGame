@@ -1,6 +1,4 @@
-using System.Collections.Generic;
 using System.IO;
-using UnityEngine;
 using Networking;
 
 namespace Packets

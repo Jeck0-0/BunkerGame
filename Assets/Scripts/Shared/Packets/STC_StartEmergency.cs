@@ -1,7 +1,6 @@
 using System.IO;
 using Client;
 using Networking;
-using UnityEngine;
 
 namespace Packets
 {
