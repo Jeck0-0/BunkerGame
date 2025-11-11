@@ -72,6 +72,8 @@ public class CrisisUI : Singleton<CrisisUI>
         NetworkManager.Client.Send(new CTS_ContributeToCrisis(amount));
 
         contributionField.interactable = false;
+
+        SlideOut();
     }
 
     public void DisplayCrisisResult(bool success, TrackAmount trackMod)

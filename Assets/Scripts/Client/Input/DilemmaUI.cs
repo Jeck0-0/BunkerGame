@@ -1,13 +1,24 @@
-using System.Collections;
 using Client;
 using Networking;
 using Packets;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 
 public class DilemmaUI : Singleton<DilemmaUI>
 {
-    [SerializeField] GameObject UI;
+    [Header("Voting UI")]
+    [SerializeField] GameObject votingUI;
+    [SerializeField] TextMeshProUGUI votingHeader;
+    [SerializeField] TextMeshProUGUI descriptionText;
+    [SerializeField] TMP_InputField influenceField;
+    [SerializeField] SignatureDrawer yesCheckBox;
+    [SerializeField] SignatureDrawer noCheckBox;
+
+    [Header("Result UI")]
+    [SerializeField] GameObject resultUI;
+    [SerializeField] TextMeshProUGUI resultHeader;
+    [SerializeField] TextMeshProUGUI resultText;
 
     [Header("Slide in/Out")]
     [SerializeField] Transform tablePosition;
@@ -15,36 +26,41 @@ public class DilemmaUI : Singleton<DilemmaUI>
     [SerializeField] float slideDuration = 1.2f;
     [SerializeField] AnimationCurve slideCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
 
-    [Header("UI References")]
-    [SerializeField] TextMeshProUGUI titleText;
-    [SerializeField] TextMeshProUGUI descriptionText;
-    [SerializeField] TMP_InputField influenceField;
-    [SerializeField] SignatureDrawer yesCheckBox;
-    [SerializeField] SignatureDrawer noCheckBox;
-
 
     private bool votingLocked;
-    private Coroutine slide;
+    private bool resultBeingShown = false;
+
+    private Coroutine votingSlide;
+    private Coroutine resultSlide;
 
     void Start()
     {
         influenceField.contentType = TMP_InputField.ContentType.IntegerNumber;
-        UI.SetActive(false);
+        votingUI.SetActive(false);
+        resultUI.SetActive(false);
     }
     private void Update()
     {
         if (yesCheckBox.OnSignatureComplete()) SubmitVote(0);
         if (noCheckBox.OnSignatureComplete()) SubmitVote(1);
+
+        if (Input.GetMouseButtonDown(0) && resultBeingShown)
+        {
+            SlideOut(resultUI);
+            resultBeingShown = false;
+        }
     }
 
     public void DisplayDilemma(Dilemma dilemma)
     {
         ClearUI();
 
-        UI.SetActive(true);
-        titleText.text = dilemma.Title;
+        votingUI.SetActive(true);
+        votingHeader.text = dilemma.Title;
+        resultHeader.text = dilemma.Title;
         descriptionText.text = dilemma.Description;
-        SlideIn();
+
+        SlideIn(votingUI);
     }
 
     private void SubmitVote(int optionIndex)
@@ -63,6 +79,16 @@ public class DilemmaUI : Singleton<DilemmaUI>
         ClientResources.Instance.ModifyInfluence(-influenceSpent);
         NetworkManager.Client.Send(new CTS_VoteOnDilemma(optionIndex, influenceSpent));
         influenceField.interactable = false;
+
+        SlideOut(votingUI);
+        SlideIn(resultUI);
+    }
+
+    public void DisplayResult(STC_DilemmaResult result)
+    {
+        resultText.text = $"Winning Option: {result.WinningOption}";
+        ClientTracks.Instance.ApplyModifier(result.TrackModifier);
+        resultBeingShown = true;
     }
 
     private void ClearUI()
@@ -73,45 +99,56 @@ public class DilemmaUI : Singleton<DilemmaUI>
 
         yesCheckBox.ClearSignature();
         noCheckBox.ClearSignature();
+
+        votingUI.SetActive(false);
+        resultUI.SetActive(false);
     }
 
-    public void DisplayResult(STC_DilemmaResult result)
+    private void SlideIn(GameObject ui)
     {
-        // change later
-        ClientTracks.Instance.ApplyModifier(result.TrackModifier);
-        descriptionText.text += $"Winning Option: {result.WinningOption}";
-        SlideOut();
+        if (ui == resultUI)
+        {
+            if (resultSlide != null) StopCoroutine(resultSlide);
+            resultSlide = StartCoroutine(Slide(ui, true));
+        }
+        else
+        {
+            if (votingSlide != null) StopCoroutine(votingSlide);
+            votingSlide = StartCoroutine(Slide(ui, true));
+        }
     }
 
-
-    public void SlideIn()
+    private void SlideOut(GameObject ui)
     {
-        if (slide != null)
-        StopCoroutine(slide);
-        slide = StartCoroutine(Slide(offScreenPosition, tablePosition.position, true));
+        if (ui == resultUI)
+        {
+            if (resultSlide != null) StopCoroutine(resultSlide);
+            resultSlide = StartCoroutine(Slide(ui, false));
+        }
+        else
+        {
+            if (votingSlide != null) StopCoroutine(votingSlide);
+            votingSlide = StartCoroutine(Slide(ui, false));
+        }
     }
 
-
-    public void SlideOut()
+    private IEnumerator Slide(GameObject ui, bool visible)
     {
-        if (slide != null)
-        StopCoroutine(slide);
-        slide = StartCoroutine(Slide(tablePosition.position, offScreenPosition, false));
-    }
+        if (visible) ui.SetActive(true);
 
-    private IEnumerator Slide(Vector3 from, Vector3 to, bool visible)
-    {
+        Vector3 start = visible ? offScreenPosition : tablePosition.position;
+        Vector3 end = visible ? tablePosition.position : offScreenPosition;
+
         float t = 0f;
         while (t < slideDuration)
         {
             t += Time.deltaTime;
-            float normalized = t / slideDuration;
-            float curveValue = slideCurve.Evaluate(normalized);
-            UI.transform.position = Vector3.LerpUnclamped(from, to, curveValue);
+            float curve = slideCurve.Evaluate(t / slideDuration);
+            ui.transform.position = Vector3.LerpUnclamped(start, end, curve);
             yield return null;
         }
 
-        UI.transform.position = to;
-        UI.SetActive(visible);
+        ui.transform.position = end;
+        if (!visible) ui.SetActive(false);
     }
 }

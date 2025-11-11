@@ -12,6 +12,7 @@ namespace Server
     public class DilemmaPhase : MonoBehaviour
     {
         public Dilemma[] dilemmaPool;
+        public float dilemmaEndDelay = 2f;
         protected Dilemma CurrentDilemma;
 
         protected struct Vote
@@ -46,6 +47,7 @@ namespace Server
             NetworkManager.Server.Unsubscribe<CTS_VoteOnDilemma>(ReceiveVote);
 
             CalculateDilemmaResult();
+            yield return new WaitForSeconds(dilemmaEndDelay);
         }
 
         protected void StartRandomDilemma()

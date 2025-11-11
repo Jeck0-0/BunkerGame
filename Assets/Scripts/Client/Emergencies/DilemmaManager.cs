@@ -40,7 +40,6 @@ public class DilemmaManager : Singleton<DilemmaManager>
 
         yield return new WaitForSeconds(3f);
 
-        DilemmaUI.Instance.SlideOut();
         Debug.Log("Dilemma finished: " + dilemma.name);
     }
 }
