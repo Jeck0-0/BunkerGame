@@ -12,13 +12,24 @@ namespace Client
 
         public void ModifyInfluence(int amount)
         {
+            int oldValue = Influence;
             resources.ModifyInfluence(amount);
+            int change = Influence - oldValue;
+
             ClientResourcesUI.Instance.UpdateInfluenceUI(Influence);
+            if (change != 0)
+                ClientResourcesUI.Instance.DisplayInfluenceIncome(change);
         }
+
         public void ModifyMaterials(int amount)
         {
+            int oldValue = Materials;
             resources.ModifyMaterials(amount);
+            int change = Materials - oldValue;
+
             ClientResourcesUI.Instance.UpdateMaterialsUI(Materials);
+            if (change != 0)
+                ClientResourcesUI.Instance.DisplayMaterialsIncome(change);
         }
 
         protected override void Awake()
@@ -35,11 +46,8 @@ namespace Client
         private void OnUpdateResources(BasePacket p)
         {
             var packet = (STC_UpdateResources)p;
-            resources.SetMaterials(packet.materials);
-            resources.SetInfluence(packet.influence);
-
-            ClientResourcesUI.Instance.UpdateInfluenceUI(Influence);
-            ClientResourcesUI.Instance.UpdateMaterialsUI(Materials);
+            ModifyInfluence(packet.influence);
+            ModifyMaterials(packet.materials);
             Debug.Log($"[ClientResources] Updated: Materials = {Materials}, Influence = {Influence}");
         }
     }

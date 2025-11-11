@@ -39,12 +39,12 @@ public class DilemmaUI : Singleton<DilemmaUI>
 
     public void DisplayDilemma(Dilemma dilemma)
     {
+        ClearUI();
+
         UI.SetActive(true);
         titleText.text = dilemma.Title;
         descriptionText.text = dilemma.Description;
         SlideIn();
-
-        ClearUI();
     }
 
     private void SubmitVote(int optionIndex)
@@ -69,6 +69,7 @@ public class DilemmaUI : Singleton<DilemmaUI>
     {
         votingLocked = false;
         influenceField.interactable = true;
+        influenceField.text = string.Empty;
 
         yesCheckBox.ClearSignature();
         noCheckBox.ClearSignature();

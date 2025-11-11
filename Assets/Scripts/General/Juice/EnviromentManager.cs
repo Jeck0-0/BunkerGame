@@ -1,3 +1,6 @@
+using Client;
+using Networking;
+using Packets;
 using UnityEngine;
 
 public class EnviromentManager : MonoBehaviour
@@ -9,7 +12,26 @@ public class EnviromentManager : MonoBehaviour
 
     private void Awake()
     {
-        // subscribe to events
+        NetworkManager.Client.Subscribe<STC_StartEmergency>(OnStartEmergency);
+    }
+
+    private void OnDestroy()
+    {
+        NetworkManager.Client.Unsubscribe<STC_StartEmergency>(OnStartEmergency);
+    }
+
+    private void OnStartEmergency(BasePacket packet)
+    {
+        var data = (STC_StartEmergency)packet;
+
+        if (data.emergencyType == EmergencyType.Crisis)
+        {
+            OnCrisis();
+        }
+        else
+        {
+            OnDilemma();
+        }
     }
 
     public void OnCrisis()

@@ -36,6 +36,7 @@ public class CrisisUI : Singleton<CrisisUI>
 
     public void DisplayCrisis(Crisis crisis)
     {
+        ResetCrisisUI();
         currentCrisis = crisis;
         UI.SetActive(true);
 
@@ -71,7 +72,6 @@ public class CrisisUI : Singleton<CrisisUI>
         NetworkManager.Client.Send(new CTS_ContributeToCrisis(amount));
 
         contributionField.interactable = false;
-        signature.ClearSignature();
     }
 
     public void DisplayCrisisResult(bool success, TrackAmount trackMod)
@@ -81,9 +81,14 @@ public class CrisisUI : Singleton<CrisisUI>
 
         ClientTracks.Instance.ApplyModifier(trackMod);
 
-        contributionField.interactable = true;
-
         SlideOut();
+    }
+
+    private void ResetCrisisUI()
+    {
+        contributionField.text = string.Empty;
+        contributionField.interactable = true;
+        signature.ClearSignature();
     }
 
     public void SlideIn()
