@@ -14,11 +14,13 @@ public class DilemmaUI : Singleton<DilemmaUI>
     [SerializeField] TMP_InputField influenceField;
     [SerializeField] SignatureDrawer yesCheckBox;
     [SerializeField] SignatureDrawer noCheckBox;
+    [SerializeField] SignatureDrawer signature;
 
     [Header("Result UI")]
     [SerializeField] GameObject resultUI;
     [SerializeField] TextMeshProUGUI resultHeader;
     [SerializeField] TextMeshProUGUI resultText;
+    [SerializeField] float delayBeforeRemovingResult = 1f;
 
     [Header("Slide in/Out")]
     [SerializeField] Transform tablePosition;
@@ -26,9 +28,9 @@ public class DilemmaUI : Singleton<DilemmaUI>
     [SerializeField] float slideDuration = 1.2f;
     [SerializeField] AnimationCurve slideCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
 
-
-    private bool votingLocked;
     private bool resultBeingShown = false;
+    private bool votingLocked;
+    private float resultTime;
 
     private Coroutine votingSlide;
     private Coroutine resultSlide;
@@ -38,15 +40,26 @@ public class DilemmaUI : Singleton<DilemmaUI>
         influenceField.contentType = TMP_InputField.ContentType.IntegerNumber;
         votingUI.SetActive(false);
         resultUI.SetActive(false);
+
+        yesCheckBox.OnSigned += () => ExclusiveSignature(yesCheckBox, noCheckBox);
+        noCheckBox.OnSigned += () => ExclusiveSignature(noCheckBox, yesCheckBox);
     }
     private void Update()
     {
-        if (yesCheckBox.OnSignatureComplete()) SubmitVote(0);
-        if (noCheckBox.OnSignatureComplete()) SubmitVote(1);
+        if (signature.OnSignatureComplete())
+        {
+            if (yesCheckBox.OnSignatureComplete()) SubmitVote(0);
+            else if (noCheckBox.OnSignatureComplete()) SubmitVote(1);
+        }
 
-        if (Input.GetMouseButtonDown(0) && resultBeingShown)
+        if (!resultBeingShown) return;
+
+        resultTime += Time.deltaTime;
+
+        if (Input.GetMouseButtonDown(0) && resultTime >= delayBeforeRemovingResult)
         {
             SlideOut(resultUI);
+            resultTime = 0f;
             resultBeingShown = false;
         }
     }
@@ -93,15 +106,23 @@ public class DilemmaUI : Singleton<DilemmaUI>
 
     private void ClearUI()
     {
+        resultTime = 0f;
         votingLocked = false;
         influenceField.interactable = true;
         influenceField.text = string.Empty;
 
         yesCheckBox.ClearSignature();
         noCheckBox.ClearSignature();
+        signature.ClearSignature();
 
         votingUI.SetActive(false);
         resultUI.SetActive(false);
+    }
+
+    private void ExclusiveSignature(SignatureDrawer signedOne, SignatureDrawer other)
+    {
+        if (signedOne.OnSignatureComplete())
+            other.ClearSignature();
     }
 
     private void SlideIn(GameObject ui)

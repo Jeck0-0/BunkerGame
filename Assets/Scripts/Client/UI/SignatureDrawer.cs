@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class SignatureDrawer : MonoBehaviour
 {
@@ -14,21 +15,23 @@ public class SignatureDrawer : MonoBehaviour
     private Vector2 prevUV;
     private RectTransform rectTransform;
     private bool signed = false;
+    private bool blocked = false;
+
+    public event Action OnSigned;
 
     void Start()
     {
         if (cam == null) cam = Camera.main;
-
         rectTransform = signatureDisplay.rectTransform;
         texture = new Texture2D(textureSize, textureSize, TextureFormat.RGBA32, false);
         ClearSignature();
         signatureDisplay.texture = texture;
-
-        Vector3 planeOrigin = rectTransform.TransformPoint(rectTransform.rect.center);
     }
 
     void Update()
     {
+        if (blocked) return;
+
         if (Input.GetMouseButtonDown(0))
         {
             if (TryGetUV(out var uv))
@@ -51,6 +54,7 @@ public class SignatureDrawer : MonoBehaviour
         {
             isSigning = false;
             signed = true;
+            OnSigned?.Invoke();
         }
     }
 
@@ -109,10 +113,10 @@ public class SignatureDrawer : MonoBehaviour
         texture.SetPixels(clearPixels);
         texture.Apply();
         signed = false;
+        blocked = false;
     }
 
-    public bool OnSignatureComplete()
-    {
-        return signed;
-    }
+    public void Block(bool blocking) => blocked = blocking;
+
+    public bool OnSignatureComplete() => signed;
 }

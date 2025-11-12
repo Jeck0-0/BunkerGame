@@ -55,8 +55,8 @@ namespace Networking
 
         private void OnDestroy()
         {
-            Client.Disconnect();
-            Server.Disconnect();
+            if (Client) Client.Disconnect();
+            if (Server) Server.Disconnect();
         }
     }
 }

@@ -7,7 +7,19 @@ using UnityEngine;
 
 public class CrisisUI : Singleton<CrisisUI>
 {
-    [SerializeField] GameObject UI;
+    [Header("Crisis UI")]
+    [SerializeField] GameObject crisisUI;
+    [SerializeField] TextMeshProUGUI crisisHeader;
+    [SerializeField] TextMeshProUGUI descriptionText;
+    [SerializeField] TextMeshProUGUI infoText;
+    [SerializeField] TMP_InputField contributionField;
+    [SerializeField] SignatureDrawer signature;
+
+    [Header("Result UI")]
+    [SerializeField] GameObject resultUI;
+    [SerializeField] TextMeshProUGUI resultHeader;
+    [SerializeField] TextMeshProUGUI resultText;
+    [SerializeField] float delayBeforeRemovingResult = 1f;
 
     [Header("Slide in/Out")]
     [SerializeField] Transform tablePosition;
@@ -15,45 +27,57 @@ public class CrisisUI : Singleton<CrisisUI>
     [SerializeField] float slideDuration = 1.2f;
     [SerializeField] AnimationCurve slideCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
 
-    [Header("UI References")]
-    [SerializeField] TextMeshProUGUI crisisNameText;
-    [SerializeField] TextMeshProUGUI descriptionText;
-    [SerializeField] TextMeshProUGUI infoText;
-    [SerializeField] TMP_InputField contributionField;
-    [SerializeField] SignatureDrawer signature;
+    private bool resultBeingShown = false;
+    private float resultTime;
+    private bool contributingLocked;
 
-    private Crisis currentCrisis;
-    private Coroutine slide;
+    private Coroutine crisisSlide;
+    private Coroutine resultSlide;
 
     void Start()
     {
         contributionField.contentType = TMP_InputField.ContentType.IntegerNumber;
         contributionField.ForceLabelUpdate();
 
-        UI.transform.position = offScreenPosition;
-        UI.SetActive(false);
+        crisisUI.SetActive(false);
+        resultUI.SetActive(false);
+        contributingLocked = false;
     }
 
-    public void DisplayCrisis(Crisis crisis)
-    {
-        ResetCrisisUI();
-        currentCrisis = crisis;
-        UI.SetActive(true);
-
-        crisisNameText.text = crisis.Title;
-        descriptionText.text = crisis.Description;
-        infoText.text =  $"Required Materials: {crisis.requiredMaterials}\n" + $"Bunker Damage on Fail: {crisis.BunkerDamageOnFail}";
-
-        SlideIn();
-    }
     private void Update()
     {
         if (signature.OnSignatureComplete())
             SubmitContribution();
+
+        if (!resultBeingShown) return;
+
+        resultTime += Time.deltaTime;
+
+        if (Input.GetMouseButtonDown(0) && resultTime >= delayBeforeRemovingResult)
+        {
+            SlideOut(resultUI);
+            resultTime = 0f;
+            resultBeingShown = false;
+        }
+    }
+
+    public void DisplayCrisis(Crisis crisis)
+    {
+        ResetUI();
+        crisisUI.SetActive(true);
+
+        crisisHeader.text = crisis.Title;
+        resultHeader.text = crisis.Title;
+        descriptionText.text = crisis.Description;
+        infoText.text =  $"Required Materials: {crisis.requiredMaterials}\n" + $"Bunker Damage on Fail: {crisis.BunkerDamageOnFail}";
+
+        SlideIn(crisisUI);
     }
 
     public void SubmitContribution()
     {
+        if (contributingLocked) return;
+
         if (!int.TryParse(contributionField.text, out int amount)) return;
         if (amount <= 0) return;
 
@@ -64,6 +88,7 @@ public class CrisisUI : Singleton<CrisisUI>
         }
 
         Debug.Log("Player submited contribution");
+        contributingLocked = true;
 
         //reduce immediately from client view
         ClientResources.Instance.ModifyMaterials(-amount);
@@ -73,7 +98,8 @@ public class CrisisUI : Singleton<CrisisUI>
 
         contributionField.interactable = false;
 
-        SlideOut();
+        SlideOut(crisisUI);
+        SlideIn(resultUI);
     }
 
     public void DisplayCrisisResult(bool success, TrackAmount trackMod)
@@ -82,45 +108,65 @@ public class CrisisUI : Singleton<CrisisUI>
         infoText.text = $"Crisis Result: {resultText}";
 
         ClientTracks.Instance.ApplyModifier(trackMod);
-
-        SlideOut();
+        resultBeingShown = true;
     }
-
-    private void ResetCrisisUI()
+    private void ResetUI()
     {
-        contributionField.text = string.Empty;
+        resultTime = 0f;
+        contributingLocked = false;
         contributionField.interactable = true;
+        contributionField.text = string.Empty;
         signature.ClearSignature();
+
+        crisisUI.SetActive(false);
+        resultUI.SetActive(false);
     }
 
-    public void SlideIn()
+    private void SlideIn(GameObject ui)
     {
-        if (slide != null)
-        StopCoroutine(slide);
-        slide = StartCoroutine(Slide(offScreenPosition, tablePosition.position, true));
+        if (ui == resultUI)
+        {
+            if (resultSlide != null) StopCoroutine(resultSlide);
+            resultSlide = StartCoroutine(Slide(ui, true));
+        }
+        else
+        {
+            if (crisisSlide != null) StopCoroutine(crisisSlide);
+            crisisSlide = StartCoroutine(Slide(ui, true));
+        }
     }
 
-
-    public void SlideOut()
+    private void SlideOut(GameObject ui)
     {
-        if (slide != null)
-        StopCoroutine(slide);
-        slide = StartCoroutine(Slide(tablePosition.position, offScreenPosition, false));
+        if (ui == resultUI)
+        {
+            if (resultSlide != null) StopCoroutine(resultSlide);
+            resultSlide = StartCoroutine(Slide(ui, false));
+        }
+        else
+        {
+            if (crisisSlide != null) StopCoroutine(crisisSlide);
+            crisisSlide = StartCoroutine(Slide(ui, false));
+        }
     }
 
-    private IEnumerator Slide(Vector3 from, Vector3 to, bool visible)
+    private IEnumerator Slide(GameObject ui, bool visible)
     {
+        if (visible) ui.SetActive(true);
+
+        Vector3 start = visible ? offScreenPosition : tablePosition.position;
+        Vector3 end = visible ? tablePosition.position : offScreenPosition;
+
         float t = 0f;
         while (t < slideDuration)
         {
             t += Time.deltaTime;
-            float normalized = t / slideDuration;
-            float curveValue = slideCurve.Evaluate(normalized);
-            UI.transform.position = Vector3.LerpUnclamped(from, to, curveValue);
+            float curve = slideCurve.Evaluate(t / slideDuration);
+            ui.transform.position = Vector3.LerpUnclamped(start, end, curve);
             yield return null;
         }
 
-        UI.transform.position = to;
-        UI.SetActive(visible);
+        ui.transform.position = end;
+        if (!visible) ui.SetActive(false);
     }
 }

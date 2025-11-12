@@ -51,8 +51,6 @@ namespace Client
             NetworkManager.Client.Unsubscribe<STC_CrisisResult>(OnCrisisResult);
 
             yield return new WaitForSeconds(3f);
-
-            CrisisUI.Instance.SlideOut();
             Debug.Log("Crisis finished: " + crisis.name);
         }
 
