@@ -37,7 +37,8 @@ public class DilemmaUI : Singleton<DilemmaUI>
 
     void Start()
     {
-        influenceField.contentType = TMP_InputField.ContentType.IntegerNumber;
+        influenceField.contentType = TMP_InputField.ContentType.Custom;
+        influenceField.onValidateInput += OnlyDigits;
         votingUI.SetActive(false);
         resultUI.SetActive(false);
 
@@ -171,5 +172,11 @@ public class DilemmaUI : Singleton<DilemmaUI>
 
         ui.transform.position = end;
         if (!visible) ui.SetActive(false);
+    }
+
+    private char OnlyDigits(string text, int charIndex, char addedChar)
+    {
+        // Only allow digits
+        return char.IsDigit(addedChar) ? addedChar : '\0';
     }
 }

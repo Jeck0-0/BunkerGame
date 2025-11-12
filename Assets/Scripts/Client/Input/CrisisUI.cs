@@ -36,8 +36,8 @@ public class CrisisUI : Singleton<CrisisUI>
 
     void Start()
     {
-        contributionField.contentType = TMP_InputField.ContentType.IntegerNumber;
-        contributionField.ForceLabelUpdate();
+        contributionField.contentType = TMP_InputField.ContentType.Custom;
+        contributionField.onValidateInput += OnlyDigits;
 
         crisisUI.SetActive(false);
         resultUI.SetActive(false);
@@ -168,5 +168,11 @@ public class CrisisUI : Singleton<CrisisUI>
 
         ui.transform.position = end;
         if (!visible) ui.SetActive(false);
+    }
+
+    private char OnlyDigits(string text, int charIndex, char addedChar)
+    {
+        // Only allow digits
+        return char.IsDigit(addedChar) ? addedChar : '\0';
     }
 }
