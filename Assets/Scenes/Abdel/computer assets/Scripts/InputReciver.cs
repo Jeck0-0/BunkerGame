@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.UI;
 using UnityEngine.UI;
 
 public class InputReciver : Singleton<InputReciver>
@@ -10,16 +12,15 @@ public class InputReciver : Singleton<InputReciver>
     GraphicRaycaster graphicRaycaster;
 
     private GameObject lastHoveredObject = null;
-
     List<GameObject> DragTargets = new List<GameObject>();
+
     void Start()
     {
         graphicRaycaster = GetComponent<GraphicRaycaster>();
     }
 
     public void OnCursorInput(Vector2 normalisedPosition)
-    {
-        Debug.Log("In On input");
+    {//Debug.Log("In On input");
         Vector3 MousePosition = new Vector3(CanvasTransform.sizeDelta.x * normalisedPosition.x,
                                             CanvasTransform.sizeDelta.y * normalisedPosition.y, 0f);
 
@@ -43,7 +44,7 @@ public class InputReciver : Singleton<InputReciver>
         }
 
         foreach (var result in results)
-        {Debug.Log(result.gameObject.name);
+        {//Debug.Log(result.gameObject.name);
             GameObject hoveredObject = result.gameObject;
 
             PointerEventData EventData = new PointerEventData(EventSystem.current);
@@ -53,19 +54,22 @@ public class InputReciver : Singleton<InputReciver>
             EventData.button = PointerEventData.InputButton.Left;
             EventData.useDragThreshold = false;
 
+
             if (SendMouseDown)
             {
                 ExecuteEvents.ExecuteHierarchy(result.gameObject, EventData, ExecuteEvents.pointerClickHandler);
                 ExecuteEvents.ExecuteHierarchy(result.gameObject, EventData, ExecuteEvents.initializePotentialDrag);
-            }
 
-            if (SendMouseDown)
-            {
-                var dragHandler = ExecuteEvents.GetEventHandler<IDragHandler>(result.gameObject);
+                GameObject dragHandler = ExecuteEvents.GetEventHandler<IDragHandler>(result.gameObject);
                 if (dragHandler != null && !DragTargets.Contains(dragHandler))
                 {
-                    DragTargets.Add(dragHandler);
-                    ExecuteEvents.Execute(dragHandler, EventData, ExecuteEvents.beginDragHandler);
+                    Scrollbar scrollbar = dragHandler.GetComponent<Scrollbar>();
+                    ScrollRect scrollRect = dragHandler.GetComponent<ScrollRect>();
+                    if (scrollbar != null || scrollRect == null)
+                    {
+                        DragTargets.Add(dragHandler);
+                        ExecuteEvents.Execute(dragHandler, EventData, ExecuteEvents.beginDragHandler);
+                    }
                 }
             }
             else if (IsMouseDown && DragTargets.Count > 0)
@@ -82,8 +86,8 @@ public class InputReciver : Singleton<InputReciver>
             }
             else if (SendMouseUp)
             {
-                ExecuteEvents.Execute(result.gameObject, EventData, ExecuteEvents.pointerUpHandler);
-                ExecuteEvents.Execute(result.gameObject, EventData, ExecuteEvents.pointerClickHandler);
+                ExecuteEvents.ExecuteHierarchy(result.gameObject, EventData, ExecuteEvents.pointerUpHandler);
+                ExecuteEvents.ExecuteHierarchy(result.gameObject, EventData, ExecuteEvents.pointerDownHandler );
             }
 
             if (hoveredObject != lastHoveredObject)
@@ -98,8 +102,8 @@ public class InputReciver : Singleton<InputReciver>
 
                 lastHoveredObject = hoveredObject;
             }
+            break;
         }
-        
         //Debug.Log(MousePosition);
     }
 
