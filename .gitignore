@@ -80,7 +80,10 @@ crashlytics-build.properties
 
 #ODIN
 # Ignore the auto-generated AOT compatibility dll.
-/Assets/Plugins/Sirenix/Assemblies/AOT/*
+/Assets/*/Plugins/Sirenix/Assemblies/AOT/*
 
 # Ignore all unpacked demos.
-/Assets/Plugins/Sirenix/Demos/*
+/Assets/*/Plugins/Sirenix/Demos/*
+
+# But keep the demo packages themselves.
+!/Assets/*/Plugins/Sirenix/Demos/*.unitypackage 
