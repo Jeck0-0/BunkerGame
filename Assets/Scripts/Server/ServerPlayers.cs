@@ -1,15 +1,18 @@
 using System;
+using Packets;
 using System.Collections.Generic;
 using Networking;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Server
 {
-    public class ServerPlayers : Singleton<ServerPlayers>
+    public class ServerPlayers : PersistentSingleton<ServerPlayers>
     {
-        protected Dictionary<uint, Player> players = new();
+        [ShowInInspector, ReadOnly] protected Dictionary<uint, Player> players = new();
 
         public static Player Get(uint id) => Instance.players[id];
+        public static IEnumerable<Player> GetAll() => Instance.players.Values;
 
         public event Action<Player> OnPlayerQuit;
         
@@ -59,7 +62,7 @@ namespace Server
             public uint id;
             public string username;
             public EmblemData emblemData;
-            //resources
+            public PlayerResources resources = new PlayerResources();
 
             public Player(uint id)
             {

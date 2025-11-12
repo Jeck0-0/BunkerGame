@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Abdel/Computer Testing.unity
     guid: 48cf7ec6eb580f9408c447452f7c40d2
   - enabled: 1
+    path: Assets/Scenes/Seva/MeetingRoom.unity
+    guid: 1ed07aa32bd4708478de4c2f528d6a07
+  - enabled: 1
     path: Assets/Scenes/Abdel/ComputerFD.unity
     guid: 7232a10bf63e5fd4d9a4dab43452b8c9
   - enabled: 1

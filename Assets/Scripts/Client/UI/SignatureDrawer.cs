@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class SignatureDrawer : MonoBehaviour
 {
     [SerializeField] private RawImage signatureDisplay;
-    [SerializeField] private Camera uiCamera;
+    [SerializeField] private Camera cam;
     [SerializeField] private Color drawColor = Color.black;
     [SerializeField] private int textureSize = 512;
     [SerializeField] private int brushSize = 4;
@@ -13,17 +13,18 @@ public class SignatureDrawer : MonoBehaviour
     private bool isSigning;
     private Vector2 prevUV;
     private RectTransform rectTransform;
-    private Plane drawPlane;
+    private bool signed = false;
 
     void Start()
     {
+        if (cam == null) cam = Camera.main;
+
         rectTransform = signatureDisplay.rectTransform;
         texture = new Texture2D(textureSize, textureSize, TextureFormat.RGBA32, false);
         ClearSignature();
         signatureDisplay.texture = texture;
 
         Vector3 planeOrigin = rectTransform.TransformPoint(rectTransform.rect.center);
-        drawPlane = new Plane(rectTransform.forward, planeOrigin);
     }
 
     void Update()
@@ -49,28 +50,25 @@ public class SignatureDrawer : MonoBehaviour
         if (Input.GetMouseButtonUp(0) && isSigning)
         {
             isSigning = false;
-            OnSignatureComplete();
+            signed = true;
         }
     }
 
     bool TryGetUV(out Vector2 uv)
     {
         uv = Vector2.zero;
-        Ray ray = uiCamera.ScreenPointToRay(Input.mousePosition);
-        if (drawPlane.Raycast(ray, out float enter))
+
+        if (!RectTransformUtility.ScreenPointToLocalPointInRectangle(rectTransform, Input.mousePosition, cam, out Vector2 localPoint)) return false;
+
+        float u = (localPoint.x / rectTransform.rect.width) + rectTransform.pivot.x;
+        float v = (localPoint.y / rectTransform.rect.height) + rectTransform.pivot.y;
+
+        if (u >= 0 && v >= 0 && u <= 1 && v <= 1)
         {
-            Vector3 hitPoint = ray.GetPoint(enter);
-            Vector3 local = rectTransform.InverseTransformPoint(hitPoint);
-
-            float u = (local.x / rectTransform.rect.width) + rectTransform.pivot.x;
-            float v = (local.y / rectTransform.rect.height) + rectTransform.pivot.y;
-
-            if (u >= 0 && v >= 0 && u <= 1 && v <= 1)
-            {
-                uv = new Vector2(u, v);
-                return true;
-            }
+            uv = new Vector2(u, v);
+            return true;
         }
+
         return false;
     }
 
@@ -110,10 +108,11 @@ public class SignatureDrawer : MonoBehaviour
         for (int i = 0; i < clearPixels.Length; i++) clearPixels[i] = Color.white;
         texture.SetPixels(clearPixels);
         texture.Apply();
+        signed = false;
     }
 
-    void OnSignatureComplete()
+    public bool OnSignatureComplete()
     {
-        Debug.Log("Signed!");
+        return signed;
     }
 }

@@ -533,7 +533,7 @@ GameObject:
   - component: {fileID: 470459915751858672}
   - component: {fileID: 8531325577532619792}
   m_Layer: 5
-  m_Name: CrisisPaper
+  m_Name: CrisisUICanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -548,7 +548,7 @@ RectTransform:
   m_GameObject: {fileID: 2890359877695910195}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.02, y: 0.02, z: 0.02}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1745187922468054682}
@@ -575,12 +575,35 @@ MonoBehaviour:
   tablePosition: {fileID: 0}
   offScreenPosition: {x: 0, y: 0, z: 0}
   slideDuration: 1.2
+  slideCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   crisisNameText: {fileID: 8548972369741100864}
   descriptionText: {fileID: 6049579428000184769}
-  infoText: {fileID: 0}
-  rewardsText: {fileID: 0}
-  signature: {fileID: 4995108903230383851}
+  infoText: {fileID: 5288787148075116760}
   contributionField: {fileID: 3465181722579765272}
+  signature: {fileID: 4995108903230383851}
 --- !u!114 &4995108903230383851
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -594,7 +617,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SignatureDrawer
   signatureDisplay: {fileID: 4685305845618010828}
-  uiCamera: {fileID: 0}
+  cam: {fileID: 0}
   drawColor: {r: 0, g: 0, b: 0, a: 1}
   textureSize: 512
   brushSize: 4

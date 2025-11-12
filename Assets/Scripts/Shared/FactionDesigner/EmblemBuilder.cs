@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EmblemBuilder : MonoBehaviour
+public class EmblemBuilder : Singleton<EmblemBuilder>
 {
     [Header("Prefabs & References")]
     [SerializeField] GameObject emblemUIPrefab;

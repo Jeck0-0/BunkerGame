@@ -1,3 +1,6 @@
+using Client;
+using Networking;
+using Packets;
 using UnityEngine;
 
 public class EnviromentManager : MonoBehaviour
@@ -9,14 +12,33 @@ public class EnviromentManager : MonoBehaviour
 
     private void Awake()
     {
-        // subscribe to events
+        NetworkManager.Client.Subscribe<STC_StartEmergency>(OnStartEmergency);
+    }
+
+    private void OnDestroy()
+    {
+        NetworkManager.Client.Unsubscribe<STC_StartEmergency>(OnStartEmergency);
+    }
+
+    private void OnStartEmergency(BasePacket packet)
+    {
+        var data = (STC_StartEmergency)packet;
+
+        if (data.emergencyType == EmergencyType.Crisis)
+        {
+            OnCrisis();
+        }
+        else
+        {
+            OnDilemma();
+        }
     }
 
     public void OnCrisis()
     {
         if (Crisis) return;
 
-        //if (AudioManager.Instance) AudioManager.Instance.PlaySound(siren, 1, null, true);
+        if (siren) AudioManager.Instance.PlaySound(siren, 0.3f, null, true);
         crisisLights.SetActive(true);
         dilemmaLights.SetActive(false);
         Crisis = true;
@@ -25,7 +47,7 @@ public class EnviromentManager : MonoBehaviour
     {
         if (!Crisis) return;
 
-        //if (AudioManager.Instance) AudioManager.Instance.StopSoundGradually(siren, 0f);
+        if (siren) AudioManager.Instance.StopSoundGradually(siren, 0f);
         crisisLights.SetActive(false);
         dilemmaLights.SetActive(true);
         Crisis = false;
