@@ -39,8 +39,6 @@ namespace Client
                 // Apply resources immediately
                 ClientTracks.Instance.ApplyModifier(packet.TrackMod);
                 ClientResources.Instance.ModifyMaterials(packet.materialsMod);
-
-                CrisisUI.Instance.DisplayCrisisResult(packet.success, packet.TrackMod);
             }
 
             NetworkManager.Client.Subscribe<STC_CrisisResult>(OnCrisisResult);

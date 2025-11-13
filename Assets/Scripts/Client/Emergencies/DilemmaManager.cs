@@ -29,7 +29,6 @@ public class DilemmaManager : Singleton<DilemmaManager>
 
             // Apply track modifiers immediately
             ClientTracks.Instance.ApplyModifier(packet.TrackModifier);
-            DilemmaUI.Instance.DisplayResult(packet);
         }
 
         NetworkManager.Client.Subscribe<STC_DilemmaResult>(OnDilemmaResult);

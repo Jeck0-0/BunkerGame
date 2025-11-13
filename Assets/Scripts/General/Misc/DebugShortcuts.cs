@@ -9,6 +9,11 @@ public class DebugShortcuts : MonoBehaviour
     
     private void Update()
     {
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+
         //toggle fullscreen
         if (Input.GetKeyDown(KeyCode.F11))
         {

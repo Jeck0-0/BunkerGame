@@ -176,7 +176,7 @@ public class DilemmaUI : Singleton<DilemmaUI>
 
     private char OnlyDigits(string text, int charIndex, char addedChar)
     {
-        // Only allow digits
+        // only digits
         return char.IsDigit(addedChar) ? addedChar : '\0';
     }
 }
