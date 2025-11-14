@@ -6,13 +6,7 @@ public static class PacketUtils
 {
     public static void SerializeTrackAmount(BinaryWriter bw, TrackAmount amount)
     {
-        if (amount == null)
-        {
-            bw.Write(0);
-            return;
-        }
-        bw.Write(amount.Values.Count);
-        foreach (var a in amount.Values)
+        foreach (var a in amount.GetAll())
         {
             bw.Write((int)a.Key);
             bw.Write(a.Value);
@@ -21,12 +15,11 @@ public static class PacketUtils
     public static TrackAmount DeserializeTrackAmount(BinaryReader br)
     {
         TrackAmount amount = new TrackAmount();
-        int count = br.ReadInt32();
-        for (int i = 0; i < count; i++)
+        for (int i = 0; i < 5; i++)
         {
-            int type = br.ReadInt32();
+            TrackType type = (TrackType)br.ReadInt32();
             int quantity = br.ReadInt32();
-            amount.Add((TrackType)type, quantity);
+            amount.Add(type, quantity);
         }
         return amount;
     }

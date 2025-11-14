@@ -1,51 +1,85 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Sirenix.Utilities;
+using UnityEngine;
 
 
 [Serializable]
 public class TrackAmount
 {
-    
-    protected Dictionary<TrackType, int> values = new ();
-    public Dictionary<TrackType, int> Values => values;
+    [SerializeField] protected int order;
+    [SerializeField] protected int population;
+    [SerializeField] protected int food;
+    [SerializeField] protected int moral;
+    [SerializeField] protected int energy;
     
     public TrackAmount() { }
-    public TrackAmount(Dictionary<TrackType, int> values) { this.values = values; }
-    public TrackAmount(TrackType type, int amount) { this.values = new Dictionary<TrackType, int> {{type, amount}}; }
+    public TrackAmount(TrackType type, int amount) 
+        => Modify(type, _ => amount); 
+    public TrackAmount(Dictionary<TrackType, int> values)
+        => values.ForEach(x => Modify(x.Key, _ => x.Value));
 
     
-    public bool Has(TrackType type) => Values.ContainsKey(type);
-    public bool Has(IEnumerable<TrackType> type) => type.All(x => Values.ContainsKey(x)); 
-    public bool Has(TrackType type, int amount) 
-        => (Values.ContainsKey(type) || amount == 0) && Values[type] >= amount;
-    public bool Has(TrackAmount amount)
-        => amount.Values.All(x => Has(x.Key, x.Value));
+    public int Get(TrackType type)
+    {
+        switch (type)
+        {
+            case TrackType.Order: return order;
+            case TrackType.Population: return population;
+            case TrackType.Food: return food;
+            case TrackType.Moral: return moral;
+            case TrackType.Energy: return energy;
+            default: return 0;
+        }
+    }
+    public int Modify(TrackType type, Func<int, int> func)
+    {
+        switch (type)
+        {
+            case TrackType.Order: order = func.Invoke(order); return order;
+            case TrackType.Population: population = func.Invoke(population); return population;
+            case TrackType.Food: food = func.Invoke(food); return food;
+            case TrackType.Moral: moral = func.Invoke(moral); return moral;
+            case TrackType.Energy: energy = func.Invoke(energy); return energy;
+            default: return 0;
+        }
+    }
+
+    public Dictionary<TrackType, int> GetAll() => new() {
+        { TrackType.Order, order },
+        { TrackType.Population, population },
+        { TrackType.Food, food },
+        { TrackType.Moral, moral },
+        { TrackType.Energy, energy }
+    };
+    
+    public bool Has(TrackType type) => Get(type) > 0;
+    public bool Has(IEnumerable<TrackType> type) => type.All(x => Get(x) > 0); 
+    public bool Has(TrackType type, int amount) => Get(type) >= amount;
 
     
     public TrackAmount Add(TrackType type, int amount)
     {
-        Values.TryAdd(type, 0);
-        Values[type] += amount;
+        Modify(type, x => x + amount);
         return this;
     }
     public TrackAmount Add(TrackAmount amount) 
     {
-        foreach (var x in amount.Values.Keys)
-            Add(x, amount.Values[x]);
+        foreach (var x in amount.GetAll())
+            Add(x.Key, x.Value);
         return this;
     }
 
     public TrackAmount Subtract(TrackType type, int amount)
     {
-        Values.TryAdd(type, 0);
-        Values[type] -= amount;
+        Modify(type, x => x - amount);
         return this;
     }
     public TrackAmount Subtract(TrackAmount amount)
     {
-        foreach (var x in amount.Values.Keys)
-            Subtract(x, amount.Values[x]);
+        foreach (var x in amount.GetAll())
+            Subtract(x.Key, x.Value);
         return this;
     }
     

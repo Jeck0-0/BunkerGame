@@ -25,7 +25,7 @@ namespace Server
 
         public void ApplyModifier(TrackAmount amount)
         {
-            foreach (var mod in amount.Values)
+            foreach (var mod in amount.GetAll())
                 ModifyResource(mod.Key, mod.Value);
         }
 
