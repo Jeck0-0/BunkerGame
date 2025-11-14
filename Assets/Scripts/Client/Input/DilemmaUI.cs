@@ -36,6 +36,7 @@ public class DilemmaUI : Singleton<DilemmaUI>
 
     private Coroutine votingSlide;
     private Coroutine resultSlide;
+    private Dilemma currentDilema;
 
     void Start()
     {
@@ -71,9 +72,9 @@ public class DilemmaUI : Singleton<DilemmaUI>
     {
         ClearUI();
 
+        currentDilema = dilemma;
         votingUI.SetActive(true);
         votingHeader.text = dilemma.Title;
-        resultHeader.text = dilemma.Title;
         descriptionText.text = dilemma.Description;
         yesText.text = dilemma.YesDescription;
         noText.text = dilemma.NoDescription;
@@ -105,7 +106,10 @@ public class DilemmaUI : Singleton<DilemmaUI>
 
     public void DisplayResult(STC_DilemmaResult result)
     {
-        resultText.text = $"Winning Option: {result.WinningOption}";
+        resultHeader.text = currentDilema.Title;
+        
+        resultText.text = "Winning Option: ";
+        resultText.text += result.WinningOption == 0 ? currentDilema.YesDescription : currentDilema.NoDescription;
         ClientTracks.Instance.ApplyModifier(result.TrackModifier);
         resultBeingShown = true;
     }
@@ -123,6 +127,8 @@ public class DilemmaUI : Singleton<DilemmaUI>
 
         votingUI.SetActive(false);
         resultUI.SetActive(false);
+
+        currentDilema = null;
     }
 
     private void ExclusiveSignature(SignatureDrawer signedOne, SignatureDrawer other)
