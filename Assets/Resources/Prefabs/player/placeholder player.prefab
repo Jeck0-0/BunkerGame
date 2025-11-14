@@ -124,7 +124,7 @@ GameObject:
   - component: {fileID: 7592904183152475043}
   - component: {fileID: 5368041125333173963}
   m_Layer: 0
-  m_Name: tep player
+  m_Name: placeholder player
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
