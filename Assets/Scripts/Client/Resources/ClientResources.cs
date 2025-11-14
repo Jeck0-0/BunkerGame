@@ -40,7 +40,7 @@ namespace Client
 
         private void OnDestroy()
         {
-            NetworkManager.Client.Unsubscribe<STC_UpdateResources>(OnUpdateResources);
+            NetworkManager.Client?.Unsubscribe<STC_UpdateResources>(OnUpdateResources);
         }
 
         private void OnUpdateResources(BasePacket p)

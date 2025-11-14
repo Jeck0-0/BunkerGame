@@ -43,7 +43,8 @@ namespace Networking
         public override void Disconnect()
         {
             connected = false;
-            socket.Close();
+            if(socket != null)
+                socket.Close();
         }
 
         public override void Update()

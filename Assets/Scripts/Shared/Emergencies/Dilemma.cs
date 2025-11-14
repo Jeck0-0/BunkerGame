@@ -12,12 +12,16 @@ namespace Client
         [Header("Yes Consequence")]
         [TextArea(3, 10)] public string YesDescription;
         public TrackAmount YesTrackModifier;
+        public int YesMaterialsModifier;
+        public int YesInfluenceModifier;
         public string[] YesKeywordsToAdd;
         public string[] YesKeywordsToRemove;
 
         [Header("No Consequence")]
         [TextArea(3, 10)] public string NoDescription;
         public TrackAmount NoTrackModifier;
+        public int NoMaterialsModifier;
+        public int NoInfluenceModifier;
         public string[] NoKeywordsToAdd;
         public string[] NoKeywordsToRemove;
     }

@@ -39,8 +39,6 @@ namespace Client
                 // Apply resources immediately
                 ClientTracks.Instance.ApplyModifier(packet.TrackMod);
                 ClientResources.Instance.ModifyMaterials(packet.materialsMod);
-
-                CrisisUI.Instance.DisplayCrisisResult(packet.success, packet.TrackMod);
             }
 
             NetworkManager.Client.Subscribe<STC_CrisisResult>(OnCrisisResult);
@@ -51,8 +49,6 @@ namespace Client
             NetworkManager.Client.Unsubscribe<STC_CrisisResult>(OnCrisisResult);
 
             yield return new WaitForSeconds(3f);
-
-            CrisisUI.Instance.SlideOut();
             Debug.Log("Crisis finished: " + crisis.name);
         }
 
