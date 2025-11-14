@@ -12,7 +12,9 @@ public class DilemmaUI : Singleton<DilemmaUI>
     [SerializeField] TextMeshProUGUI votingHeader;
     [SerializeField] TextMeshProUGUI descriptionText;
     [SerializeField] TMP_InputField influenceField;
+    [SerializeField] TextMeshProUGUI yesText;
     [SerializeField] SignatureDrawer yesCheckBox;
+    [SerializeField] TextMeshProUGUI noText;
     [SerializeField] SignatureDrawer noCheckBox;
     [SerializeField] SignatureDrawer signature;
 
@@ -73,6 +75,8 @@ public class DilemmaUI : Singleton<DilemmaUI>
         votingHeader.text = dilemma.Title;
         resultHeader.text = dilemma.Title;
         descriptionText.text = dilemma.Description;
+        yesText.text = dilemma.YesDescription;
+        noText.text = dilemma.NoDescription;
 
         SlideIn(votingUI);
     }
@@ -85,6 +89,7 @@ public class DilemmaUI : Singleton<DilemmaUI>
         if (ClientResources.Instance.Influence < influenceSpent)
         {
             Debug.Log("Not enough influence!");
+            signature.ClearSignature();
             return;
         }
 

@@ -16,5 +16,7 @@ namespace Client
 
         [Tooltip("If true players commits are hidden")]
         public bool HiddenContributions = true;
+
+        public bool Repeatable = false;
     }
 }

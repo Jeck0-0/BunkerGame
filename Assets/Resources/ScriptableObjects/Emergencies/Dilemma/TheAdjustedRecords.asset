@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 210b644c3c204376a4252bbb4530c528, type: 3}
+  m_Name: TheAdjustedRecords
+  m_EditorClassIdentifier: Assembly-CSharp::Client.Dilemma
+  Title: The "adjusted" records
+  Description: A clerk suggests "editing" the supply logs to hide the shortfalls.
+  TimeToResolve: 120
+  HiddenContributions: 1
+  Repeatable: 0
+  Keyword: 
+  YesDescription: Aprove the "adjustment".
+  YesTrackModifier:
+    order: 0
+    population: 0
+    food: 0
+    moral: 2
+    energy: 0
+  YesMaterialsModifier: 0
+  YesInfluenceModifier: 0
+  YesKeywordsToAdd:
+  - Corruption
+  YesKeywordsToRemove: []
+  NoDescription: Reject it.
+  NoTrackModifier:
+    order: 1
+    population: 0
+    food: 0
+    moral: -1
+    energy: 0
+  NoMaterialsModifier: 0
+  NoInfluenceModifier: 0
+  NoKeywordsToAdd: []
+  NoKeywordsToRemove: []

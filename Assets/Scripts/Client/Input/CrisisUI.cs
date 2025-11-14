@@ -84,6 +84,7 @@ public class CrisisUI : Singleton<CrisisUI>
         if (ClientResources.Instance.Materials < amount)
         {
             Debug.Log("Not enough materials");
+            signature.ClearSignature();
             return;
         }
 
