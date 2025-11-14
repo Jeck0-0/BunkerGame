@@ -4,7 +4,7 @@ using Networking;
 
 namespace Client 
 {
-    public class ClientPlayers : Singleton<ClientPlayers>
+    public class ClientPlayers : PersistentSingleton<ClientPlayers>
     {
         Dictionary<uint, Player> Players = new();
 

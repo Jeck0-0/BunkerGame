@@ -1,3 +1,4 @@
+using Networking;
 using UnityEngine;
 
 public class PersistentSingleton<T> : MonoBehaviour where T : Component
@@ -15,11 +16,12 @@ public class PersistentSingleton<T> : MonoBehaviour where T : Component
         {
             if (instance == null)
             {
-                instance = FindAnyObjectByType<T>();
+                (FindAnyObjectByType<T>() as PersistentSingleton<T>)?.InitializeSingleton();
                 if (instance == null)
                 {
                     var go = new GameObject(typeof(T).Name + " Auto-Generated");
-                    instance = go.AddComponent<T>();
+                    var component = go.AddComponent<T>();
+                    (component as PersistentSingleton<T>)?.InitializeSingleton();
                 }
             }
 

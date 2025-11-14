@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Networking
 {
-    public class NetworkManager : Singleton<NetworkManager>
+    public class NetworkManager : PersistentSingleton<NetworkManager>
     {
         [SerializeField] protected Client client;
         [SerializeField] protected Server server;
