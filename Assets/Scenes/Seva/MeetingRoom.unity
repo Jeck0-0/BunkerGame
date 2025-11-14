@@ -2116,7 +2116,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 1
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -4931,6 +4931,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 767063539}
+  - component: {fileID: 767063540}
   m_Layer: 0
   m_Name: Enviroment
   m_TagString: Untagged
@@ -4956,6 +4957,21 @@ Transform:
   - {fileID: 1219750779}
   m_Father: {fileID: 555569609}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &767063540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 767063538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb11c86eefec4b84c97e53e7ee2eaa3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnviromentManager
+  crisisLights: {fileID: 722315196}
+  dilemmaLights: {fileID: 1214619157}
+  siren: {fileID: 8300000, guid: c4df6ca59311c724f84c02655696a697, type: 3}
 --- !u!1 &780580568
 GameObject:
   m_ObjectHideFlags: 0
@@ -9381,7 +9397,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 1
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

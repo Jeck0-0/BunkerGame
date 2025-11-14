@@ -171,7 +171,7 @@ namespace Server
 
             // Apply modifiers
             TrackAmount modifier = winningOption == 0 ? CurrentDilemma.YesTrackModifier  : CurrentDilemma.NoTrackModifier;
-            ServerTracks.Instance?.ApplyModifier(modifier);
+            ServerTracks.Instance.ApplyModifier(modifier);
             ApplyKeywordChanges(CurrentDilemma, winningOption == 0);
 
             // Send results

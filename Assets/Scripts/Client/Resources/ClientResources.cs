@@ -32,6 +32,28 @@ namespace Client
                 ClientResourcesUI.Instance.DisplayMaterialsIncome(change);
         }
 
+        public void SetInfluence(int amount)
+        {
+            int oldValue = Influence;
+            resources.SetInfluence(amount);
+            int change = Influence - oldValue;
+
+            ClientResourcesUI.Instance.UpdateInfluenceUI(Influence);
+            if (change != 0)
+                ClientResourcesUI.Instance.DisplayInfluenceIncome(change);
+        }
+
+        public void SetMaterials(int amount)
+        {
+            int oldValue = Materials;
+            resources.SetMaterials(amount);
+            int change = Materials - oldValue;
+
+            ClientResourcesUI.Instance.UpdateMaterialsUI(Materials);
+            if (change != 0)
+                ClientResourcesUI.Instance.DisplayMaterialsIncome(change);
+        }
+
         protected override void Awake()
         {
             NetworkManager.Client.Subscribe<STC_UpdateResources>(OnUpdateResources);
@@ -46,8 +68,8 @@ namespace Client
         private void OnUpdateResources(BasePacket p)
         {
             var packet = (STC_UpdateResources)p;
-            ModifyInfluence(packet.influence);
-            ModifyMaterials(packet.materials);
+            SetInfluence(packet.influence);
+            SetMaterials(packet.materials);
             Debug.Log($"[ClientResources] Updated: Materials = {Materials}, Influence = {Influence}");
         }
     }
