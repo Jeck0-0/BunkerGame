@@ -1,14 +1,16 @@
 using Packets;
 using System.Collections.Generic;
 using Networking;
+using Sirenix.OdinInspector;
 
 namespace Client 
 {
     public class ClientPlayers : PersistentSingleton<ClientPlayers>
     {
-        Dictionary<uint, Player> Players = new();
+        [ShowInInspector, ReadOnly] Dictionary<uint, Player> Players = new();
 
         public Player Get(uint playerId) => Players[playerId];
+        public IEnumerable<Player> GetAll() => Players.Values;
         
         protected override void Awake()
         {
@@ -18,7 +20,7 @@ namespace Client
 
         private void OnDestroy()
         {
-            NetworkManager.Client.Unsubscribe<STC_PlayerJoined>(OnPlayerJoined);
+            NetworkManager.Client?.Unsubscribe<STC_PlayerJoined>(OnPlayerJoined);
         }
 
         private void OnPlayerJoined(BasePacket p)

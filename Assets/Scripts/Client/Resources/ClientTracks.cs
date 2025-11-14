@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System;
+using Sirenix.OdinInspector;
 
 namespace Client
 {
@@ -8,7 +9,7 @@ namespace Client
         public int startValue = 5;
         public int maxValue = 10;
         
-        protected Dictionary<TrackType, int> values = new ();
+        [ShowInInspector, ReadOnly] protected Dictionary<TrackType, int> values = new ();
 
         public event Action<TrackType> ResourceReachedZero;
         

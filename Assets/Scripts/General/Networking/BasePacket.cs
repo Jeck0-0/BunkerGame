@@ -17,7 +17,8 @@ namespace Networking
         STC_StartEmergency = 102,
         STC_CrisisResult = 103,
         STC_DilemmaResult = 104,
-        STC_UpdateResources = 105
+        STC_UpdateResources = 105,
+        STC_UpdateTracks = 106,
     }
 
     public abstract class BasePacket

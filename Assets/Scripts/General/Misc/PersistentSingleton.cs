@@ -9,20 +9,17 @@ public class PersistentSingleton<T> : MonoBehaviour where T : Component
 
     public static bool HasInstance => instance != null;
     public static T TryGetInstance() => HasInstance ? instance : null;
-
+    private bool initialized = false;
+    
     public static T Instance
     {
         get
         {
             if (instance == null)
             {
-                (FindAnyObjectByType<T>() as PersistentSingleton<T>)?.InitializeSingleton();
-                if (instance == null)
-                {
-                    var go = new GameObject(typeof(T).Name + " Auto-Generated");
-                    var component = go.AddComponent<T>();
-                    (component as PersistentSingleton<T>)?.InitializeSingleton();
-                }
+                var a = FindAnyObjectByType<T>();
+                Debug.Log("a " + (a == null));
+                (a as PersistentSingleton<T>)?.InitializeSingleton();
             }
 
             return instance;
@@ -36,6 +33,9 @@ public class PersistentSingleton<T> : MonoBehaviour where T : Component
 
     protected virtual void InitializeSingleton()
     {
+        if (initialized) return;
+        initialized = true;
+        
         if (!Application.isPlaying) return;
 
         if (AutoUnparentOnAwake)

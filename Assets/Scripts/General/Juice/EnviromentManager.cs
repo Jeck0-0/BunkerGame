@@ -17,7 +17,7 @@ public class EnviromentManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        NetworkManager.Client.Unsubscribe<STC_StartEmergency>(OnStartEmergency);
+        NetworkManager.Client?.Unsubscribe<STC_StartEmergency>(OnStartEmergency);
     }
 
     private void OnStartEmergency(BasePacket packet)

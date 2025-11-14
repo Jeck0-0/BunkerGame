@@ -130,7 +130,6 @@ GameObject:
   - component: {fileID: 5169504}
   - component: {fileID: 5169503}
   - component: {fileID: 5169502}
-  - component: {fileID: 5169501}
   m_Layer: 0
   m_Name: NetworkManager
   m_TagString: Untagged
@@ -138,18 +137,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &5169501
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5169500}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e8f797622a4111498206d86c6e71747, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DontDestroy
 --- !u!114 &5169502
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -175,6 +162,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25ca430dad1a4c1c91927fe423557df2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NetworkManager
+  AutoUnparentOnAwake: 1
   client: {fileID: 11400000, guid: 104a35d56cf4b9f42a3ef183638025c9, type: 2}
   server: {fileID: 11400000, guid: a7a713f208398974f821693225fa20eb, type: 2}
 --- !u!4 &5169504
@@ -4928,6 +4916,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b06e2b45ed74b2a8665db4851a1f908, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Client.ClientPlayers
+  AutoUnparentOnAwake: 1
 --- !u!4 &761199651 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d94cbf98fa1d5b54c864c37e42ca4663, type: 3}

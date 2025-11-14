@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System;
+using Sirenix.OdinInspector;
 
 namespace Server
 {
@@ -8,7 +9,7 @@ namespace Server
         public int startValue = 5;
         public int maxValue = 10;
 
-        protected Dictionary<TrackType, int> values = new();
+        [ShowInInspector, ReadOnly] protected Dictionary<TrackType, int> values = new();
 
         public event Action<TrackType> ResourceReachedZero;
 
@@ -27,9 +28,11 @@ namespace Server
         {
             foreach (var mod in amount.GetAll())
                 ModifyResource(mod.Key, mod.Value);
+            
+            
         }
 
-        public void ModifyResource(TrackType type, int amount)
+        protected void ModifyResource(TrackType type, int amount)
         {
             values[type] += amount;
             if (values[type] >= maxValue) values[type] = maxValue;

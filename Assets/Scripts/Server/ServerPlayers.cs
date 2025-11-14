@@ -27,9 +27,12 @@ namespace Server
 
         private void OnDestroy()
         {
-            NetworkManager.Server.OnPlayerConnected -= PlayerConnected;
-            NetworkManager.Server.OnPlayerDisconnected -= PlayerDisconnected;
-            NetworkManager.Server.Unsubscribe<CTS_PlayerInformation>(GetPlayerInformation);
+            if (NetworkManager.Server != null)
+            {
+                NetworkManager.Server.OnPlayerConnected -= PlayerConnected;
+                NetworkManager.Server.OnPlayerDisconnected -= PlayerDisconnected;
+                NetworkManager.Server.Unsubscribe<CTS_PlayerInformation>(GetPlayerInformation);
+            }
         }
         
         protected void PlayerConnected(uint id)
@@ -37,7 +40,12 @@ namespace Server
             if (players.ContainsKey(id))
                 Debug.LogError("Duplicate player ID: " + id);
             
+            var allPlayers = GetAll();
+            
             players[id] = new Player(id);
+            
+            foreach (var player in allPlayers)
+                NetworkManager.Server.SendTo(id, new STC_PlayerJoined(player.id, player.username, player.emblemData));
             
             //TODO ?disconnect if doesn't send PlayerInformation within 2 seconds
         }

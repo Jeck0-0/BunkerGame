@@ -69,7 +69,7 @@ namespace Networking
         {
             foreach (var connection in connectionInfos)
                 connection.socket.Close();
-            serverSocket.Close();
+            serverSocket?.Close();
             connectionInfos.Clear();
         }
 
