@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: NamePlateMaterial
+  m_Name: ComputerMaterial
   m_Shader: {fileID: -6465566751694194690, guid: 9b90b20dee135d549beb49243643604b, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -38,7 +38,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _RenderTexture:
-        m_Texture: {fileID: 8400000, guid: c27bf4d58f703584391346334c773b5a, type: 2}
+        m_Texture: {fileID: 8400000, guid: 069d89c5d1625524d9b308aff60314c9, type: 2}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Scanlines:
@@ -66,7 +66,7 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ScanlinesResponse: 7
-    - _scanlinesTiling: -200
+    - _scanlinesTiling: 5
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
