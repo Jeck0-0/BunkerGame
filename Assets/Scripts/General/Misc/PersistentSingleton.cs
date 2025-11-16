@@ -16,11 +16,7 @@ public class PersistentSingleton<T> : MonoBehaviour where T : Component
         get
         {
             if (instance == null)
-            {
-                var a = FindAnyObjectByType<T>();
-                Debug.Log("a " + (a == null));
-                (a as PersistentSingleton<T>)?.InitializeSingleton();
-            }
+                (FindAnyObjectByType<T>() as PersistentSingleton<T>)?.InitializeSingleton();
 
             return instance;
         }
