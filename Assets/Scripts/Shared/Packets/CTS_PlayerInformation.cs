@@ -5,7 +5,7 @@ namespace Packets
 {
     public class CTS_PlayerInformation : BasePacket
     {
-        public override PacketType Type => PacketType.CTS_FactionInformation;
+        public override PacketType Type => PacketType.CTS_PlayerInformation;
 
         public string username;
         public EmblemData emblemData;

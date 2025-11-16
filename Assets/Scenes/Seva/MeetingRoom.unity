@@ -175,6 +175,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25ca430dad1a4c1c91927fe423557df2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NetworkManager
+  AutoUnparentOnAwake: 1
   client: {fileID: 11400000, guid: 104a35d56cf4b9f42a3ef183638025c9, type: 2}
   server: {fileID: 11400000, guid: a7a713f208398974f821693225fa20eb, type: 2}
 --- !u!4 &5169504
@@ -807,54 +808,6 @@ Transform:
   - {fileID: 1861173734}
   m_Father: {fileID: 25137800}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &81720091
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 81720092}
-  - component: {fileID: 81720093}
-  m_Layer: 0
-  m_Name: DilemmaPhase
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &81720092
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 81720091}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1255480446}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &81720093
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 81720091}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 238013fed3fc4db9ab377da5d805bf33, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Server.DilemmaPhase
-  dilemmaPool:
-  - {fileID: 11400000, guid: e5e4d5a24b13c6e4097175ce0334d38b, type: 2}
-  - {fileID: 11400000, guid: 1bdd26d868bbad84493384f66f4ccef8, type: 2}
-  dilemmaEndDelay: 2
 --- !u!1 &95076727
 GameObject:
   m_ObjectHideFlags: 0
@@ -2084,7 +2037,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1255480447}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Server.PhaseManager, Assembly-CSharp
         m_MethodName: GameStart
         m_Mode: 1
@@ -3240,7 +3193,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 365064147}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7fed9f5b6e69c304a803bac0d4dae3a6, type: 3}
   m_Name: 
@@ -4169,27 +4122,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 374414010175167967, guid: 94e6f5a17996b9e43ac61b931d0c1ee9, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 374414010175167967, guid: 94e6f5a17996b9e43ac61b931d0c1ee9, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 374414010175167967, guid: 94e6f5a17996b9e43ac61b931d0c1ee9, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 260
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 374414010175167967, guid: 94e6f5a17996b9e43ac61b931d0c1ee9, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 50
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 374414010175167967, guid: 94e6f5a17996b9e43ac61b931d0c1ee9, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 130
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 374414010175167967, guid: 94e6f5a17996b9e43ac61b931d0c1ee9, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -120
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 477428119910372000, guid: 94e6f5a17996b9e43ac61b931d0c1ee9, type: 3}
       propertyPath: m_SizeDelta.x
@@ -4229,27 +4182,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1081955118788068492, guid: 94e6f5a17996b9e43ac61b931d0c1ee9, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1081955118788068492, guid: 94e6f5a17996b9e43ac61b931d0c1ee9, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1081955118788068492, guid: 94e6f5a17996b9e43ac61b931d0c1ee9, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 260
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1081955118788068492, guid: 94e6f5a17996b9e43ac61b931d0c1ee9, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 50
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1081955118788068492, guid: 94e6f5a17996b9e43ac61b931d0c1ee9, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 130
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1081955118788068492, guid: 94e6f5a17996b9e43ac61b931d0c1ee9, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -185
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1095963679079989667, guid: 94e6f5a17996b9e43ac61b931d0c1ee9, type: 3}
       propertyPath: m_AnchorMax.x
@@ -4685,27 +4638,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7822576729479205967, guid: 94e6f5a17996b9e43ac61b931d0c1ee9, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7822576729479205967, guid: 94e6f5a17996b9e43ac61b931d0c1ee9, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7822576729479205967, guid: 94e6f5a17996b9e43ac61b931d0c1ee9, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 260
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7822576729479205967, guid: 94e6f5a17996b9e43ac61b931d0c1ee9, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 50
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7822576729479205967, guid: 94e6f5a17996b9e43ac61b931d0c1ee9, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 130
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7822576729479205967, guid: 94e6f5a17996b9e43ac61b931d0c1ee9, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -55
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8332951813045125839, guid: 94e6f5a17996b9e43ac61b931d0c1ee9, type: 3}
       propertyPath: m_AnchorMax.y
@@ -6637,6 +6590,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b06e2b45ed74b2a8665db4851a1f908, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Client.ClientPlayers
+  AutoUnparentOnAwake: 1
 --- !u!4 &761199651 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d94cbf98fa1d5b54c864c37e42ca4663, type: 3}
@@ -10020,7 +9974,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1255480446}
-  - component: {fileID: 1255480447}
   m_Layer: 0
   m_Name: ServerManagers
   m_TagString: Untagged
@@ -10041,32 +9994,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2069502964}
-  - {fileID: 81720092}
   - {fileID: 2103890609}
+  - {fileID: 1804365633}
   m_Father: {fileID: 79551688}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1255480447
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1255480445}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f914562278484972b819b35f359e3119, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Server.PhaseManager
-  crisisPhase: {fileID: 2069502965}
-  dilemmaPhase: {fileID: 81720093}
-  totalCrises: 5
-  minTurnsBetweenCrises: 1
-  baseCrisisChance: 0.2
-  crisisChanceGrowth: 0.15
-  maxCrisisChance: 1
-  economyDuration: 5
-  emergencyDelay: 5
 --- !u!1 &1264263342
 GameObject:
   m_ObjectHideFlags: 0
@@ -13446,6 +13377,107 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 618031f247da7f24c90da6fb42197136, type: 3}
+--- !u!1 &1804365632
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1804365633}
+  - component: {fileID: 1804365637}
+  - component: {fileID: 1804365636}
+  - component: {fileID: 1804365635}
+  - component: {fileID: 1804365634}
+  m_Layer: 0
+  m_Name: PhaseManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1804365633
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1804365632}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1255480446}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1804365634
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1804365632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09734c01d0824c2fb558960b90a5c507, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Server.CrisisPhase
+  crisisPool:
+  - {fileID: 11400000, guid: aabf4c6757676a3478587734146e47c9, type: 2}
+  - {fileID: 11400000, guid: 37506b8ec739944418bd00810f27f875, type: 2}
+  - {fileID: 11400000, guid: 08550e84ff8cb694fa898ca08c313842, type: 2}
+--- !u!114 &1804365635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1804365632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 238013fed3fc4db9ab377da5d805bf33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Server.DilemmaPhase
+  dilemmaPool:
+  - {fileID: 11400000, guid: e5e4d5a24b13c6e4097175ce0334d38b, type: 2}
+  - {fileID: 11400000, guid: 1bdd26d868bbad84493384f66f4ccef8, type: 2}
+  dilemmaEndDelay: 2
+--- !u!114 &1804365636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1804365632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f914562278484972b819b35f359e3119, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Server.PhaseManager
+  crisisPhase: {fileID: 0}
+  dilemmaPhase: {fileID: 0}
+  startOnAwake: 1
+  totalCrises: 5
+  minTurnsBetweenCrises: 1
+  baseCrisisChance: 0.2
+  crisisChanceGrowth: 0.15
+  maxCrisisChance: 1
+  economyDuration: 5
+  emergencyDelay: 5
+--- !u!114 &1804365637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1804365632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7f7f4bd076670f4f90e4e9de2dc142b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Server.KeywordManager
 --- !u!1001 &1810960617
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15624,54 +15656,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dba821ced23cbc3478e6783112ea4d53, type: 3}
---- !u!1 &2069502963
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2069502964}
-  - component: {fileID: 2069502965}
-  m_Layer: 0
-  m_Name: CrisisPhase
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2069502964
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2069502963}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1255480446}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2069502965
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2069502963}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09734c01d0824c2fb558960b90a5c507, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Server.CrisisPhase
-  crisisPool:
-  - {fileID: 11400000, guid: aabf4c6757676a3478587734146e47c9, type: 2}
-  - {fileID: 11400000, guid: 37506b8ec739944418bd00810f27f875, type: 2}
-  - {fileID: 11400000, guid: 08550e84ff8cb694fa898ca08c313842, type: 2}
 --- !u!4 &2078653893 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 05a6947e9537c6b49a35d1b3c216be74, type: 3}

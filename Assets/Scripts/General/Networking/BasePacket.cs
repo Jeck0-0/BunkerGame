@@ -6,10 +6,10 @@ namespace Networking
 {
     public enum PacketType
     {
-        None,
-        CTS_FactionInformation = 0,
-        CTS_ContributeToCrisis = 1,
-        CTS_VoteOnDilemma = 2,
+        None = 0,
+        CTS_PlayerInformation = 1,
+        CTS_ContributeToCrisis = 2,
+        CTS_VoteOnDilemma = 3,
 
 
         STC_PlayerJoined = 100,
@@ -34,7 +34,7 @@ namespace Networking
 
             switch (type)
             {
-                case PacketType.CTS_FactionInformation: return new CTS_PlayerInformation().Deserialize(br);
+                case PacketType.CTS_PlayerInformation: return new CTS_PlayerInformation().Deserialize(br);
                 case PacketType.CTS_VoteOnDilemma: return new CTS_VoteOnDilemma().Deserialize(br);
                 case PacketType.CTS_ContributeToCrisis: return new CTS_ContributeToCrisis().Deserialize(br);
 

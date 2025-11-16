@@ -1,8 +1,10 @@
+using System;
 using Networking;
 using Packets;
 using Sirenix.OdinInspector;
 using System.Collections;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Server
 {
@@ -10,7 +12,8 @@ namespace Server
     {
         public CrisisPhase crisisPhase;
         public DilemmaPhase dilemmaPhase;
-
+        public bool startOnAwake = true;
+        
         [Header("Game Settings")]
         public int totalCrises = 5;
         public int minTurnsBetweenCrises = 1;
@@ -32,6 +35,12 @@ namespace Server
             if (!crisisPhase) crisisPhase = GetComponent<CrisisPhase>();
             if (!dilemmaPhase) dilemmaPhase = GetComponent<DilemmaPhase>();
             ServerTracks.Instance.ResourceReachedZero += OnTrackReachedZero;
+        }
+
+        private void Start()
+        {
+            if(startOnAwake)
+                GameStart();
         }
 
         [Button]

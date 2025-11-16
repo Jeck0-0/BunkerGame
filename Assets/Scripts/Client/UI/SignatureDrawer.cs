@@ -19,7 +19,7 @@ public class SignatureDrawer : MonoBehaviour
 
     public event Action OnSigned;
 
-    void Start()
+    void Awake()
     {
         if (cam == null) cam = Camera.main;
         rectTransform = signatureDisplay.rectTransform;
