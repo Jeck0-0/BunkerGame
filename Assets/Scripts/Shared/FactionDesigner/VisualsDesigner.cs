@@ -6,8 +6,6 @@ using UnityEngine.UI;
 
 public class VisualsDesigner : MonoBehaviour
 {
-    public Transform temporaryTransform;
-
     [Header("Drop your designs here")]
     [SerializeField] List<BackgroundPattern> availablePatterns;
     [SerializeField] List<SymbolType> availableSymbols;
@@ -657,8 +655,6 @@ public class VisualsDesigner : MonoBehaviour
     {
         if (!canFinishFaction) return;
 
-        EmblemBuilder builder = FindAnyObjectByType<EmblemBuilder>();
-        builder.BuildUIEmblem(BuildEmblemPacket(), temporaryTransform, 1.2f, 1f);
     }
 
     #region Utilities
