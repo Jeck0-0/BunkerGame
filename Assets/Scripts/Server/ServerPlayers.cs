@@ -14,6 +14,7 @@ namespace Server
         public static Player Get(uint id) => Instance.players[id];
         public static IEnumerable<Player> GetAll() => Instance.players.Values;
 
+        protected List<int> occupiedSpots;
         public event Action<Player> OnPlayerQuit;
         
         protected override void Awake()
@@ -44,15 +45,23 @@ namespace Server
             
             players[id] = new Player(id);
             
-            foreach (var player in allPlayers)
-                NetworkManager.Server.SendTo(id, new STC_PlayerJoined(player.id, player.username, player.emblemData));
+            //find first free spot
+            int i = 0;
+            for (; i < 100 && occupiedSpots.Contains(i); i++) { }
+            players[id].spot = i;
+            occupiedSpots.Add(i);
             
+            foreach (var player in allPlayers)
+                NetworkManager.Server.SendTo(id, new STC_PlayerJoined(player.id, player.username, player.spot, player.emblemData));
+            
+            NetworkManager.Server.SendTo(id, new STC_JoinResponse(players[id].spot));
             //TODO ?disconnect if doesn't send PlayerInformation within 2 seconds
         }
         protected void PlayerDisconnected(uint id)
         {
             Debug.Log("Player left: " + id);
             OnPlayerQuit?.Invoke(Get(id));
+            occupiedSpots.Remove(players[id].spot);
             players.Remove(id);
         }
 
@@ -68,6 +77,7 @@ namespace Server
         public class Player
         {
             public uint id;
+            public int spot;
             public string username;
             public EmblemData emblemData;
             public PlayerResources resources = new PlayerResources();

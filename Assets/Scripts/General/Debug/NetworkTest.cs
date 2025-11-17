@@ -26,7 +26,7 @@ public class NetworkTest : MonoBehaviour
         //SERVER sends packet back
         CTS_PlayerInformation packet = p as CTS_PlayerInformation;
         
-        var responsePacket = new STC_PlayerJoined(playerId, packet.username, packet.emblemData);
+        var responsePacket = new STC_PlayerJoined(playerId, packet.username, 1, packet.emblemData);
         NetworkManager.Server.SendToAllExcept(playerId, responsePacket);
     }
 
