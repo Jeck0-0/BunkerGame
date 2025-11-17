@@ -13,7 +13,7 @@ namespace Networking
 
 
         STC_PlayerJoined = 100,
-        STC_StartEconomyPhase = 101,
+        STC_JoinResponse = 101,
         STC_StartEmergency = 102,
         STC_CrisisResult = 103,
         STC_DilemmaResult = 104,
@@ -39,10 +39,12 @@ namespace Networking
                 case PacketType.CTS_ContributeToCrisis: return new CTS_ContributeToCrisis().Deserialize(br);
 
                 case PacketType.STC_PlayerJoined: return new STC_PlayerJoined().Deserialize(br);
+                case PacketType.STC_JoinResponse: return new STC_JoinResponse().Deserialize(br);
                 case PacketType.STC_StartEmergency:   return new STC_StartEmergency().Deserialize(br);
                 case PacketType.STC_CrisisResult: return new STC_CrisisResult().Deserialize(br);
                 case PacketType.STC_DilemmaResult: return new STC_DilemmaResult().Deserialize(br);
                 case PacketType.STC_UpdateResources: return new STC_UpdateResources().Deserialize(br);
+                case  PacketType.STC_UpdateTracks: return new STC_UpdateTracks().Deserialize(br);
 
                 default: Debug.LogError("Unknown packet type: " + type);
                 return null;

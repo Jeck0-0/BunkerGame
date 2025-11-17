@@ -9,13 +9,15 @@ namespace Packets
 
         public uint playerId;
         public string username;
+        public int spot;
         public EmblemData emblemData;
 
         public STC_PlayerJoined() { }
-        public STC_PlayerJoined(uint playerId, string username, EmblemData emblemData)
+        public STC_PlayerJoined(uint playerId, string username, int spot, EmblemData emblemData)
         {
             this.playerId = playerId;
             this.username = username;
+            this.spot = spot;
             this.emblemData = emblemData;
         }
 
@@ -24,6 +26,7 @@ namespace Packets
             bw.Write((int)Type);
             bw.Write(playerId);
             bw.Write(username);
+            bw.Write(spot);
             PacketUtils.SerializeFactionData(bw, emblemData);
         }
 
@@ -31,6 +34,7 @@ namespace Packets
         {
             playerId = br.ReadUInt32();
             username = br.ReadString();
+            spot = br.ReadInt32();
             emblemData = PacketUtils.DeserializeFactionData(br);
             return this;
         }
