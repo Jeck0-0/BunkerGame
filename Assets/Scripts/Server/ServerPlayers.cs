@@ -51,10 +51,11 @@ namespace Server
             players[id].spot = i;
             occupiedSpots.Add(i);
             
+            NetworkManager.Server.SendTo(id, new STC_JoinResponse(players[id].spot));
+
             foreach (var player in allPlayers)
                 NetworkManager.Server.SendTo(id, new STC_PlayerJoined(player.id, player.username, player.spot, player.emblemData));
             
-            NetworkManager.Server.SendTo(id, new STC_JoinResponse(players[id].spot));
             //TODO ?disconnect if doesn't send PlayerInformation within 2 seconds
         }
         protected void PlayerDisconnected(uint id)
