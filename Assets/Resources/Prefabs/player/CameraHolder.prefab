@@ -362,7 +362,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3d3da3a2eb511140ba35b75f61ce17c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LookCamera
-  sensitivity: 50
+  sensitivity: 35
   returnSpeed: 6
   minYaw: -70
   maxYaw: 70

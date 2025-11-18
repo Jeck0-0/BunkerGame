@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MusicManager : MonoBehaviour
+public class MusicManager : Singleton<MusicManager>
 {
     [Header("Audio")]
     [SerializeField] AudioSource musicSource;
@@ -45,12 +45,6 @@ public class MusicManager : MonoBehaviour
         if (tapePlayer != null)
         player = tapePlayer;
         PlayNextTrack();
-    }
-
-    private void Awake()
-    {
-        if (musicSource == null)
-            Debug.LogWarning("No music source");
     }
 
     private void PrepareTapeQueue(Tape tape, bool shuffle = true)

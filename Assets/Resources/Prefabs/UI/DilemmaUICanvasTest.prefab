@@ -908,7 +908,7 @@ RectTransform:
   m_GameObject: {fileID: 2890359877695910195}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.02, y: 0.02, z: 0.02}
+  m_LocalScale: {x: 0.017, y: 0.017, z: 0.017}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1029600840618549918}
@@ -935,7 +935,9 @@ MonoBehaviour:
   votingHeader: {fileID: 446752261929381472}
   descriptionText: {fileID: 6049579428000184769}
   influenceField: {fileID: 3465181722579765272}
+  yesText: {fileID: 0}
   yesCheckBox: {fileID: 0}
+  noText: {fileID: 0}
   noCheckBox: {fileID: 0}
   signature: {fileID: 0}
   resultUI: {fileID: 6550433085495439970}
@@ -969,6 +971,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  lookAroundOffset: {x: 0, y: -4, z: 0}
+  lookAroundSpeed: 0.6
 --- !u!223 &6128152855409308598
 Canvas:
   m_ObjectHideFlags: 0
@@ -1014,7 +1018,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &8531325577532619792
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1444,6 +1444,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2924113223824547479}
+  - component: {fileID: 3035937481289128434}
   - component: {fileID: 4103026802015489574}
   m_Layer: 0
   m_Name: TapePlayer
@@ -1470,6 +1471,19 @@ Transform:
   - {fileID: 1697075940159624357}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3035937481289128434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5590361577412318831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4b87950ab74a424e8cf1cff665d5a0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TapePlayerInteractor
+  playerCamera: {fileID: 0}
 --- !u!114 &4103026802015489574
 MonoBehaviour:
   m_ObjectHideFlags: 0
