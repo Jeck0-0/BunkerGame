@@ -72,7 +72,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 95
+    m_Bits: 127
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: f004ede568e5b8142a45b712ff0d398a, type: 2}
   m_TargetDisplay: 0
@@ -362,7 +362,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3d3da3a2eb511140ba35b75f61ce17c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LookCamera
-  sensitivity: 50
+  sensitivity: 35
   returnSpeed: 6
   minYaw: -70
   maxYaw: 70

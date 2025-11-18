@@ -5,7 +5,6 @@ using TMPro;
 public class TapePlayer : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] MusicManager musicManager;
     [SerializeField] Transform tapeSlot;
     [SerializeField] TextMeshPro songName;
 
@@ -62,7 +61,7 @@ public class TapePlayer : MonoBehaviour
         yield return new WaitForSeconds(insertDelay);
 
         insertedTape = tape;
-        musicManager.InsertTape(tape, this);
+        MusicManager.Instance.InsertTape(tape, this);
         isPaused = false;
 
         isBusy = false;
@@ -71,8 +70,9 @@ public class TapePlayer : MonoBehaviour
     private IEnumerator EjectRoutine()
     {
         isBusy = true;
+        songName.text = "";
         tapeObject.gameObject.SetActive(true);
-        musicManager.StopCurrentMusic(0f);
+        MusicManager.Instance.StopCurrentMusic(0f);
 
         //AudioManager.Instance.PlaySound(ejectSound);
         yield return new WaitForSeconds(ejectDelay);
@@ -98,12 +98,12 @@ public class TapePlayer : MonoBehaviour
 
         if (isPaused)
         {
-            musicManager.ResumeMusic();
+            MusicManager.Instance.ResumeMusic();
             isPaused = false;
         }
         else
         {
-            musicManager.PauseMusic();
+            MusicManager.Instance.PauseMusic();
             isPaused = true;
         }
 
@@ -122,7 +122,7 @@ public class TapePlayer : MonoBehaviour
         //AudioManager.Instance.PlaySound(buttonClickSound);
         yield return new WaitForSeconds(buttonClickDelay);
 
-        musicManager.StopCurrentMusic();
+        MusicManager.Instance.StopCurrentMusic();
         isPaused = false;
 
         isBusy = false;
@@ -140,7 +140,7 @@ public class TapePlayer : MonoBehaviour
         //AudioManager.Instance.PlaySound(buttonClickSound);
         yield return new WaitForSeconds(buttonClickDelay);
 
-        musicManager.NextMusic();
+        MusicManager.Instance.NextMusic();
         isPaused = false;
 
         isBusy = false;
@@ -159,7 +159,7 @@ public class TapePlayer : MonoBehaviour
         yield return new WaitForSeconds(buttonClickDelay);
 
         isLooping = !isLooping;
-        musicManager.LoopTrack(isLooping);
+        MusicManager.Instance.LoopTrack(isLooping);
         Debug.Log($"TapePlayer: Loop mode {(isLooping ? "enabled" : "disabled")}");
 
         isBusy = false;

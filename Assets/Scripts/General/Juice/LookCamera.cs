@@ -72,6 +72,8 @@ public class LookCamera : MonoBehaviour
     private void Return()
     {
         transform.localRotation = Quaternion.Slerp(transform.localRotation, originalRotation, Time.deltaTime * returnSpeed);
+        yaw = transform.localRotation.eulerAngles.y;
+        pitch = transform.localRotation.eulerAngles.x;
 
         if (Quaternion.Angle(transform.localRotation, originalRotation) < 0.1f)
         {
