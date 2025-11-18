@@ -2,68 +2,107 @@ using UnityEngine;
 using System.Linq;
 using Server;
 using Client;
+using Packets;
+using Networking;
 public class PlayerSpawner : MonoBehaviour
 {
     [SerializeField]private GameObject PlayerObj;
-    //[SerializeField] private GameObject PlayerPlaque;
-    [SerializeField] private Transform[] Spawnpoints;
+    [SerializeField] private Transform[] seats;
+    [SerializeField] private Transform RMap;
 
     public int MaxPlayers = 6;
-    void Start()
+
+    private int mySpot = 0;
+    private bool KnowMe = false;
+    void Awake()
     {
-        SpawnAllPlayersFromServer();
+        NetworkManager.Client.Subscribe<STC_PlayerJoined>(NewPlayerSpawned);
+        NetworkManager.Client.Subscribe<STC_JoinResponse>(SpawnMe);
+        Debug.LogError("subscribed");
     }
 
+    private void OnDestroy()
+    {
+        try
+        {
+        NetworkManager.Client.Unsubscribe<STC_PlayerJoined>(NewPlayerSpawned);
+        NetworkManager.Client.Unsubscribe<STC_JoinResponse>(SpawnMe);
+        }
+        catch
+        {}
+    }
     void Update()
     {
         if (Input.GetKeyUp(KeyCode.S))
         {
-            SpawnAllPlayersFromServer();
+            
         }
     }
 
-    void SpawnAllPlayersFromServer()
+   private void SpawnMe(BasePacket p)
     {
-       if (Spawnpoints.Length == 0)
-       {
-           Debug.LogWarning("No waypoints assigned to PlayerSpawner!");
-           return;
-       }
+        Debug.LogError("Spawnme");
+        STC_JoinResponse playerInfo = (STC_JoinResponse)p;
 
-        GameObject[] existingPlayers = GameObject.FindGameObjectsWithTag("Player");
+        mySpot = playerInfo.spot;
+        KnowMe = true;
 
-        for (int i = 0; i < existingPlayers.Length; i++)
+        float MapRotation = (mySpot - 1) * 60f;
+
+        RMap.localRotation = Quaternion.Euler(0f, MapRotation, 0f);
+
+        SpawnExistingPlayers();
+    }
+
+    private void SpawnExistingPlayers()
+    {
+        ClientPlayers playerRegistry = ClientPlayers.Instance;
+
+        foreach (ClientPlayers.Player other in playerRegistry.GetOthers())
         {
-            Destroy(existingPlayers[i]);
+            int otherSpot = other.spot;    // their player number
+            SpawnAtSeat(otherSpot);
+        }
+    }
 
+    private void NewPlayerSpawned(BasePacket p)
+    {
+        Debug.LogError("spawning new player");
+        if (!KnowMe)
+        {
+            Debug.LogError("trying to spawn before I know myself.");
+            return;
+        }
+        STC_PlayerJoined playerInfo = (STC_PlayerJoined)p;
+
+        int otherSpot = playerInfo.spot;
+
+        SpawnAtSeat(otherSpot);
+
+    }
+
+    private void SpawnAtSeat(int otherSpot)
+    {
+       
+        int Pcount = ClientPlayers.Instance.GetAll().Count();
+
+        if (Pcount >= MaxPlayers) 
+        {
+            Debug.LogError($"max players reached {Pcount} out of {MaxPlayers}.");
+            return;
+        }
+        
+        int Seat = ((otherSpot - mySpot) + MaxPlayers) % MaxPlayers;
+
+        if (Seat < 0 || Seat >= seats.Length)
+        {
+            Debug.LogError($"Seat index {Seat} out of range.");
+            return;
         }
 
-        ServerPlayers.Player[] players = ServerPlayers
-            .GetAll()
-            .OrderBy(p => p.id)
-            .ToArray();
+        Transform seat = seats[Seat];
+        Instantiate(PlayerObj, seat.position, seat.rotation);
 
-        int SpawnCount = 0;
-
-        for(int i = 0;i < players.Length;i++)
-        {
-            if (i >= MaxPlayers)
-            {
-                Debug.Log("Max player of " + MaxPlayers + " reached");
-                break;
-            }
-
-            if (i >= Spawnpoints.Length)
-            {
-                Debug.LogWarning("Not enough spawnpoints for all players!");
-                break;
-            }
-            Transform waypoint = Spawnpoints[i];
-            Instantiate(PlayerObj, waypoint.position, waypoint.rotation);
-
-            SpawnCount++;
-        }
-
-        Debug.LogError(SpawnCount + "/" + MaxPlayers + " players spawned from server data.");
+        Debug.LogError($"spawning {otherSpot} at {Seat}");
     }
 }
