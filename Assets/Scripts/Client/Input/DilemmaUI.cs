@@ -127,7 +127,6 @@ public class DilemmaUI : Singleton<DilemmaUI>
         influenceField.interactable = false;
 
         SlideOut(votingUI);
-        SlideIn(resultUI);
     }
 
     public void DisplayResult(STC_DilemmaResult result)
@@ -137,6 +136,7 @@ public class DilemmaUI : Singleton<DilemmaUI>
         resultText.text = "Winning Option: ";
         resultText.text += result.WinningOption == 0 ? currentDilema.YesDescription : currentDilema.NoDescription;
         ClientTracks.Instance.ApplyModifier(result.TrackModifier);
+        SlideIn(resultUI);
         resultBeingShown = true;
     }
 
@@ -190,6 +190,7 @@ public class DilemmaUI : Singleton<DilemmaUI>
         {
             if (resultSlide != null) StopCoroutine(resultSlide);
             resultSlide = StartCoroutine(Slide(ui, false));
+            resultBeingShown = false;
         }
         else
         {
