@@ -14,7 +14,7 @@ namespace Server
         public static Player Get(uint id) => Instance.players[id];
         public static IEnumerable<Player> GetAll() => Instance.players.Values;
 
-        protected List<int> occupiedSpots;
+        protected List<int> occupiedSpots = new ();
         public event Action<Player> OnPlayerQuit;
         
         protected override void Awake()
@@ -47,7 +47,7 @@ namespace Server
             
             //find first free spot
             int i = 0;
-            for (; i < 100 && occupiedSpots.Contains(i); i++) { }
+            while (i < 100 && occupiedSpots.Contains(i)) i++;
             players[id].spot = i;
             occupiedSpots.Add(i);
             
