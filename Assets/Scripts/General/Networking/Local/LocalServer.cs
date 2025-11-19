@@ -86,8 +86,10 @@ namespace Networking
                 InvokePlayerConnected(ci.connectionId);
                 Debug.Log("[Server] Local client connected");
             }
-            catch
+            catch (Exception e)
             {
+                if (e is not SocketException)
+                    Debug.LogError(e);
             }
 
             try
@@ -112,7 +114,7 @@ namespace Networking
             }
             catch (Exception e)
             {
-                Debug.LogError(e.Message);
+                Debug.LogError("Error receiving the packet: " + e);
             }
         }
 
