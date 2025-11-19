@@ -2,11 +2,15 @@ using UnityEngine;
 
 public class TapePlayerInteractor : MonoBehaviour // for testing
 {
-    [SerializeField] private Camera playerCamera;
+    [SerializeField] Camera playerCamera;
 
     private TapePlayerButton hoveredButton;
     private TapeObject hoveredTape;
 
+    private void Awake()
+    {
+        if (playerCamera == null) playerCamera = Camera.main;
+    }
     void Update()
     {
         Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);

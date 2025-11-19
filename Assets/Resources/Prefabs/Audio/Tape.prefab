@@ -49,8 +49,8 @@ MonoBehaviour:
   tapeLabel: {fileID: 9075073929233957131}
   tapePlayer: {fileID: 0}
   tape: {fileID: 11400000, guid: 45cce556099e87b468c696f3402b8d00, type: 2}
-  buttonRenderer: {fileID: 7622774457379522301}
-  hoverColor: {r: 0, g: 1, b: 1, a: 1}
+  buttonRenderer: {fileID: 6095898994260330005}
+  hoverColor: {r: 1, g: 0.70980394, b: 0.45490196, a: 1}
 --- !u!65 &8612605099476004726
 BoxCollider:
   m_ObjectHideFlags: 0

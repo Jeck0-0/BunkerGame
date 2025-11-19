@@ -27,9 +27,17 @@ public class CrisisUI : Singleton<CrisisUI>
     [SerializeField] float slideDuration = 1.2f;
     [SerializeField] AnimationCurve slideCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
 
+    [Header("Look Around")]
+    [SerializeField] Vector3 lookAroundOffset = new Vector3(0, -4f, 0);
+    [SerializeField] Vector3 lookAroundRotation = new Vector3(50f, 0f, 0f);
+    [SerializeField] float lookAroundSpeed = 5f;
+
+    private bool documentIsOut = false;
     private bool resultBeingShown = false;
     private float resultTime;
     private bool contributingLocked;
+    private GameObject activeUI;
+    private bool isPeeking;
 
     private Coroutine crisisSlide;
     private Coroutine resultSlide;
@@ -46,6 +54,8 @@ public class CrisisUI : Singleton<CrisisUI>
 
     private void Update()
     {
+        if (documentIsOut) DocumentDown();
+
         if (signature.OnSignatureComplete())
             SubmitContribution();
 
@@ -58,6 +68,21 @@ public class CrisisUI : Singleton<CrisisUI>
             SlideOut(resultUI);
             resultTime = 0f;
             resultBeingShown = false;
+        }
+    }
+
+    private void DocumentDown()
+    {
+        if (activeUI != null)
+        {
+            if (Input.GetMouseButton(1)) isPeeking = true;
+            else isPeeking = false;
+
+            Vector3 targetPos = isPeeking ? tablePosition.position + lookAroundOffset : tablePosition.position;
+            Quaternion targetRot = isPeeking ? Quaternion.Euler(lookAroundRotation) : Quaternion.identity;
+
+            activeUI.transform.position = Vector3.Lerp(activeUI.transform.position, targetPos, Time.deltaTime * lookAroundSpeed);
+            activeUI.transform.rotation = Quaternion.Lerp(activeUI.transform.rotation, targetRot, Time.deltaTime * lookAroundSpeed);
         }
     }
 
@@ -125,6 +150,10 @@ public class CrisisUI : Singleton<CrisisUI>
 
     private void SlideIn(GameObject ui)
     {
+        activeUI = ui;
+        documentIsOut = false;
+        ui.transform.rotation = Quaternion.identity;
+
         if (ui == resultUI)
         {
             if (resultSlide != null) StopCoroutine(resultSlide);
@@ -139,6 +168,9 @@ public class CrisisUI : Singleton<CrisisUI>
 
     private void SlideOut(GameObject ui)
     {
+        if (activeUI == ui) activeUI = null;
+        documentIsOut = false;
+
         if (ui == resultUI)
         {
             if (resultSlide != null) StopCoroutine(resultSlide);
@@ -155,7 +187,7 @@ public class CrisisUI : Singleton<CrisisUI>
     {
         if (visible) ui.SetActive(true);
 
-        Vector3 start = visible ? offScreenPosition : tablePosition.position;
+        Vector3 start = visible ? offScreenPosition : ui.transform.position;
         Vector3 end = visible ? tablePosition.position : offScreenPosition;
 
         float t = 0f;
@@ -169,6 +201,7 @@ public class CrisisUI : Singleton<CrisisUI>
 
         ui.transform.position = end;
         if (!visible) ui.SetActive(false);
+        if (visible) documentIsOut = true;
     }
 
     private char OnlyDigits(string text, int charIndex, char addedChar)

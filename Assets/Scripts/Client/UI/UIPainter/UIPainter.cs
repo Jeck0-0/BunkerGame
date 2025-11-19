@@ -7,7 +7,7 @@ using UnityEditor;
 
 public class UIPainter : Singleton<UIPainter>
 {
-    [SerializeField] private PainterSettings settings;
+    [SerializeField] PainterSettings settings;
     public List<UIToPaint> uiToPaint = new List<UIToPaint>();
 
     private Color prevColor1, prevColor2, prevColor3;
