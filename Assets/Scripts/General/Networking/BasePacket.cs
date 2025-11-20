@@ -40,7 +40,7 @@ namespace Networking
 
                 case PacketType.STC_PlayerJoined: return new STC_PlayerJoined().Deserialize(br);
                 case PacketType.STC_JoinResponse: return new STC_JoinResponse().Deserialize(br);
-                case PacketType.STC_StartEmergency:   return new STC_StartEmergency().Deserialize(br);
+                case PacketType.STC_StartEmergency: return new STC_StartEmergency().Deserialize(br);
                 case PacketType.STC_CrisisResult: return new STC_CrisisResult().Deserialize(br);
                 case PacketType.STC_DilemmaResult: return new STC_DilemmaResult().Deserialize(br);
                 case PacketType.STC_UpdateResources: return new STC_UpdateResources().Deserialize(br);

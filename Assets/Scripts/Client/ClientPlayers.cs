@@ -33,6 +33,7 @@ namespace Client
 
         private void OnJoinResponse(BasePacket p)
         {
+            UnityEngine.Debug.LogError("JOIN RESPONSE RECEIVED IN CLIENTPLAYERS");
             STC_JoinResponse packet = p as STC_JoinResponse;
             myself = new Player(999);
             myself.spot = packet.spot;
@@ -44,6 +45,7 @@ namespace Client
             Players.Add(packet.playerId, new Player(packet.playerId));
             Players[packet.playerId].emblemData = packet.emblemData;
             Players[packet.playerId].username = packet.username;
+            Players[packet.playerId].spot = packet.spot;
         }
 
 

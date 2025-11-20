@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using Sirenix.OdinInspector;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Networking
@@ -14,7 +16,7 @@ namespace Networking
         Socket serverSocket;
         int port = 6969;
 
-        private List<ConnectionInfo> connectionInfos = new();
+        [ShowInInspector, ReadOnly, DoNotSerialize] private List<ConnectionInfo> connectionInfos = new();
 
         private string currentLevel;
         private List<string> winners;
@@ -86,8 +88,10 @@ namespace Networking
                 InvokePlayerConnected(ci.connectionId);
                 Debug.Log("[Server] Local client connected");
             }
-            catch
+            catch (Exception e)
             {
+                if (e is not SocketException)
+                    Debug.LogError(e);
             }
 
             try
@@ -112,7 +116,7 @@ namespace Networking
             }
             catch (Exception e)
             {
-                Debug.LogError(e.Message);
+                Debug.LogError("Error receiving the packet: " + e);
             }
         }
 

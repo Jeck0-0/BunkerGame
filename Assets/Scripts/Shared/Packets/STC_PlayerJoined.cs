@@ -16,7 +16,7 @@ namespace Packets
         public STC_PlayerJoined(uint playerId, string username, int spot, EmblemData emblemData)
         {
             this.playerId = playerId;
-            this.username = username;
+            this.username = username ?? string.Empty;
             this.spot = spot;
             this.emblemData = emblemData;
         }
