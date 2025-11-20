@@ -36,7 +36,7 @@ namespace Networking
 
         protected void HandlePacket(BasePacket packet)
         {
-            Debug.Log($"[Client] Received packet from server: {packet.Type}");
+            Debug.LogError($"[Client] Received packet from server: {packet.Type}");
 
             if (_subscribers.TryGetValue(packet.GetType(), out var callbacks))
                 foreach (var callback in callbacks)

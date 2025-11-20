@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using Sirenix.OdinInspector;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Networking
@@ -14,7 +16,7 @@ namespace Networking
         Socket serverSocket;
         int port = 6969;
 
-        private List<ConnectionInfo> connectionInfos = new();
+        [ShowInInspector, ReadOnly, DoNotSerialize] private List<ConnectionInfo> connectionInfos = new();
 
         private string currentLevel;
         private List<string> winners;

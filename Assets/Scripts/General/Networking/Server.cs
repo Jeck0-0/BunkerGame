@@ -53,7 +53,7 @@ namespace Networking
 
         protected void HandlePacket(uint connectionId, BasePacket packet)
         {
-            Debug.Log($"[SERVER] Received packet from {connectionId}: {packet.Type}");
+            Debug.LogError($"[SERVER] Received packet from {connectionId}: {packet.Type}");
 
             if (_subscribers.TryGetValue(packet.GetType(), out var callbacks))
                 foreach (var callback in callbacks)
