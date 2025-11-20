@@ -27,12 +27,12 @@ public class PlayerSpawner : MonoBehaviour
             playerRegistry.OnSpotReceived += SpawnMe;
         }
 
-        if (playerRegistry.Myself == null)
+        /*if (playerRegistry.Myself == null)
         {
-            Debug.LogError("Error: Myself is still null when entering the scene!");
+            Debug.Log("Error: Myself is still null when entering the scene!");
             return;
-        }
-        Debug.LogError("subscribed");
+        }*/
+        //Debug.Log("subscribed");
     }
 
     private void OnDestroy()
@@ -58,8 +58,8 @@ public class PlayerSpawner : MonoBehaviour
 
    private void SpawnMe()
     {
-        Debug.LogError($"My spot in ClientPlayers: {playerRegistry.Myself?.spot}");
-        Debug.LogError("Spawnme");
+        //Debug.Log($"My spot in ClientPlayers: {playerRegistry.Myself?.spot}");
+        //Debug.Log("Spawnme");
 
         mySpot = playerRegistry.Myself.spot;
         KnowMe = true;
@@ -81,11 +81,11 @@ public class PlayerSpawner : MonoBehaviour
 
     private void NewPlayerSpawned(BasePacket p)
     {
-        Debug.LogError("spawning new player");
+        //Debug.Log("spawning new player");
 
         if (!KnowMe)
         {
-            Debug.LogError("trying to spawn before I know myself.");
+            Debug.LogWarning("trying to spawn before I know myself.");
             return;
         }
         
@@ -101,7 +101,7 @@ public class PlayerSpawner : MonoBehaviour
 
         if (Pcount >= MaxPlayers) 
         {
-            Debug.LogError($"max players reached {Pcount} out of {MaxPlayers}.");
+            Debug.LogWarning($"max players reached {Pcount} out of {MaxPlayers}.");
             return;
         }
         
@@ -109,13 +109,13 @@ public class PlayerSpawner : MonoBehaviour
 
         if (Seat < 0 || Seat >= seats.Length)
         {
-            Debug.LogError($"Seat index {Seat} out of range.");
+            Debug.LogWarning($"Seat index {Seat} out of range.");
             return;
         }
 
         Transform seat = seats[Seat];
         Instantiate(PlayerObj, seat.position, seat.rotation);
 
-        Debug.LogError($"spawning {otherSpot} at {Seat}");
+        //Debug.Log($"spawning {otherSpot} at {Seat}");
     }
 }
