@@ -4,8 +4,9 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour
 {
-    [SerializeField] Animator anim;
     [SerializeField] GameObject obj;
+    [SerializeField] CanvasGroup canvasGroup;
+    [SerializeField] float transitionDuration;
 
     private static SceneLoader _instance;
 
@@ -48,10 +49,6 @@ public class SceneLoader : MonoBehaviour
         if (obj)
         obj.SetActive(true);
     }
-    public void CloseGame()
-    {
-        Application.Quit();
-    }
     public void LoadScene(string name)
     {
         StartCoroutine(TransitionToScene(name));
@@ -66,13 +63,9 @@ public class SceneLoader : MonoBehaviour
     }
     IEnumerator TransitionToScene(string name = "", int buildIndex = -1)
     {
-        if (anim)
-        anim.SetTrigger("Start");
+        if (canvasGroup) yield return StartCoroutine(FadeCanvas(1f));
 
         yield return new WaitForSeconds(1);
-
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
 
         if (name != "")
         SceneManager.LoadScene(name);
@@ -81,9 +74,25 @@ public class SceneLoader : MonoBehaviour
 
         // Wait until the new scene is fully loaded
         yield return null;
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.1f);
 
-        if (anim)
-        anim.SetTrigger("End");
+        if (canvasGroup) yield return StartCoroutine(FadeCanvas(0f));
+    }
+
+    private IEnumerator FadeCanvas(float targetAlpha)
+    {
+        if (canvasGroup == null) yield break;
+
+        float startAlpha = canvasGroup.alpha;
+        float time = 0f;
+
+        while (time < transitionDuration)
+        {
+            time += Time.deltaTime;
+            canvasGroup.alpha = Mathf.Lerp(startAlpha, targetAlpha, time / transitionDuration);
+            yield return null;
+        }
+
+        canvasGroup.alpha = targetAlpha;
     }
 }
