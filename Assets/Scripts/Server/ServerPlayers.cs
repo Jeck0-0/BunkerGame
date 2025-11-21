@@ -41,8 +41,6 @@ namespace Server
             if (players.ContainsKey(id))
                 Debug.LogError("Duplicate player ID: " + id);
             
-            var allPlayers = GetAll();
-            
             players[id] = new Player(id);
             
             //find first free spot
@@ -53,8 +51,9 @@ namespace Server
             
             NetworkManager.Server.SendTo(id, new STC_JoinResponse(players[id].spot));
 
-            foreach (var player in allPlayers)
-                NetworkManager.Server.SendTo(id, new STC_PlayerJoined(player.id, player.username, player.spot, player.emblemData));
+            foreach (var player in GetAll())
+                if(player.id != id)
+                    NetworkManager.Server.SendTo(id, new STC_PlayerJoined(player.id, player.username, player.spot, player.emblemData));
             
             //TODO ?disconnect if doesn't send PlayerInformation within 2 seconds
         }
@@ -66,11 +65,12 @@ namespace Server
             players.Remove(id);
         }
 
-        private void GetPlayerInformation(uint playerId, BasePacket p)
+        private void GetPlayerInformation(uint id, BasePacket p)
         {
             CTS_PlayerInformation playerInfo = (CTS_PlayerInformation)p;
-            players[playerId].emblemData = playerInfo.emblemData;
-            players[playerId].username = playerInfo.username;
+            players[id].emblemData = playerInfo.emblemData;
+            players[id].username = playerInfo.username;
+            NetworkManager.Server.SendToAllExcept(id, new STC_PlayerJoined(id, players[id].username, players[id].spot, players[id].emblemData));
         }
         
         
@@ -79,8 +79,8 @@ namespace Server
         {
             public uint id;
             public int spot;
-            public string username;
-            public EmblemData emblemData;
+            public string username = string.Empty;
+            public EmblemData emblemData = new EmblemData();
             public PlayerResources resources = new PlayerResources();
 
             public Player(uint id)
