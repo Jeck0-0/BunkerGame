@@ -16,7 +16,7 @@ public class TapePlayer : MonoBehaviour
     [Header("Sounds")]
     [SerializeField] AudioClip insertSound;
     [SerializeField] AudioClip ejectSound;
-    [SerializeField] AudioClip buttonClickSound;
+    [SerializeField] AudioClip[] buttonClickSounds;
 
     private AudioClip currentSong;
     private Tape insertedTape;
@@ -44,11 +44,8 @@ public class TapePlayer : MonoBehaviour
 
     public void EjectTape()
     {
-        if (isBusy || !HasTape)
-        {
-            //AudioManager.Instance.PlaySound(buttonClickSound);
-            return;
-        }
+        if (buttonClickSounds.Length > 0) AudioManager.Instance.PlayRandomSound(buttonClickSounds, 1f);
+        if (isBusy || !HasTape) return;
 
         StartCoroutine(EjectRoutine());
     }
@@ -86,6 +83,7 @@ public class TapePlayer : MonoBehaviour
 
     public void PlayOrPause()
     {
+        if (buttonClickSounds.Length > 0) AudioManager.Instance.PlayRandomSound(buttonClickSounds, 1f);
         if (!HasTape || isBusy) return;
         StartCoroutine(PlayPauseRoutine());
     }
@@ -93,7 +91,7 @@ public class TapePlayer : MonoBehaviour
     private IEnumerator PlayPauseRoutine()
     {
         isBusy = true;
-        //AudioManager.Instance.PlaySound(buttonClickSound);
+
         yield return new WaitForSeconds(buttonClickDelay);
 
         if (isPaused)
@@ -112,6 +110,7 @@ public class TapePlayer : MonoBehaviour
 
     public void Stop()
     {
+        if (buttonClickSounds.Length > 0) AudioManager.Instance.PlayRandomSound(buttonClickSounds, 1f);
         if (!HasTape || isBusy) return;
         StartCoroutine(StopRoutine());
     }
@@ -119,7 +118,7 @@ public class TapePlayer : MonoBehaviour
     private IEnumerator StopRoutine()
     {
         isBusy = true;
-        //AudioManager.Instance.PlaySound(buttonClickSound);
+
         yield return new WaitForSeconds(buttonClickDelay);
 
         MusicManager.Instance.StopCurrentMusic();
@@ -130,6 +129,7 @@ public class TapePlayer : MonoBehaviour
 
     public void NextTrack()
     {
+        if (buttonClickSounds.Length > 0) AudioManager.Instance.PlayRandomSound(buttonClickSounds, 1f);
         if (!HasTape || isBusy) return;
         StartCoroutine(NextTrackRoutine());
     }
@@ -137,7 +137,7 @@ public class TapePlayer : MonoBehaviour
     private IEnumerator NextTrackRoutine()
     {
         isBusy = true;
-        //AudioManager.Instance.PlaySound(buttonClickSound);
+
         yield return new WaitForSeconds(buttonClickDelay);
 
         MusicManager.Instance.NextMusic();
@@ -148,6 +148,7 @@ public class TapePlayer : MonoBehaviour
 
     public void ToggleLoop()
     {
+        if (buttonClickSounds.Length > 0) AudioManager.Instance.PlayRandomSound(buttonClickSounds, 1f);
         if (!HasTape || isBusy) return;
         StartCoroutine(LoopRoutine());
     }
@@ -155,7 +156,7 @@ public class TapePlayer : MonoBehaviour
     private IEnumerator LoopRoutine()
     {
         isBusy = true;
-        //AudioManager.Instance.PlaySound(buttonClickSound);
+
         yield return new WaitForSeconds(buttonClickDelay);
 
         isLooping = !isLooping;

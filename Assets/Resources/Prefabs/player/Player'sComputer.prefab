@@ -1055,6 +1055,22 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: -0.16
       objectReference: {fileID: 0}
+    - target: {fileID: 4103026802015489574, guid: fc5591209ef0b6448b06ee6e1d1409d9, type: 3}
+      propertyPath: buttonClickSounds.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4103026802015489574, guid: fc5591209ef0b6448b06ee6e1d1409d9, type: 3}
+      propertyPath: 'buttonClickSounds.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: ee131e38ac9820643937f9ba2a037de4, type: 3}
+    - target: {fileID: 4103026802015489574, guid: fc5591209ef0b6448b06ee6e1d1409d9, type: 3}
+      propertyPath: 'buttonClickSounds.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: dd88fced60c5fae43a0b0075f51a7629, type: 3}
+    - target: {fileID: 4103026802015489574, guid: fc5591209ef0b6448b06ee6e1d1409d9, type: 3}
+      propertyPath: 'buttonClickSounds.Array.data[2]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 17ed73cf30fdef34a971785b9a9b44af, type: 3}
     - target: {fileID: 4166103202740231609, guid: fc5591209ef0b6448b06ee6e1d1409d9, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.2

@@ -352,7 +352,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: <color=red>In The Ground
+  m_text: In The Ground
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: da05aa90ea7af564c8547dd0cfa0cfa5, type: 2}
   m_sharedMaterial: {fileID: 5089552237919125498, guid: da05aa90ea7af564c8547dd0cfa0cfa5, type: 2}
@@ -463,8 +463,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Highlight
   colorA: {r: 1, g: 0, b: 0, a: 1}
-  colorB: {r: 0.41509432, g: 0.016613165, b: 0, a: 1}
-  duration: 0.05
+  colorB: {r: 0.81761, g: 0.029912561, b: 0, a: 1}
+  duration: 0.1
 --- !u!1 &772951284
 GameObject:
   m_ObjectHideFlags: 0
