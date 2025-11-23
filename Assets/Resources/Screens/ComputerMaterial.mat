@@ -59,7 +59,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Brightnes: 3
+    - _Brightnes: 4
     - _Noise: 0
     - _NoiseResponse: 22.2
     - _NoiseScale: 3.43

@@ -1,6 +1,7 @@
 using Client;
 using Networking;
 using Packets;
+using System.Collections;
 using UnityEngine;
 
 public class EnviromentManager : MonoBehaviour
@@ -38,9 +39,8 @@ public class EnviromentManager : MonoBehaviour
     {
         if (Crisis) return;
 
-        if (siren) AudioManager.Instance.PlaySound(siren, 0.3f, null, true);
-        crisisLights.SetActive(true);
-        dilemmaLights.SetActive(false);
+        StartCoroutine(CrisisBuildUp());
+
         Crisis = true;
     }
     public void OnDilemma()
@@ -51,6 +51,16 @@ public class EnviromentManager : MonoBehaviour
         crisisLights.SetActive(false);
         dilemmaLights.SetActive(true);
         Crisis = false;
+    }
+
+    private IEnumerator CrisisBuildUp()
+    {
+        dilemmaLights.SetActive(false);
+
+        yield return new WaitForSeconds(1.5f);
+
+        crisisLights.SetActive(true);
+        if (siren) AudioManager.Instance.PlaySound(siren, 0.3f, null, true);
     }
     // for testing
     private void Update()
