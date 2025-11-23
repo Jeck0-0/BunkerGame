@@ -13,7 +13,8 @@ public class ComputerManager : Singleton<ComputerManager>
     [SerializeField] Transform upPosition;
     [SerializeField] Transform downPosition;
     [SerializeField] float slideDuration = 1.2f;
-    [SerializeField] AnimationCurve slideCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
+    [SerializeField] AnimationCurve slideUpCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
+    [SerializeField] AnimationCurve slideDownCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
 
     [SerializeField] GameObject leftDoor;
     [SerializeField] GameObject rightDoor;
@@ -122,7 +123,7 @@ public class ComputerManager : Singleton<ComputerManager>
         {
             t += Time.deltaTime;
             float normalized = Mathf.Clamp01(t / slideDuration);
-            float curved = slideCurve.Evaluate(normalized);
+            float curved = up ? slideUpCurve.Evaluate(normalized) : slideDownCurve.Evaluate(normalized);
 
             computer.transform.position = Vector3.LerpUnclamped(startPos, endPos, curved);
             yield return null;
