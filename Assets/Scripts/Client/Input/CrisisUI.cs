@@ -125,16 +125,16 @@ public class CrisisUI : Singleton<CrisisUI>
         contributionField.interactable = false;
 
         SlideOut(crisisUI);
-        SlideIn(resultUI);
     }
 
     public void DisplayCrisisResult(bool success, TrackAmount trackMod)
     {
-        string resultText = success ? "<color=green>SUCCESS</color>" : "<color=red>FAILURE</color>";
-        infoText.text = $"Crisis Result: {resultText}";
+        string result = success ? "<color=green>SUCCESS</color>" : "<color=red>FAILURE</color>";
+        resultText.text = $"Crisis Result: {result}";
 
         ClientTracks.Instance.ApplyModifier(trackMod);
         resultBeingShown = true;
+        SlideIn(resultUI);
     }
     private void ResetUI()
     {
@@ -175,6 +175,7 @@ public class CrisisUI : Singleton<CrisisUI>
         {
             if (resultSlide != null) StopCoroutine(resultSlide);
             resultSlide = StartCoroutine(Slide(ui, false));
+            resultBeingShown = false;
         }
         else
         {

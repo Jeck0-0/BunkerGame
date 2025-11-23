@@ -11,7 +11,7 @@ namespace Server
 {
     public class DilemmaPhase : MonoBehaviour
     {
-        public Dilemma[] dilemmaPool;
+        private List<Dilemma> dilemmaPool;
         public float dilemmaEndDelay = 2f;
         protected Dilemma CurrentDilemma;
 
@@ -27,7 +27,8 @@ namespace Server
 
         private void Awake()
         {
-            dilemmaPool = Resources.LoadAll<Dilemma>("ScriptableObjects/Emergencies/Dilemma");
+            var loadedDilemmas = Resources.LoadAll<Dilemma>("ScriptableObjects/Emergencies/Dilemma");
+            dilemmaPool = new List<Dilemma>(loadedDilemmas);
         }
 
         public IEnumerator PlayPhase()
@@ -53,7 +54,7 @@ namespace Server
         protected void StartRandomDilemma()
         {
             // Get random dilemma
-            if (dilemmaPool == null || dilemmaPool.Length == 0) Debug.LogError("No dilemmas in pool");
+            if (dilemmaPool == null || dilemmaPool.Count == 0) Debug.LogError("No dilemmas in pool");
             CurrentDilemma = GetRandomAccessibleDilemma();
 
             if (CurrentDilemma == null)
@@ -62,6 +63,8 @@ namespace Server
                 return;
             }
 
+            if (!CurrentDilemma.Repeatable)
+                dilemmaPool.Remove(CurrentDilemma);
 
             // Send Dilemma start packet
             STC_StartEmergency packet = new STC_StartEmergency(CurrentDilemma, DateTime.Now.Ticks);

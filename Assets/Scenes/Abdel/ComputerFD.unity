@@ -10750,7 +10750,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 082717dbe01fce34a848fd25a581ee2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::VisualsDesigner
-  temporaryTransform: {fileID: 1084041360}
   availablePatterns:
   - {fileID: 11400000, guid: aff4fc9169b80ac4f88bcfbf7146a831, type: 2}
   - {fileID: 11400000, guid: 7ffd890e5a383b24d9c59146ab9c6ab6, type: 2}

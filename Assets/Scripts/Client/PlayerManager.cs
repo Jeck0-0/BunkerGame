@@ -1,12 +1,13 @@
-using UnityEngine;
-using System.Linq;
-using System;
 using Client;
-using Packets;
 using Networking;
-public class PlayerSpawner : MonoBehaviour
+using Packets;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
+public class PlayerManager : MonoBehaviour
 {
-    [SerializeField]private GameObject PlayerObj;
+    public static PlayerManager Instance;
+    [SerializeField] private GameObject PlayerObj;
     [SerializeField] private Transform[] seats;
     [SerializeField] private Transform RMap;
 
@@ -14,8 +15,15 @@ public class PlayerSpawner : MonoBehaviour
     private ClientPlayers playerRegistry = ClientPlayers.Instance;
     private int mySpot = 0;
     private bool KnowMe = false;
+
+    public Dictionary<int, PlayerInstance> PlayerGNS;
+
     void Awake()
     {
+        Instance = this;
+
+        PlayerGNS = new Dictionary<int, PlayerInstance>();
+
         NetworkManager.Client.Subscribe<STC_PlayerJoined>(NewPlayerSpawned);
 
         if (playerRegistry.Myself != null)
@@ -41,22 +49,22 @@ public class PlayerSpawner : MonoBehaviour
         {
             NetworkManager.Client.Unsubscribe<STC_PlayerJoined>(NewPlayerSpawned);
             if (ClientPlayers.Instance != null)
-            { 
+            {
                 ClientPlayers.Instance.OnSpotReceived -= SpawnMe;
             }
-                
+
         }
         catch
-        {}
+        { }
     }
     void Update()
     {
         if (Input.GetKeyUp(KeyCode.S))
-        { SpawnMe();}
-        
+        { SpawnMe(); }
+
     }
 
-   private void SpawnMe()
+    private void SpawnMe()
     {
         //Debug.Log($"My spot in ClientPlayers: {playerRegistry.Myself?.spot}");
         //Debug.Log("Spawnme");
@@ -88,7 +96,7 @@ public class PlayerSpawner : MonoBehaviour
             Debug.LogWarning("trying to spawn before I know myself.");
             return;
         }
-        
+
         STC_PlayerJoined playerInfo = (STC_PlayerJoined)p;
         int otherSpot = playerInfo.spot;
 
@@ -99,12 +107,12 @@ public class PlayerSpawner : MonoBehaviour
     {
         int Pcount = ClientPlayers.Instance.GetAll().Count();
 
-        if (Pcount >= MaxPlayers) 
+        if (Pcount >= MaxPlayers)
         {
             Debug.LogWarning($"max players reached {Pcount} out of {MaxPlayers}.");
             return;
         }
-        
+
         int Seat = ((otherSpot - mySpot) + MaxPlayers) % MaxPlayers;
 
         if (Seat < 0 || Seat >= seats.Length)
@@ -114,8 +122,30 @@ public class PlayerSpawner : MonoBehaviour
         }
 
         Transform seat = seats[Seat];
-        Instantiate(PlayerObj, seat.position, seat.rotation);
+        GameObject obj = Instantiate(PlayerObj, seat.position, seat.rotation);
 
+        PlayerInstance instance = new PlayerInstance
+        {
+            info = ClientPlayers.Instance.GetAll().First(p => p.spot == otherSpot),
+            obj = obj
+        };
+        PlayerGNS.Add(otherSpot, instance);
         //Debug.Log($"spawning {otherSpot} at {Seat}");
     }
+    public void RemovePlayerObject(int spot)
+    {
+        try
+        {
+        Destroy(PlayerGNS[spot].obj);
+        PlayerGNS.Remove(spot);
+        }
+        catch {}
+
+        Debug.Log($"Destroyed player at spot {spot}");
+    }
+}
+public class PlayerInstance
+{
+    public ClientPlayers.Player info;
+    public GameObject obj;
 }

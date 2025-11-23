@@ -1,6 +1,8 @@
-using System.Collections.Generic;
-using System;
 using Sirenix.OdinInspector;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using UnityEngine;
 
 namespace Server
 {
@@ -37,6 +39,11 @@ namespace Server
             values[type] += amount;
             if (values[type] >= maxValue) values[type] = maxValue;
             if (values[type] <= 0) ResourceReachedZero?.Invoke(type);
+        }
+
+        public bool GetTrackValue(TrackType type, out int value)
+        {
+            return values.TryGetValue(type, out value);
         }
     }
 }

@@ -82,6 +82,7 @@ namespace Server
             public string username = string.Empty;
             public EmblemData emblemData = new EmblemData();
             public PlayerResources resources = new PlayerResources();
+            public SecretObjective SecretObjective;
 
             public Player(uint id)
             {

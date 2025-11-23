@@ -19,17 +19,17 @@ public class ComputerUI : Singleton<ComputerUI>
     public void MainMenu()
     {
         DeactivateAllUI();
-        pauseMenuUI.SetActive(true);
+        MainMenuUI.SetActive(true);
     }
     public void Lobby()
     {
         DeactivateAllUI();
-        pauseMenuUI.SetActive(true);
+        LobbyUI.SetActive(true);
     }
     public void FactionDesigner()
     {
         DeactivateAllUI();
-        pauseMenuUI.SetActive(true);
+        FactionDesignerUI.SetActive(true);
     }
     public void TurnComputerOff()
     {

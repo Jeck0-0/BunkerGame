@@ -4,11 +4,6 @@ public class MainMenu : MonoBehaviour
 {
     public GameObject mainMenu;
     public GameObject FactionDesigner;
-    void Start()
-    {
-        mainMenu.SetActive(true);
-        FactionDesigner.SetActive(false);
-    }
 
     void Update()
     {
