@@ -11,7 +11,6 @@ namespace Networking
         CTS_ContributeToCrisis = 2,
         CTS_VoteOnDilemma = 3,
 
-
         STC_PlayerJoined = 100,
         STC_JoinResponse = 101,
         STC_StartEmergency = 102,
@@ -19,6 +18,7 @@ namespace Networking
         STC_DilemmaResult = 104,
         STC_UpdateResources = 105,
         STC_UpdateTracks = 106,
+        STC_PlayerDisconected = 107
     }
 
     public abstract class BasePacket
@@ -45,6 +45,7 @@ namespace Networking
                 case PacketType.STC_DilemmaResult: return new STC_DilemmaResult().Deserialize(br);
                 case PacketType.STC_UpdateResources: return new STC_UpdateResources().Deserialize(br);
                 case  PacketType.STC_UpdateTracks: return new STC_UpdateTracks().Deserialize(br);
+                case PacketType.STC_PlayerDisconected: return new STC_PlayerDisconected().Deserialize(br);
 
                 default: Debug.LogError("Unknown packet type: " + type);
                 return null;
