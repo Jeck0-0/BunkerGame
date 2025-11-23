@@ -30,6 +30,8 @@ public class CrisisUI : Singleton<CrisisUI>
     [Header("Look Around")]
     [SerializeField] Vector3 lookAroundOffset = new Vector3(0, -4f, 0);
     [SerializeField] Vector3 lookAroundRotation = new Vector3(50f, 0f, 0f);
+    [SerializeField] Vector3 pauseOffset = new Vector3(0, -1.8f, -0.8f);
+    [SerializeField] Vector3 pauseRotation = new Vector3(10f, 0f, 0f);
     [SerializeField] float lookAroundSpeed = 5f;
 
     private bool documentIsOut = false;
@@ -55,6 +57,7 @@ public class CrisisUI : Singleton<CrisisUI>
     private void Update()
     {
         if (documentIsOut) DocumentDown();
+        if (ComputerManager.Instance.GetComputerUp()) return;
 
         if (signature.OnSignatureComplete())
             SubmitContribution();
@@ -75,11 +78,21 @@ public class CrisisUI : Singleton<CrisisUI>
     {
         if (activeUI != null)
         {
-            if (Input.GetMouseButton(1)) isPeeking = true;
-            else isPeeking = false;
+            Vector3 targetPos;
+            Quaternion targetRot;
 
-            Vector3 targetPos = isPeeking ? tablePosition.position + lookAroundOffset : tablePosition.position;
-            Quaternion targetRot = isPeeking ? Quaternion.Euler(lookAroundRotation) : Quaternion.identity;
+            if (ComputerManager.Instance.GetComputerUp())
+            {
+                isPeeking = true;
+                targetPos = tablePosition.position + pauseOffset;
+                targetRot = Quaternion.Euler(pauseRotation);
+            }
+            else
+            {
+                isPeeking = Input.GetMouseButton(1);
+                targetPos = isPeeking ? tablePosition.position + lookAroundOffset : tablePosition.position;
+                targetRot = isPeeking ? Quaternion.Euler(lookAroundRotation) : Quaternion.identity;
+            }
 
             activeUI.transform.position = Vector3.Lerp(activeUI.transform.position, targetPos, Time.deltaTime * lookAroundSpeed);
             activeUI.transform.rotation = Quaternion.Lerp(activeUI.transform.rotation, targetRot, Time.deltaTime * lookAroundSpeed);
