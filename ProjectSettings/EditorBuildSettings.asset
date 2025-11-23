@@ -6,17 +6,20 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Seva/Intro.unity
+    guid: 01318afec46b46146891d7b044c81508
+  - enabled: 1
     path: Assets/Scenes/Giacomo/DebugConnection.unity
     guid: f406acfee69c8574e825c25328999fd7
   - enabled: 1
+    path: Assets/Scenes/Seva/MeetingRoom.unity
+    guid: 1ed07aa32bd4708478de4c2f528d6a07
+  - enabled: 0
     path: Assets/Scenes/Abdel/MeetingRoom.unity
     guid: 9110d658226a5784aa84b3873dc47f8c
   - enabled: 0
     path: Assets/Scenes/Abdel/Computer Testing.unity
     guid: 48cf7ec6eb580f9408c447452f7c40d2
-  - enabled: 0
-    path: Assets/Scenes/Seva/MeetingRoom.unity
-    guid: 1ed07aa32bd4708478de4c2f528d6a07
   - enabled: 0
     path: Assets/Scenes/Abdel/ComputerFD.unity
     guid: 7232a10bf63e5fd4d9a4dab43452b8c9
