@@ -6,43 +6,26 @@ using UnityEngine.UI;
 
 public class TrackUI : Singleton<TrackUI>
 {
-    [Header("Sliders")]
-    [SerializeField] Slider energySlider;
-    [SerializeField] Slider foodSlider;
-    [SerializeField] Slider moralSlider;
-    [SerializeField] Slider orderSlider;
-    [SerializeField] Slider populationSlider;
-
-    [Header("Text fields")]
-    [SerializeField] TextMeshProUGUI energyText;
-    [SerializeField] TextMeshProUGUI foodText;
-    [SerializeField] TextMeshProUGUI moralText;
-    [SerializeField] TextMeshProUGUI orderText;
-    [SerializeField] TextMeshProUGUI populationText;
-
-    private Dictionary<TrackType, (Slider slider, TextMeshProUGUI label)> tracks;
+    [SerializeField] List<TrackUIElement> trackReferences;
+    private Dictionary<TrackType, TrackUIElement> tracks;
 
     void Start()
     {
-        tracks = new Dictionary<TrackType, (Slider, TextMeshProUGUI)>
-        {
-            { TrackType.Energy, (energySlider, energyText) },
-            { TrackType.Food, (foodSlider, foodText) },
-            { TrackType.Moral, (moralSlider, moralText) },
-            { TrackType.Order, (orderSlider, orderText) },
-            { TrackType.Population, (populationSlider, populationText) }
-        };
+        tracks = new Dictionary<TrackType, TrackUIElement>();
 
-        int startValue = ClientTracks.Instance.startValue;
-        int maxValue = ClientTracks.Instance.maxValue;
-
-        foreach (var slider in tracks.Values)
+        foreach (var track in trackReferences)
         {
-            slider.slider.minValue = 0;
-            slider.slider.maxValue = ClientTracks.Instance.maxValue;
+            tracks.Add(track.type, track);
+
+            track.slider.minValue = 0;
+            track.slider.maxValue = ClientTracks.Instance.maxValue;
+
+            track.upIcon.SetActive(false);
+            track.downIcon.SetActive(false);
         }
 
         ClientTracks.Instance.ResourceReachedZero += OnTrackZero;
+
         UpdateAllTracks();
     }
 
@@ -50,6 +33,21 @@ public class TrackUI : Singleton<TrackUI>
     {
         if (ClientTracks.Instance != null)
             ClientTracks.Instance.ResourceReachedZero -= OnTrackZero;
+    }
+
+    public void SetObjective(SecretObjective objective)
+    {
+        foreach (var track in objective.PositiveTracks)
+        {
+            if (tracks.TryGetValue(track, out var element))
+                element.upIcon.SetActive(true);
+        }
+
+        foreach (var track in objective.NegativeTracks)
+        {
+            if (tracks.TryGetValue(track, out var element))
+                element.downIcon.SetActive(true);
+        }
     }
 
     public void UpdateAllTracks()
@@ -72,4 +70,14 @@ public class TrackUI : Singleton<TrackUI>
         UpdateTrack(type);
         Debug.LogWarning($"{type} reached zero");
     }
+}
+[System.Serializable]
+public class TrackUIElement
+{
+    public TrackType type;
+
+    public Slider slider;
+    public TextMeshProUGUI label;
+    public GameObject upIcon;
+    public GameObject downIcon;
 }

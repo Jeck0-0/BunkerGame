@@ -13,10 +13,9 @@ MonoBehaviour:
   m_Name: TheDreamingChild
   m_EditorClassIdentifier: Assembly-CSharp::Client.Dilemma
   Title: The Dreaming Child
-  Description: "A child is seeing visions when she sleeps: corridors collapsing,
-    unnatural shadows, people with no skin on thier faces. Rumors spread that she\u2019s
-    touched by the anomalies. Her family stands firm and warns they won\u2019t back
-    down."
+  Description: "A child is seeing visions: corridors collapsing, people with no skin
+    on thier faces. Rumors spread that she\u2019s touched by the anomalies. Her family
+    stands firm and warns they won\u2019t back down."
   TimeToResolve: 120
   HiddenContributions: 1
   Repeatable: 0
