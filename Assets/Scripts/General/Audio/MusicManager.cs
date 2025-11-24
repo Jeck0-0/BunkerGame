@@ -16,27 +16,38 @@ public class MusicManager : Singleton<MusicManager>
     private Coroutine fadeCoroutine;
     private bool loopTrack = false;
     private TapePlayer player;
+    private bool blocked = false;
 
+    public void BlockMusic(bool block)
+    {
+        if (block) PauseMusic();
+        else ResumeMusic();
+        blocked = block;
+    }
 
-    public void PauseMusic() => musicSource.Pause();
+    public void PauseMusic() { if (!blocked) musicSource.Pause(); }
 
-    public void ResumeMusic() => musicSource.UnPause();
+    public void ResumeMusic()  { if (!blocked) musicSource.UnPause(); }
 
     public void LoopTrack(bool loop) => loopTrack = loop;
 
     public void NextMusic()
     {
+        if (blocked) return;
+
         StopCurrentMusic(defaultFadeTime);
         PlayNextTrack();
     }
 
     public void ChangeMusicQue(bool shuffle)
     {
+        if (blocked) return;
         PrepareTapeQueue(currentTape, shuffle);
     }
 
     public void InsertTape(Tape newTape, TapePlayer tapePlayer = null)
     {
+        if (blocked) return;
         StopAllCoroutines();
         StopCurrentMusic(0f);
 
@@ -49,6 +60,7 @@ public class MusicManager : Singleton<MusicManager>
 
     private void PrepareTapeQueue(Tape tape, bool shuffle = true)
     {
+        if (blocked) return;
         musicQue.Clear();
 
         if (tape == null || tape.Tracks == null || tape.Tracks.Length == 0)
@@ -76,6 +88,8 @@ public class MusicManager : Singleton<MusicManager>
 
     private void PlayNextTrack()
     {
+        if (blocked) return;
+
         if (loopTrack && currentTrack != null)
         {
             StartMusic(currentTrack, 1f, defaultFadeTime, loop: false);
@@ -100,6 +114,8 @@ public class MusicManager : Singleton<MusicManager>
 
     public void StartMusic(AudioClip clip, float volume = 1f, float fadeInTime = 0.5f, bool loop = false)
     {
+        if (blocked) return;
+
         if (clip == null)
         {
             Debug.LogWarning("no music clip");
@@ -117,6 +133,8 @@ public class MusicManager : Singleton<MusicManager>
 
     public void StopCurrentMusic(float fadeOutTime = 0.5f)
     {
+        if (blocked) return;
+
         if (fadeCoroutine != null) StopCoroutine(fadeCoroutine);
         fadeCoroutine = StartCoroutine(FadeOutAndStop(fadeOutTime));
     }

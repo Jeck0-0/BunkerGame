@@ -1,6 +1,7 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class Intro : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class Intro : MonoBehaviour
     [SerializeField] TextMeshProUGUI textField;
     [SerializeField, TextArea] string text;
 
+    [Header("Title Reveal")]
     [SerializeField] GameObject revealText;
     [SerializeField] AudioClip revealSound;
     [SerializeField] AudioClip introAmbient;
@@ -19,17 +21,33 @@ public class Intro : MonoBehaviour
     [SerializeField] float maxCharDelay = 0.08f;
     [SerializeField] float punctuationPause = 0.25f;
 
+    [Header("PostProcessing")]
+    [SerializeField] Volume volume;
+    [SerializeField] float volumeLow = 0.5f;
+    [SerializeField] float volumeHigh = 1f;
+    [SerializeField] float pingPongSpeed = 0.2f;
+
+    private bool startPingPong = false;
+
 
     void Awake()
     {
         revealText.SetActive(false);
         typingText.SetActive(true);
-        if (introAmbient) AudioManager.Instance.PlaySound(introAmbient, 1f);
+        startPingPong = false;
+        volume.weight = 0f;
 
+        if (introAmbient) AudioManager.Instance.PlaySound(introAmbient, 1f);
         StartCoroutine(TypeText());
     }
     private void Update()
     {
+        if (startPingPong && volume != null)
+        {
+            float t = Mathf.PingPong(Time.time * pingPongSpeed, 1f);
+            volume.weight = Mathf.Lerp(volumeLow, volumeHigh, t);
+        }
+
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Escape))
         {
             StopAllCoroutines();
@@ -70,6 +88,7 @@ public class Intro : MonoBehaviour
 
         revealText.SetActive(true);
         typingText.SetActive(false);
+        startPingPong = true;
 
         yield return new WaitForSeconds(3f);
         SceneLoader.Instance.LoadNextScene();

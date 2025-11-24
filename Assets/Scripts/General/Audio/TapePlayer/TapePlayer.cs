@@ -24,7 +24,6 @@ public class TapePlayer : MonoBehaviour
     private bool isBusy = false;
     private bool isPaused = false;
     private bool isLooping = false;
-
     public bool HasTape => insertedTape != null;
     public bool IsBusy => isBusy;
 

@@ -10,10 +10,10 @@ public class SecretObjective : ScriptableObject
     [Header("Objectives")]
     public bool Greedy = false; // get's twice the VP per supply
 
-    public TrackType PositiveTrack;
+    public List<TrackType> PositiveTracks;
     public List<LevelVP> PositiveTable;
 
-    public TrackType NegativeTrack;
+    public List<TrackType> NegativeTracks;
     public List<LevelVP> NegativeTable;
 }
 

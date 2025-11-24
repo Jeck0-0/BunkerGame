@@ -16,16 +16,22 @@ namespace Server
             var obj = player.SecretObjective;
             int total = 0;
 
-            // Positive track
-            if (ServerTracks.Instance.GetTrackValue(obj.PositiveTrack, out int posValue))
+            // Positive tracks
+            foreach (TrackType track in obj.PositiveTracks)
             {
-                total += GetVPFromTable(posValue, obj.PositiveTable);
+                if (ServerTracks.Instance.GetTrackValue(track, out int posValue))
+                {
+                    total += GetVPFromTable(posValue, obj.PositiveTable);
+                }
             }
 
-            // Negative track
-            if (ServerTracks.Instance.GetTrackValue(obj.NegativeTrack, out int negValue))
+            // Negative tracks
+            foreach (TrackType track in obj.NegativeTracks)
             {
-                total += GetVPFromTable(negValue, obj.NegativeTable);
+                if (ServerTracks.Instance.GetTrackValue(track, out int posValue))
+                {
+                    total += GetVPFromTable(posValue, obj.NegativeTable);
+                }
             }
 
             return total;
