@@ -26,7 +26,7 @@ namespace Server
             {
                 players[i].SecretObjective = pool[i];
 
-                // Send game start + objective
+                // Send objective
                 NetworkManager.Server.SendTo(players[i].id, new STC_SecretObjective(pool[i]));
             }
 

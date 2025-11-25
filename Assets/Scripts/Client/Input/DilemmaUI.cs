@@ -2,6 +2,7 @@ using Client;
 using Networking;
 using Packets;
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -146,8 +147,12 @@ public class DilemmaUI : Singleton<DilemmaUI>
     {
         resultHeader.text = currentDilema.Title;
         
-        resultText.text = "Winning Option: ";
-        resultText.text += result.WinningOption == 0 ? currentDilema.YesDescription : currentDilema.NoDescription;
+        string descriptionText = result.WinningOption == 0 ? currentDilema.YesDescription : currentDilema.NoDescription;
+        string trackText = result.WinningOption == 0 ? TrackToString(currentDilema.YesTrackModifier) : TrackToString(currentDilema.NoTrackModifier);
+
+        resultText.text = "Winning Option: " + descriptionText;
+        resultText.text += "\n\nTrack changes: " + trackText;
+
         ClientTracks.Instance.ApplyModifier(result.TrackModifier);
         SlideIn(resultUI);
         resultBeingShown = true;
@@ -237,5 +242,24 @@ public class DilemmaUI : Singleton<DilemmaUI>
     {
         // only digits
         return char.IsDigit(addedChar) ? addedChar : '\0';
+    }
+
+    private string TrackToString(TrackAmount amount)
+    {
+        var dict = amount.GetAll();
+        List<string> parts = new();
+
+        foreach (var pair in dict)
+        {
+            int value = pair.Value;
+            if (value == 0) continue;
+
+            string sign = value > 0 ? "+" : "";
+            parts.Add($"{pair.Key}: {sign}{value}");
+        }
+
+        return parts.Count == 0
+            ? "None"
+            : string.Join(", ", parts);
     }
 }

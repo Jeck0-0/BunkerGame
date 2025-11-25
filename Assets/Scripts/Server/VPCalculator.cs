@@ -44,7 +44,6 @@ namespace Server
                 if (_level.Level == level) 
                     return _level.Points;
             }
-
             return 0;
         }
     }

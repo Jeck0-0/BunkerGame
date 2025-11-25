@@ -62,7 +62,7 @@ public class EnviromentManager : MonoBehaviour
         yield return new WaitForSeconds(1.5f);
 
         crisisLights.SetActive(true);
-        if (siren) AudioManager.Instance.PlaySound(siren, 0.3f, null, true);
+        if (siren) AudioManager.Instance.PlaySound(siren, 0.2f, null, true);
     }
     // for testing
     private void Update()

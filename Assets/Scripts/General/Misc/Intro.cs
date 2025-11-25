@@ -32,6 +32,7 @@ public class Intro : MonoBehaviour
 
     void Awake()
     {
+        Cursor.visible = false;
         revealText.SetActive(false);
         typingText.SetActive(true);
         startPingPong = false;

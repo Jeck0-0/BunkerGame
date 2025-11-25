@@ -75,6 +75,7 @@ public class SceneLoader : MonoBehaviour
         // Wait until the new scene is fully loaded
         yield return null;
         yield return new WaitForSeconds(0.1f);
+        Cursor.visible = true;
 
         if (canvasGroup) yield return StartCoroutine(FadeCanvas(0f));
     }
