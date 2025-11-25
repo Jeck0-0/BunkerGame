@@ -1,8 +1,8 @@
+using Networking;
+using Packets;
 using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
-using System.Data;
-using UnityEngine;
 
 namespace Server
 {
@@ -30,8 +30,9 @@ namespace Server
         {
             foreach (var mod in amount.GetAll())
                 ModifyResource(mod.Key, mod.Value);
-            
-            
+
+            // STC_UpdateTracks packet = new STC_UpdateTracks();
+            // NetworkManager.Server.SendToAll(packet);
         }
 
         protected void ModifyResource(TrackType type, int amount)
