@@ -18,7 +18,8 @@ namespace Networking
         STC_DilemmaResult = 104,
         STC_UpdateResources = 105,
         STC_UpdateTracks = 106,
-        STC_PlayerDisconected = 107
+        STC_PlayerDisconected = 107,
+        STC_GameStart = 108
     }
 
     public abstract class BasePacket
@@ -44,8 +45,9 @@ namespace Networking
                 case PacketType.STC_CrisisResult: return new STC_CrisisResult().Deserialize(br);
                 case PacketType.STC_DilemmaResult: return new STC_DilemmaResult().Deserialize(br);
                 case PacketType.STC_UpdateResources: return new STC_UpdateResources().Deserialize(br);
-                case  PacketType.STC_UpdateTracks: return new STC_UpdateTracks().Deserialize(br);
+                case PacketType.STC_UpdateTracks: return new STC_UpdateTracks().Deserialize(br);
                 case PacketType.STC_PlayerDisconected: return new STC_PlayerDisconected().Deserialize(br);
+                case PacketType.STC_GameStart: return new STC_GameStart().Deserialize(br);
 
                 default: Debug.LogError("Unknown packet type: " + type);
                 return null;

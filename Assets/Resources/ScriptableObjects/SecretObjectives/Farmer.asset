@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edb7b876f26bc504c975948cc219a2e0, type: 3}
+  m_Name: Farmer
+  m_EditorClassIdentifier: Assembly-CSharp::SecretObjective
+  RoleName: Farmer
+  Description: You want to keep population growing, while having a stable supply
+    of food. But you despise the technologies.
+  Greedy: 0
+  PositiveTracks: 0102
+  PositiveTable:
+  - Level: 1
+    Points: 0
+  - Level: 2
+    Points: 1
+  - Level: 3
+    Points: 3
+  - Level: 4
+    Points: 6
+  - Level: 5
+    Points: 10
+  - Level: 6
+    Points: 15
+  - Level: 7
+    Points: 21
+  - Level: 8
+    Points: 28
+  - Level: 9
+    Points: 35
+  NegativeTracks: 04
+  NegativeTable:
+  - Level: 1
+    Points: 45
+  - Level: 2
+    Points: 30
+  - Level: 3
+    Points: 15
+  - Level: 4
+    Points: 6
+  - Level: 5
+    Points: 3
+  - Level: 6
+    Points: 2
+  - Level: 7
+    Points: 2
+  - Level: 8
+    Points: 1
+  - Level: 9
+    Points: 0

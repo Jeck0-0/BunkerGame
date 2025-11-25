@@ -13,8 +13,8 @@ namespace Packets
         public CTS_VoteOnDilemma() { }
         public CTS_VoteOnDilemma(int optionIndex, int influenceSpent)
         {
-            OptionIndex = optionIndex;
-            InfluenceSpent = influenceSpent;
+            this.OptionIndex = optionIndex;
+            this.InfluenceSpent = influenceSpent;
         }
 
         public override void Serialize(BinaryWriter bw)

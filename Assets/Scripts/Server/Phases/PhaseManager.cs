@@ -39,8 +39,8 @@ namespace Server
 
         private void Start()
         {
-            if(startOnAwake)
-                GameStart();
+            if (startOnAwake)
+                SecretObjectiveManager.Instance.SetSecretObjectives();
         }
 
         [Button]
