@@ -47,6 +47,7 @@ namespace Server
         public void GameStart()
         {
             Debug.Log("Game started");
+            NetworkManager.Server.SendToAll(new STC_GameStart());
             StartCoroutine(GameLoop());
         }
 

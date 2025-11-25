@@ -40,17 +40,21 @@ public class SecretObjectivelUI : MonoBehaviour
 
     private void Awake()
     {
-        NetworkManager.Client.Subscribe<STC_GameStart>(ReceiveObjective);
+        NetworkManager.Client.Subscribe<STC_SecretObjective>(ReceiveObjective);
+        NetworkManager.Client.Subscribe<STC_GameStart>(GameStart);
     }
 
     private void OnDestroy()
     {
-        NetworkManager.Client?.Unsubscribe<STC_GameStart>(ReceiveObjective);
+        NetworkManager.Client?.Unsubscribe<STC_SecretObjective>(ReceiveObjective);
+        NetworkManager.Client?.Unsubscribe<STC_GameStart>(GameStart);
     }
+
+    private void GameStart(BasePacket p) => SlideOut();
 
     private void ReceiveObjective(BasePacket p)
     {
-        var packet = (STC_GameStart)p;
+        var packet = (STC_SecretObjective)p;
         objective = Resources.Load<SecretObjective>("ScriptableObjects/SecretObjectives/" + packet.ObjectiveId);
         DisplaySecretObjective();
         SlideIn();
@@ -121,8 +125,8 @@ public class SecretObjectivelUI : MonoBehaviour
         if (disable) return;
         DocumentDown();
 
-        if (ComputerManager.Instance.GetComputerUp()) return;
-        if (signature.OnSignatureComplete()) SubmitDocument();
+        // if (ComputerManager.Instance.GetComputerUp()) return;
+        // if (signature.OnSignatureComplete()) SubmitDocument();
     }
 
     private void SubmitDocument()

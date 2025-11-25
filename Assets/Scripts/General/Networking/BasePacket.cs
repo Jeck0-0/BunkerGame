@@ -19,7 +19,8 @@ namespace Networking
         STC_UpdateResources = 105,
         STC_UpdateTracks = 106,
         STC_PlayerDisconected = 107,
-        STC_GameStart = 108
+        STC_GameStart = 108,
+        STC_SecretObjective = 109
     }
 
     public abstract class BasePacket
@@ -48,6 +49,7 @@ namespace Networking
                 case PacketType.STC_UpdateTracks: return new STC_UpdateTracks().Deserialize(br);
                 case PacketType.STC_PlayerDisconected: return new STC_PlayerDisconected().Deserialize(br);
                 case PacketType.STC_GameStart: return new STC_GameStart().Deserialize(br);
+                case PacketType.STC_SecretObjective: return new STC_SecretObjective().Deserialize(br);
 
                 default: Debug.LogError("Unknown packet type: " + type);
                 return null;
