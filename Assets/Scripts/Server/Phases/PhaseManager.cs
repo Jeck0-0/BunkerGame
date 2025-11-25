@@ -1,4 +1,3 @@
-using System;
 using Networking;
 using Packets;
 using Sirenix.OdinInspector;
@@ -13,6 +12,7 @@ namespace Server
         public CrisisPhase crisisPhase;
         public DilemmaPhase dilemmaPhase;
         public bool startOnAwake = true;
+        public float startDelay = 5f; //temporary
         
         [Header("Game Settings")]
         public int totalCrises = 5;
@@ -43,8 +43,13 @@ namespace Server
                 SecretObjectiveManager.Instance.SetSecretObjectives();
         }
 
-        [Button]
         public void GameStart()
+        {
+            Invoke("DelayedStart", startDelay);
+        }
+
+        [Button]
+        public void DelayedStart()
         {
             Debug.Log("Game started");
             NetworkManager.Server.SendToAll(new STC_GameStart());
