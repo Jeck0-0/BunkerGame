@@ -22,6 +22,10 @@ public class ComputerManager : Singleton<ComputerManager>
     [SerializeField] Transform rightOpenPosition;
     [SerializeField] float openingDuration = 1f;
 
+    [Header("Audio")]
+    [SerializeField] AudioClip computerSlidingClip;
+    [SerializeField] AudioClip doorsOpeningClip;
+
     private Coroutine coroutine;
     private bool computerIsUp = false;
     private bool canMoveComputer = true;
@@ -97,6 +101,8 @@ public class ComputerManager : Singleton<ComputerManager>
         Vector3 leftEnd = open ? leftOpenPosition.position : leftDoor.transform.parent.position;
         Vector3 rightEnd = open ? rightOpenPosition.position : rightDoor.transform.parent.position;
 
+        AudioManager.Instance.PlaySound(AudioStorage.Instance.GetComputerDoorsClip(), 0.8f);
+
         float t = 0f;
 
         while (t < openingDuration)
@@ -113,6 +119,7 @@ public class ComputerManager : Singleton<ComputerManager>
     private IEnumerator Move(bool up)
     {
         computer.SetActive(true);
+        AudioManager.Instance.PlaySound(AudioStorage.Instance.GetComputerSlidingClip(), 0.6f);
 
         Vector3 startPos = computer.transform.position;
         Vector3 endPos = up ? upPosition.position : downPosition.position;

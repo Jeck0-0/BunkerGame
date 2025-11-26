@@ -16,6 +16,8 @@ public class SignatureDrawer : MonoBehaviour
     private RectTransform rectTransform;
     private bool signed = false;
     private bool blocked = false;
+    private float inputTime;
+    private float audioClipsSpace = 0.15f;
 
     public event Action OnSigned;
 
@@ -45,6 +47,14 @@ public class SignatureDrawer : MonoBehaviour
         {
             if (TryGetUV(out var uv))
             {
+                inputTime += Time.deltaTime;
+
+                if (inputTime >= audioClipsSpace)
+                {
+                    AudioManager.Instance.PlayRandomSound(AudioStorage.Instance.GetWritingClips(), 0.9f);
+                    inputTime = 0f;
+                }
+
                 DrawLine(prevUV, uv);
                 prevUV = uv;
             }

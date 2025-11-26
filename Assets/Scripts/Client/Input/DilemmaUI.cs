@@ -186,6 +186,7 @@ public class DilemmaUI : Singleton<DilemmaUI>
         activeUI = ui;
         documentIsOut = false;
         ui.transform.rotation = Quaternion.identity;
+        AudioManager.Instance.PlayRandomSound(AudioStorage.Instance.GetPaperClips(), 0.8f);
 
         if (ui == resultUI)
         {
@@ -203,6 +204,7 @@ public class DilemmaUI : Singleton<DilemmaUI>
     {
         if (activeUI == ui) activeUI = null;
         documentIsOut = false;
+        AudioManager.Instance.PlayRandomSound(AudioStorage.Instance.GetPaperClips(), 0.8f);
 
         if (ui == resultUI)
         {

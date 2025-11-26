@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 293053080767469112}
   - component: {fileID: 7735980181611721230}
+  - component: {fileID: 4096561374609060459}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Untagged
@@ -44,10 +45,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27f5cdb293152b44584028bd237699be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AudioManager
+  loopSources: []
   soundFXPrefab: {fileID: 5651484511525924400, guid: 4a81170a07be8f04486c4135a28c8fb2, type: 3}
   maxSoundsPlaying: 25
-  buttonSound: {fileID: 0}
-  hoverSound: {fileID: 0}
+--- !u!114 &4096561374609060459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 500121836128991401}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3548f633173bc8b42b70875c50cb99b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioStorage
+  writingClips:
+  - {fileID: 8300000, guid: fc6e27b38640d1e4c82c6b1a478d2274, type: 3}
+  - {fileID: 8300000, guid: ffc42415c2e3ceb4d9bba30b5e6b758f, type: 3}
+  - {fileID: 8300000, guid: 90c2279f1db4f1741b196e6955ab6301, type: 3}
+  - {fileID: 8300000, guid: 3fc4d417a8b9a2a4092f1b225015958b, type: 3}
+  - {fileID: 8300000, guid: beeaa868765988f4eb93c33fabfbf929, type: 3}
+  UIButtonClips:
+  - {fileID: 8300000, guid: 4d4b080f07a18b04c93f69e8fa17fc03, type: 3}
+  paperClips:
+  - {fileID: 8300000, guid: f0c88434d2e909b47a8a110beb9eda44, type: 3}
+  - {fileID: 8300000, guid: b219e530282640440abd16a375761963, type: 3}
+  - {fileID: 8300000, guid: 758cfe290acea2d4f92a9eb3e0d1914b, type: 3}
 --- !u!1 &1966797387040126202
 GameObject:
   m_ObjectHideFlags: 0
