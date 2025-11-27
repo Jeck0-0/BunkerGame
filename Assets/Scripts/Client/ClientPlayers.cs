@@ -4,6 +4,7 @@ using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using SteamClient = Networking.SteamClient;
 
 namespace Client
 {
@@ -39,7 +40,14 @@ namespace Client
             myself = new Player(999);
             myself.spot = packet.spot;
             OnSpotReceived?.Invoke();
+            
+            //Send my info
+            CTS_PlayerInformation myInfo = new CTS_PlayerInformation();
+            myInfo.username = Steamworks.SteamClient.Name; // for testing, while we're not using steam
+            myInfo.emblemData = new EmblemData();
+            SteamClient.Send(myInfo);
         }
+        
         private void OnPlayerJoined(BasePacket p)
         {
             STC_PlayerJoined packet = p as STC_PlayerJoined;

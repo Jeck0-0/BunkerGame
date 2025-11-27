@@ -6,28 +6,29 @@ using UnityEngine.SceneManagement;
 
 public class ConnectionMenu : MonoBehaviour
 {
+    private void Awake()
+    {
+        SteamClient.Subscribe<STC_JoinResponse>(StartGame);
+    }
+    private void OnDestroy()
+    {
+        SteamClient.Unsubscribe<STC_JoinResponse>(StartGame);
+    }
+
     public void JoinGame()
     {
-        SteamClient.OnConnect += SendMyInfo;
         SteamLobby.OpenJoinOverlay();
     }
 
     public void HostGame()
     {
-        SteamClient.OnConnect += SendMyInfo;
         SteamServer.Instance.Create(6);
         SteamLobby.OpenInviteOverlay();
-    }
-    public void StartGame()
-    {
-        SceneManager.LoadScene("MeetingRoom");
+        //StartGame();
     }
 
-    protected void SendMyInfo()
+    protected void StartGame(object _)
     {
-        CTS_PlayerInformation myInfo = new CTS_PlayerInformation();
-        myInfo.username = Environment.UserName; // for testing, while we're not using steam
-        SteamClient.Send(myInfo);
-        SteamClient.OnConnect -= SendMyInfo;
+        SceneManager.LoadScene("MeetingRoom");
     }
 }

@@ -91,23 +91,17 @@ namespace Networking
         }
         private void OnJoinedLobby(Lobby lobby)
         {
-            Debug.Log($"[Client] Joined lobby, connecting to host...");
+            if (SteamLobby.IsOwner) return;
+            
+            Debug.Log($"[Client] Joined lobby, connecting to host: {lobby.Owner.Id}");
+            
             if (IsConnected)
             {
-                Debug.LogWarning("Already connected!");
+                Debug.LogWarning("[Client] Nevermind, already connected!");
                 return;
             }
 
-            try
-            {
-                _connectionManager = SteamNetworkingSockets.ConnectRelay(lobby.Owner.Id, 0, this);
-            }
-            catch (Exception e)
-            {
-                Debug.LogError(e);
-            }
-            OnConnect?.Invoke();
-            Debug.Log($"[Client] Connecting to host: {lobby.Owner.Id}");
+            _connectionManager = SteamNetworkingSockets.ConnectRelay(lobby.Owner.Id, 0, this);
         }
         
         
@@ -135,6 +129,7 @@ namespace Networking
         public void OnConnected(ConnectionInfo info)
         {
             Debug.Log($"[CLIENT] Connected to server! Connection ID: {Connection?.Id}");
+            OnConnect?.Invoke();
         }
 
         public void OnDisconnected(ConnectionInfo info)

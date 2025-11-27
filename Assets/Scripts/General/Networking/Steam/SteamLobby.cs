@@ -134,7 +134,6 @@ namespace Networking
         {
             Debug.Log($"{friend.Name} joined the lobby");
 
-            // Send a chat message or trigger an event
             // NetworkManager.Instance?.OnPlayerJoined(friend.Id);
         }
 
