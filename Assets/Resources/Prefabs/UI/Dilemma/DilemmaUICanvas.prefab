@@ -259,8 +259,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 7
-  m_fontSizeBase: 7
+  m_fontSize: 5
+  m_fontSizeBase: 5
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 0.1
@@ -726,6 +726,13 @@ MonoBehaviour:
   drawColor: {r: 0, g: 0, b: 0, a: 1}
   textureSize: 512
   brushSize: 14
+  writingClips:
+  - {fileID: 8300000, guid: fc6e27b38640d1e4c82c6b1a478d2274, type: 3}
+  - {fileID: 8300000, guid: ffc42415c2e3ceb4d9bba30b5e6b758f, type: 3}
+  - {fileID: 8300000, guid: 90c2279f1db4f1741b196e6955ab6301, type: 3}
+  - {fileID: 8300000, guid: 3fc4d417a8b9a2a4092f1b225015958b, type: 3}
+  - {fileID: 8300000, guid: beeaa868765988f4eb93c33fabfbf929, type: 3}
+  audioClipsSpace: 0.1
 --- !u!222 &1976817005200479938
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1055,9 +1062,9 @@ MonoBehaviour:
   m_fontSize: 7
   m_fontSizeBase: 7
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 1
-  m_fontSizeMax: 10
+  m_fontSizeMax: 7
   m_fontStyle: 0
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
@@ -1228,6 +1235,13 @@ MonoBehaviour:
   drawColor: {r: 0, g: 0, b: 0, a: 1}
   textureSize: 512
   brushSize: 14
+  writingClips:
+  - {fileID: 8300000, guid: fc6e27b38640d1e4c82c6b1a478d2274, type: 3}
+  - {fileID: 8300000, guid: ffc42415c2e3ceb4d9bba30b5e6b758f, type: 3}
+  - {fileID: 8300000, guid: 3fc4d417a8b9a2a4092f1b225015958b, type: 3}
+  - {fileID: 8300000, guid: 90c2279f1db4f1741b196e6955ab6301, type: 3}
+  - {fileID: 8300000, guid: beeaa868765988f4eb93c33fabfbf929, type: 3}
+  audioClipsSpace: 0.1
 --- !u!222 &7049431620288248820
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1392,12 +1406,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 10
+  m_fontSize: 8
   m_fontSizeBase: 10
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 0.1
-  m_fontSizeMax: 10
+  m_fontSizeMax: 8
   m_fontStyle: 0
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
@@ -1742,9 +1756,9 @@ MonoBehaviour:
   m_fontSize: 7
   m_fontSizeBase: 7
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 1
-  m_fontSizeMax: 10
+  m_fontSizeMax: 7
   m_fontStyle: 0
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
@@ -1875,8 +1889,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 7
-  m_fontSizeBase: 7
+  m_fontSize: 6.8
+  m_fontSizeBase: 6.8
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 1
@@ -1975,6 +1989,13 @@ MonoBehaviour:
   drawColor: {r: 0, g: 0, b: 0, a: 1}
   textureSize: 512
   brushSize: 4
+  writingClips:
+  - {fileID: 8300000, guid: fc6e27b38640d1e4c82c6b1a478d2274, type: 3}
+  - {fileID: 8300000, guid: ffc42415c2e3ceb4d9bba30b5e6b758f, type: 3}
+  - {fileID: 8300000, guid: 90c2279f1db4f1741b196e6955ab6301, type: 3}
+  - {fileID: 8300000, guid: 3fc4d417a8b9a2a4092f1b225015958b, type: 3}
+  - {fileID: 8300000, guid: beeaa868765988f4eb93c33fabfbf929, type: 3}
+  audioClipsSpace: 0.1
 --- !u!222 &432387217814025286
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2910,7 +2931,7 @@ MonoBehaviour:
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 0.1
-  m_fontSizeMax: 8
+  m_fontSizeMax: 7
   m_fontStyle: 0
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 256

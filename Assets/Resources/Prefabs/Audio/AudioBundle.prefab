@@ -47,6 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AudioManager
   loopSources: []
   soundFXPrefab: {fileID: 5651484511525924400, guid: 4a81170a07be8f04486c4135a28c8fb2, type: 3}
+  SFXGroup: {fileID: 0}
   maxSoundsPlaying: 25
 --- !u!114 &4096561374609060459
 MonoBehaviour:
@@ -72,6 +73,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: f0c88434d2e909b47a8a110beb9eda44, type: 3}
   - {fileID: 8300000, guid: b219e530282640440abd16a375761963, type: 3}
   - {fileID: 8300000, guid: 758cfe290acea2d4f92a9eb3e0d1914b, type: 3}
+  computerSlidingClip: {fileID: 0}
+  computerDoorsClip: {fileID: 0}
+  ambientClip: {fileID: 8300000, guid: 0f201b718cff67140a1830f6c4477adb, type: 3}
 --- !u!1 &1966797387040126202
 GameObject:
   m_ObjectHideFlags: 0

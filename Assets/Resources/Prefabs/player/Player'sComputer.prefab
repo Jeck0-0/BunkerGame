@@ -1702,6 +1702,8 @@ MonoBehaviour:
   leftOpenPosition: {fileID: 1886789818202873736}
   rightOpenPosition: {fileID: 6736003044880506106}
   openingDuration: 0.6
+  computerSlidingClip: {fileID: 0}
+  doorsOpeningClip: {fileID: 0}
 --- !u!1 &8033631098831621424
 GameObject:
   m_ObjectHideFlags: 0

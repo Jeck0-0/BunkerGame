@@ -1137,10 +1137,10 @@ MonoBehaviour:
   - {fileID: 8300000, guid: a008fa5b3d80d8b47a1c73b910270a25, type: 3}
   - {fileID: 8300000, guid: 16311affbed45bb4ebb85c89fc408162, type: 3}
   nextPageSounds:
-  - {fileID: 8300000, guid: 75eeb38ef6c3ebf43a4c93b381499481, type: 3}
-  - {fileID: 8300000, guid: 4f612e382fadd714984092b0b4d7c2c7, type: 3}
+  - {fileID: 8300000, guid: 4a970507ab7832f4495533d8dfceeaf1, type: 3}
+  - {fileID: 8300000, guid: 61e45dd7f801c2f408c7817d2d7e2b0f, type: 3}
   minCharDelay: 0.1
-  maxCharDelay: 0.12
+  maxCharDelay: 0.11
   punctuationPause: 0.35
   volume: {fileID: 897830376}
   volumeLow: 0.5

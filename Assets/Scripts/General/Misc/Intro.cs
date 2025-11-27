@@ -69,12 +69,12 @@ public class Intro : MonoBehaviour
 
             if (c == '\n')
             {
-                if (nextPageSounds.Length > 0) AudioManager.Instance.PlayRandomSound(nextPageSounds, 1f);
+                if (nextPageSounds.Length > 0) AudioManager.Instance.PlayRandomSound(nextPageSounds, 0.9f);
                 delay += punctuationPause;
             }
             else
             {
-                if (typeSounds.Length > 0) AudioManager.Instance.PlayRandomSound(typeSounds, Random.Range(0.4f, 0.6f));
+                if (typeSounds.Length > 0) AudioManager.Instance.PlayRandomSound(typeSounds, Random.Range(0.3f, 0.5f));
             }
 
             if (".,!?…".Contains(c)) delay += punctuationPause;

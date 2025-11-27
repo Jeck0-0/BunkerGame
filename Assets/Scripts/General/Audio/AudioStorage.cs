@@ -16,4 +16,11 @@ public class AudioStorage : Singleton<AudioStorage>
 
     [SerializeField] AudioClip computerDoorsClip;
     public AudioClip GetComputerDoorsClip() => computerDoorsClip;
+
+    [SerializeField] AudioClip ambientClip;
+
+    private void Start()
+    {
+       if (ambientClip) AudioManager.Instance.PlaySound(ambientClip, 0.6f, null, true);
+    }
 }
