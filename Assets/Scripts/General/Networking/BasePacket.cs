@@ -47,7 +47,7 @@ namespace Networking
                 case PacketType.STC_DilemmaResult: return new STC_DilemmaResult().Deserialize(br);
                 case PacketType.STC_UpdateResources: return new STC_UpdateResources().Deserialize(br);
                 case PacketType.STC_UpdateTracks: return new STC_UpdateTracks().Deserialize(br);
-                case PacketType.STC_PlayerDisconected: return new STC_PlayerDisconected().Deserialize(br);
+                case PacketType.STC_PlayerDisconected: return new STC_PlayerDisconnected().Deserialize(br);
                 case PacketType.STC_GameStart: return new STC_GameStart().Deserialize(br);
                 case PacketType.STC_SecretObjective: return new STC_SecretObjective().Deserialize(br);
 

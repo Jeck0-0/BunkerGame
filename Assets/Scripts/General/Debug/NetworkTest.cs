@@ -16,7 +16,7 @@ public class NetworkTest : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.T))
         {
             //CLIENT sends test packet
-            var factionInfoPacket = new STC_JoinResponse(55);
+            var factionInfoPacket = new STC_JoinResponse(999, 55);
             GameClient.Send(factionInfoPacket);
         }
     }
@@ -26,7 +26,7 @@ public class NetworkTest : MonoBehaviour
         //SERVER sends packet back
         STC_JoinResponse packet = p as STC_JoinResponse;
         
-        var responsePacket = new STC_JoinResponse(66);
+        var responsePacket = new STC_JoinResponse(999, 66);
         GameServer.SendTo(playerId, responsePacket);
     }
 

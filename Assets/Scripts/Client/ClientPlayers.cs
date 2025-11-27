@@ -23,27 +23,27 @@ namespace Client
             base.Awake();
             GameClient.Subscribe<STC_PlayerJoined>(OnPlayerJoined);
             GameClient.Subscribe<STC_JoinResponse>(OnJoinResponse);
-            GameClient.Subscribe<STC_PlayerDisconected>(OnPlayerDisconected);
+            GameClient.Subscribe<STC_PlayerDisconnected>(OnPlayerDisconnected);
         }
 
         private void OnDestroy()
         {
             GameClient.Unsubscribe<STC_PlayerJoined>(OnPlayerJoined);
             GameClient.Unsubscribe<STC_JoinResponse>(OnJoinResponse);
-            GameClient.Unsubscribe<STC_PlayerDisconected>(OnPlayerDisconected);
+            GameClient.Unsubscribe<STC_PlayerDisconnected>(OnPlayerDisconnected);
         }
 
         private void OnJoinResponse(BasePacket p)
         {
             STC_JoinResponse packet = p as STC_JoinResponse;
-            myself = new Player(999);
+            myself = new Player(packet.playerId);
+            myself.username = Steamworks.SteamClient.IsValid ? Steamworks.SteamClient.Name : Environment.UserName;
+            myself.emblemData = new EmblemData(); //TODO: Use actual emblem data
             myself.spot = packet.spot;
             OnSpotReceived?.Invoke();
             
             //Send my info
-            CTS_PlayerInformation myInfo = new CTS_PlayerInformation();
-            myInfo.username = Steamworks.SteamClient.IsValid ? Steamworks.SteamClient.Name : Environment.UserName;
-            myInfo.emblemData = new EmblemData();
+            CTS_PlayerInformation myInfo = new CTS_PlayerInformation(myself.username, myself.emblemData);
             GameClient.Send(myInfo);
         }
         
@@ -55,9 +55,9 @@ namespace Client
             Players[packet.playerId].username = packet.username;
             Players[packet.playerId].spot = packet.spot;
         }
-        private void OnPlayerDisconected(BasePacket p)
+        private void OnPlayerDisconnected(BasePacket p)
         {
-            STC_PlayerDisconected packet = (STC_PlayerDisconected)p;
+            STC_PlayerDisconnected packet = (STC_PlayerDisconnected)p;
 
             int spot = packet.spot;
 

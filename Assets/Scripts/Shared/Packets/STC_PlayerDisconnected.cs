@@ -3,13 +3,13 @@ using System.IO;
 using UnityEngine;
 namespace Packets
 {
-    public class STC_PlayerDisconected : BasePacket
+    public class STC_PlayerDisconnected : BasePacket
     {
         public override PacketType Type => PacketType.STC_PlayerDisconected;
         public int spot;
 
-        public STC_PlayerDisconected() { }
-        public STC_PlayerDisconected(int spot)
+        public STC_PlayerDisconnected() { }
+        public STC_PlayerDisconnected(int spot)
         {
             this.spot = spot;
         }

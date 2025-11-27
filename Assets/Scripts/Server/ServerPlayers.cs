@@ -47,7 +47,7 @@ namespace Server
             players[id].spot = i;
             occupiedSpots.Add(i);
             
-            GameServer.SendTo(id, new STC_JoinResponse(players[id].spot));
+            GameServer.SendTo(id, new STC_JoinResponse(id, players[id].spot));
 
             foreach (var player in GetAll())
                 if(player.id != id)
