@@ -7,7 +7,7 @@ namespace Networking
     public abstract class GameClient : PersistentSingleton<GameClient>
     {
         public bool IsConnected => instance.isConnected;
-        protected abstract bool isConnected { get; }
+        protected abstract bool isConnected { get; set; }
 
         /// <summary>
         /// This is called as soon as the client connects to the server.
@@ -16,6 +16,7 @@ namespace Networking
         public static event Action OnConnect;
         protected void InvokeOnConnect() => OnConnect?.Invoke();
         
+        public abstract void Connect(object args);
         public abstract void Disconnect();
         
         public static void Send(BasePacket packet) => instance?.SendLogic(packet);

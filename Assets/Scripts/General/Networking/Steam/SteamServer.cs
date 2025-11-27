@@ -81,6 +81,8 @@ namespace Networking
                 _connections.Add(0, new ServerConnectionInfo(Steamworks.SteamClient.SteamId, new Connection()));
                 _connectedIds.Add(0);
                 InvokeOnPlayerConnected(0);
+                
+                SteamLobby.OpenInviteOverlay();
             }
         }
 
@@ -100,6 +102,12 @@ namespace Networking
             SteamLobby.Leave();
             
             Debug.Log("[SERVER] Server stopped");
+        }
+
+        public override void SetOpen(bool open)
+        {
+            base.SetOpen(open);
+            SteamLobby.CurrentLobby?.SetJoinable(open);
         }
 
         protected override void SendMessage(IEnumerable<uint> connectionId, BasePacket packet)
@@ -161,12 +169,19 @@ namespace Networking
         {
             Debug.Log($"[SERVER] Client connecting: {info.Identity.SteamId}");
 
+            if (!IsOpen)
+            {
+                Debug.LogWarning("[SERVER] Lobby closed! Rejecting connection.");
+                connection.Close();
+                return;
+            }
             if (_connections.Count >= MaxPlayers)
             {
                 Debug.LogWarning("[SERVER] Server full! Rejecting connection.");
                 connection.Close();
                 return;
             }
+
 
             // Check if they're in the lobby
             if (SteamLobby.IsInLobby)

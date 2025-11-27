@@ -17,13 +17,12 @@ public class ConnectionMenu : MonoBehaviour
 
     public void JoinGame()
     {
-        SteamLobby.OpenJoinOverlay();
+        GameClient.Instance.Connect(null);
     }
 
     public void HostGame()
     {
         GameServer.Instance.Create(6);
-        SteamLobby.OpenInviteOverlay();
         //StartGame();
     }
 

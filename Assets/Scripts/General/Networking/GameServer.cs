@@ -11,7 +11,8 @@ namespace Networking
         public bool IsRunning { get; protected set; }
         public abstract int PlayerCount { get; protected set; }
         public abstract int MaxPlayers { get; protected set; }
-
+        public static bool IsOpen { get; private set; } = true;
+        
         public static event Action<uint> OnPlayerConnected;
         public static event Action<uint> OnPlayerDisconnected;
         public static event Action OnServerStarted;
@@ -20,6 +21,7 @@ namespace Networking
         protected void InvokeOnPlayerDisconnected(uint connectionId) => OnPlayerDisconnected?.Invoke(connectionId);
         protected void InvokeOnServerStarted() => OnServerStarted?.Invoke();
 
+        public virtual void SetOpen(bool open) => IsOpen = open;
 
         public abstract void Create(int maxPlayers);
         

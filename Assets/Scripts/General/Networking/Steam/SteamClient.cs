@@ -10,8 +10,11 @@ namespace Networking
     public class SteamClient : GameClient, IConnectionManager
     {
         protected static SteamClient SteamInstance => instance as SteamClient;
-        protected override bool isConnected => (SteamInstance?.Connection != null && SteamInstance?.Connection.Value.Id != 0) || SteamLobby.IsOwner;
-        
+        protected override bool isConnected {
+            get => (SteamInstance?.Connection != null && SteamInstance?.Connection.Value.Id != 0) || SteamLobby.IsOwner;
+            set { }
+        }
+
         private ConnectionManager _connectionManager;
         private Connection? Connection => _connectionManager?.Connection;
 
@@ -42,7 +45,19 @@ namespace Networking
         {
             SteamMatchmaking.JoinLobbyAsync(lobbyId);
         }
-        
+
+        public override void Connect(object args)
+        {
+            if (args is ulong id)
+            {
+                SteamId lobbyId = id;
+                SteamMatchmaking.JoinLobbyAsync(lobbyId);
+                return;
+            }
+            
+            SteamLobby.OpenJoinOverlay();
+        }
+
         public override void Disconnect()
         {
             if (IsConnected)

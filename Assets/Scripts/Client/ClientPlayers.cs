@@ -42,7 +42,7 @@ namespace Client
             
             //Send my info
             CTS_PlayerInformation myInfo = new CTS_PlayerInformation();
-            myInfo.username = Steamworks.SteamClient.Name; // for testing, while we're not using steam
+            myInfo.username = Steamworks.SteamClient.IsValid ? Steamworks.SteamClient.Name : Environment.UserName;
             myInfo.emblemData = new EmblemData();
             GameClient.Send(myInfo);
         }
