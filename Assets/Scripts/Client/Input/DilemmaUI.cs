@@ -137,7 +137,7 @@ public class DilemmaUI : Singleton<DilemmaUI>
         votingLocked = true;
 
         ClientResources.Instance.ModifyInfluence(-influenceSpent);
-        SteamClient.Send(new CTS_VoteOnDilemma(optionIndex, influenceSpent));
+        GameClient.Send(new CTS_VoteOnDilemma(optionIndex, influenceSpent));
         influenceField.interactable = false;
 
         SlideOut(votingUI);

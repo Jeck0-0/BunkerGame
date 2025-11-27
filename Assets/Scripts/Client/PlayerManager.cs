@@ -24,7 +24,7 @@ public class PlayerManager : MonoBehaviour
 
         PlayerGNS = new Dictionary<int, PlayerInstance>();
 
-        SteamClient.Subscribe<STC_PlayerJoined>(NewPlayerSpawned);
+        GameClient.Subscribe<STC_PlayerJoined>(NewPlayerSpawned);
 
         if (playerRegistry.Myself != null)
         {
@@ -47,7 +47,7 @@ public class PlayerManager : MonoBehaviour
     {
         try
         {
-            SteamClient.Unsubscribe<STC_PlayerJoined>(NewPlayerSpawned);
+            GameClient.Unsubscribe<STC_PlayerJoined>(NewPlayerSpawned);
             if (ClientPlayers.Instance != null)
             {
                 ClientPlayers.Instance.OnSpotReceived -= SpawnMe;

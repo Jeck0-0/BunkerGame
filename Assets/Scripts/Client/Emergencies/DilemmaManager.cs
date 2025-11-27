@@ -31,11 +31,11 @@ public class DilemmaManager : Singleton<DilemmaManager>
             ClientTracks.Instance.ApplyModifier(packet.TrackModifier);
         }
 
-        SteamClient.Subscribe<STC_DilemmaResult>(OnDilemmaResult);
+        GameClient.Subscribe<STC_DilemmaResult>(OnDilemmaResult);
 
         yield return new WaitUntil(() => resultReceived);
 
-        SteamClient.Unsubscribe<STC_DilemmaResult>(OnDilemmaResult);
+        GameClient.Unsubscribe<STC_DilemmaResult>(OnDilemmaResult);
 
         yield return new WaitForSeconds(3f);
 

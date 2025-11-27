@@ -1,19 +1,16 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
-using System.Threading.Tasks;
 using Steamworks;
 using Steamworks.Data;
 using UnityEngine;
 
 namespace Networking
 {
-    public class SteamClient : PersistentSingleton<SteamClient>, IConnectionManager
+    public class SteamClient : GameClient, IConnectionManager
     {
-        public static bool IsConnected => (instance?.Connection != null && instance?.Connection.Value.Id != 0) || SteamLobby.IsOwner;
-
-        public static event Action OnConnect;
+        protected static SteamClient SteamInstance => instance as SteamClient;
+        protected override bool isConnected => (SteamInstance?.Connection != null && SteamInstance?.Connection.Value.Id != 0) || SteamLobby.IsOwner;
         
         private ConnectionManager _connectionManager;
         private Connection? Connection => _connectionManager?.Connection;
@@ -36,36 +33,17 @@ namespace Networking
             Disconnect();
         }
 
-        public static void Send(BasePacket packet)
+        public void Update()
         {
-            if (!HasInstance)
-            {
-                Debug.LogWarning("Steam Client is not initialized!");
-                return;
-            }
-            if (!IsConnected)
-            {
-                Debug.LogWarning("Not connected to host!");
-                return;
-            }
-
-            //If I'm hosting, don't send through network
-            if (SteamLobby.IsOwner)
-            {
-                SteamServer.instance.HandlePacket(0, packet);
-                return;
-            }
-            
-            using var ms = new MemoryStream();
-            using var bw = new BinaryWriter(ms);
-            packet.Serialize(bw);
-
-            byte[] data = ms.ToArray();
-            instance?.Connection?.SendMessage(data, SendType.Reliable);
+            _connectionManager?.Receive();
         }
 
-
-        public void Disconnect()
+        public void Join(SteamId lobbyId)
+        {
+            SteamMatchmaking.JoinLobbyAsync(lobbyId);
+        }
+        
+        public override void Disconnect()
         {
             if (IsConnected)
             {
@@ -76,18 +54,14 @@ namespace Networking
             SteamLobby.Leave();
         }
 
-        public void Update()
-        {
-            _connectionManager?.Receive();
-        }
 
 
-
+#region Lobby
         private void OnLobbyCreated(Result result, Lobby lobby)
         {
             Debug.Log($"[Client] Connecting to local host");
             if (result == Result.OK)
-                OnConnect?.Invoke();
+                InvokeOnConnect();
         }
         private void OnJoinedLobby(Lobby lobby)
         {
@@ -103,7 +77,7 @@ namespace Networking
 
             _connectionManager = SteamNetworkingSockets.ConnectRelay(lobby.Owner.Id, 0, this);
         }
-        
+#endregion
         
 #region IConnectionManager
         public void OnMessage(IntPtr data, int size, long messageNum, long recvTime, int channel)
@@ -129,7 +103,7 @@ namespace Networking
         public void OnConnected(ConnectionInfo info)
         {
             Debug.Log($"[CLIENT] Connected to server! Connection ID: {Connection?.Id}");
-            OnConnect?.Invoke();
+            InvokeOnConnect();
         }
 
         public void OnDisconnected(ConnectionInfo info)
@@ -138,40 +112,36 @@ namespace Networking
         }
 #endregion
 
-#region Receiving Data
-
-        protected static Dictionary<Type, List<Action<BasePacket>>> _subscribers = new();
-        
-        public static void Subscribe<T>(Action<BasePacket> callback) where T : BasePacket
+#region Sending Data
+        protected override void SendLogic(BasePacket packet)
         {
-            var type = typeof(T);
+            if (!HasInstance)
+            {
+                Debug.LogWarning("Steam Client is not initialized!");
+                return;
+            }
+            if (!IsConnected)
+            {
+                Debug.LogWarning("Not connected to host!");
+                return;
+            }
 
-            if (type.ToString().StartsWith("CTS"))
-                Debug.LogWarning(
-                    "Subscribed to packet type " + type + " in Client, but that should be a Client To Server packet.",
-                    instance);
+            //If I'm hosting, don't send through network
+            if (SteamLobby.IsOwner)
+            {
+                GameServer.instance.HandlePacket(0, packet);
+                return;
+            }
+                    
+            using var ms = new MemoryStream();
+            using var bw = new BinaryWriter(ms);
+            packet.Serialize(bw);
 
-            if (!_subscribers.ContainsKey(type) || _subscribers[type] == null)
-                _subscribers[type] = new List<Action<BasePacket>>();
-            _subscribers[type].Add(callback);
+            byte[] data = ms.ToArray();
+            SteamInstance?.Connection?.SendMessage(data, SendType.Reliable);
         }
-
-        public static void Unsubscribe<T>(Action<BasePacket> callback) where T : BasePacket
-        {
-            var type = typeof(T);
-            if (_subscribers.ContainsKey(type))
-                _subscribers[type].Remove(callback);
-        }
-
-        internal void HandlePacket(BasePacket packet)
-        {
-            Debug.Log($"[Client] Received packet from server: {packet.Type}");
-
-            if (_subscribers.TryGetValue(packet.GetType(), out var callbacks))
-                foreach (var callback in callbacks)
-                    callback?.Invoke(packet);
-        }
-
 #endregion
+
+
     }
 }

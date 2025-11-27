@@ -11,16 +11,16 @@ namespace Client
         
         private void Start()
         {
-            SteamClient.Subscribe<STC_StartEmergency>(OnCrisisStart);
-            SteamClient.Subscribe<STC_CrisisResult>(OnCrisisResult);
-            SteamClient.Subscribe<STC_DilemmaResult>(OnDilemmaResult);
+            GameClient.Subscribe<STC_StartEmergency>(OnCrisisStart);
+            GameClient.Subscribe<STC_CrisisResult>(OnCrisisResult);
+            GameClient.Subscribe<STC_DilemmaResult>(OnDilemmaResult);
         }
 
         private void OnDestroy()
         {
-            SteamClient.Unsubscribe<STC_StartEmergency>(OnCrisisStart);
-            SteamClient.Unsubscribe<STC_CrisisResult>(OnCrisisResult);
-            SteamClient.Unsubscribe<STC_DilemmaResult>(OnDilemmaResult);
+            GameClient.Unsubscribe<STC_StartEmergency>(OnCrisisStart);
+            GameClient.Unsubscribe<STC_CrisisResult>(OnCrisisResult);
+            GameClient.Unsubscribe<STC_DilemmaResult>(OnDilemmaResult);
         }
 
         protected void OnCrisisStart(BasePacket p)

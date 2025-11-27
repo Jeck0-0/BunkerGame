@@ -8,11 +8,11 @@ public class ConnectionMenu : MonoBehaviour
 {
     private void Awake()
     {
-        SteamClient.Subscribe<STC_JoinResponse>(StartGame);
+        GameClient.Subscribe<STC_JoinResponse>(StartGame);
     }
     private void OnDestroy()
     {
-        SteamClient.Unsubscribe<STC_JoinResponse>(StartGame);
+        GameClient.Unsubscribe<STC_JoinResponse>(StartGame);
     }
 
     public void JoinGame()
@@ -22,7 +22,7 @@ public class ConnectionMenu : MonoBehaviour
 
     public void HostGame()
     {
-        SteamServer.Instance.Create(6);
+        GameServer.Instance.Create(6);
         SteamLobby.OpenInviteOverlay();
         //StartGame();
     }

@@ -12,7 +12,7 @@ public class LobbyManager : MonoBehaviour
 
     void Awake()
     {
-        SteamClient.Subscribe<STC_PlayerJoined>(AddNewPlayer);
+        GameClient.Subscribe<STC_PlayerJoined>(AddNewPlayer);
     }
 
     private void Start()

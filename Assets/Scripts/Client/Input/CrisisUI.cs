@@ -133,7 +133,7 @@ public class CrisisUI : Singleton<CrisisUI>
         ClientResources.Instance.ModifyMaterials(-amount);
 
         // Send packet to server
-        SteamClient.Send(new CTS_ContributeToCrisis(amount));
+        GameClient.Send(new CTS_ContributeToCrisis(amount));
 
         contributionField.interactable = false;
 

@@ -41,12 +41,12 @@ namespace Client
                 ClientResources.Instance.ModifyMaterials(packet.materialsMod);
             }
 
-            SteamClient.Subscribe<STC_CrisisResult>(OnCrisisResult);
+            GameClient.Subscribe<STC_CrisisResult>(OnCrisisResult);
 
             yield return new WaitUntil(() => resultReceived);
             //crisisFinished = false;
             
-            SteamClient.Unsubscribe<STC_CrisisResult>(OnCrisisResult);
+            GameClient.Unsubscribe<STC_CrisisResult>(OnCrisisResult);
 
             yield return new WaitForSeconds(3f);
             Debug.Log("Crisis finished: " + crisis.name);

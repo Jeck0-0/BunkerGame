@@ -52,7 +52,7 @@ namespace Server
         public void DelayedStart()
         {
             Debug.Log("Game started");
-            SteamServer.SendToAll(new STC_GameStart());
+            GameServer.SendToAll(new STC_GameStart());
             StartCoroutine(GameLoop());
         }
 
@@ -100,7 +100,7 @@ namespace Server
                 p.resources.ModifyInfluence(2);
 
                 // update clients about resource changes
-                SteamServer.SendTo(p.id, new STC_UpdateResources(p.resources.Materials, p.resources.Influence));
+                GameServer.SendTo(p.id, new STC_UpdateResources(p.resources.Materials, p.resources.Influence));
             }
         }
         IEnumerator PlayRandomEmergencyPhase()

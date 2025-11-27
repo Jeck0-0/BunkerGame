@@ -40,14 +40,14 @@ public class SecretObjectivelUI : MonoBehaviour
 
     private void Awake()
     {
-        SteamClient.Subscribe<STC_SecretObjective>(ReceiveObjective);
-        SteamClient.Subscribe<STC_GameStart>(GameStart);
+        GameClient.Subscribe<STC_SecretObjective>(ReceiveObjective);
+        GameClient.Subscribe<STC_GameStart>(GameStart);
     }
 
     private void OnDestroy()
     {
-        SteamClient.Unsubscribe<STC_SecretObjective>(ReceiveObjective);
-        SteamClient.Unsubscribe<STC_GameStart>(GameStart);
+        GameClient.Unsubscribe<STC_SecretObjective>(ReceiveObjective);
+        GameClient.Unsubscribe<STC_GameStart>(GameStart);
     }
 
     private void GameStart(BasePacket p) => SlideOut();

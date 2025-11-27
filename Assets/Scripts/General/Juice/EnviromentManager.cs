@@ -13,12 +13,12 @@ public class EnviromentManager : MonoBehaviour
 
     private void Awake()
     {
-        SteamClient.Subscribe<STC_StartEmergency>(OnStartEmergency);
+        GameClient.Subscribe<STC_StartEmergency>(OnStartEmergency);
     }
 
     private void OnDestroy()
     {
-        SteamClient.Unsubscribe<STC_StartEmergency>(OnStartEmergency);
+        GameClient.Unsubscribe<STC_StartEmergency>(OnStartEmergency);
     }
 
     private void OnStartEmergency(BasePacket packet)

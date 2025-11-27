@@ -20,21 +20,22 @@ namespace Server
         protected override void Awake()
         {
             base.Awake();
-            SteamServer.OnPlayerConnected += PlayerConnected;
-            SteamServer.OnPlayerDisconnected += PlayerDisconnected;
-            SteamServer.Subscribe<CTS_PlayerInformation>(GetPlayerInformation);
+            GameServer.OnPlayerConnected += PlayerConnected;
+            GameServer.OnPlayerDisconnected += PlayerDisconnected;
+            GameServer.Subscribe<CTS_PlayerInformation>(GetPlayerInformation);
         }
 
 
         private void OnDestroy()
         {
-            SteamServer.OnPlayerConnected -= PlayerConnected;
-            SteamServer.OnPlayerDisconnected -= PlayerDisconnected;
-            SteamServer.Unsubscribe<CTS_PlayerInformation>(GetPlayerInformation);
+            GameServer.OnPlayerConnected -= PlayerConnected;
+            GameServer.OnPlayerDisconnected -= PlayerDisconnected;
+            GameServer.Unsubscribe<CTS_PlayerInformation>(GetPlayerInformation);
         }
         
         protected void PlayerConnected(uint id)
         {
+            Debug.Log("[ServerPlayers] Player connected: " + id);
             if (players.ContainsKey(id))
                 Debug.LogError("Duplicate player ID: " + id);
             
@@ -46,11 +47,11 @@ namespace Server
             players[id].spot = i;
             occupiedSpots.Add(i);
             
-            SteamServer.SendTo(id, new STC_JoinResponse(players[id].spot));
+            GameServer.SendTo(id, new STC_JoinResponse(players[id].spot));
 
             foreach (var player in GetAll())
                 if(player.id != id)
-                    SteamServer.SendTo(id, new STC_PlayerJoined(player.id, player.username, player.spot, player.emblemData));
+                    GameServer.SendTo(id, new STC_PlayerJoined(player.id, player.username, player.spot, player.emblemData));
             
             //TODO ?disconnect if doesn't send PlayerInformation within 2 seconds
         }
@@ -67,7 +68,7 @@ namespace Server
             CTS_PlayerInformation playerInfo = (CTS_PlayerInformation)p;
             players[id].emblemData = playerInfo.emblemData;
             players[id].username = playerInfo.username;
-            SteamServer.SendToAllExcept(id, new STC_PlayerJoined(id, players[id].username, players[id].spot, players[id].emblemData));
+            GameServer.SendToAllExcept(id, new STC_PlayerJoined(id, players[id].username, players[id].spot, players[id].emblemData));
         }
         
         

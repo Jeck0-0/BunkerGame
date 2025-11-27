@@ -4,7 +4,6 @@ using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using SteamClient = Networking.SteamClient;
 
 namespace Client
 {
@@ -22,16 +21,16 @@ namespace Client
         protected override void Awake()
         {
             base.Awake();
-            SteamClient.Subscribe<STC_PlayerJoined>(OnPlayerJoined);
-            SteamClient.Subscribe<STC_JoinResponse>(OnJoinResponse);
-            SteamClient.Subscribe<STC_PlayerDisconected>(OnPlayerDisconected);
+            GameClient.Subscribe<STC_PlayerJoined>(OnPlayerJoined);
+            GameClient.Subscribe<STC_JoinResponse>(OnJoinResponse);
+            GameClient.Subscribe<STC_PlayerDisconected>(OnPlayerDisconected);
         }
 
         private void OnDestroy()
         {
-            SteamClient.Unsubscribe<STC_PlayerJoined>(OnPlayerJoined);
-            SteamClient.Unsubscribe<STC_JoinResponse>(OnJoinResponse);
-            SteamClient.Unsubscribe<STC_PlayerDisconected>(OnPlayerDisconected);
+            GameClient.Unsubscribe<STC_PlayerJoined>(OnPlayerJoined);
+            GameClient.Unsubscribe<STC_JoinResponse>(OnJoinResponse);
+            GameClient.Unsubscribe<STC_PlayerDisconected>(OnPlayerDisconected);
         }
 
         private void OnJoinResponse(BasePacket p)
@@ -45,7 +44,7 @@ namespace Client
             CTS_PlayerInformation myInfo = new CTS_PlayerInformation();
             myInfo.username = Steamworks.SteamClient.Name; // for testing, while we're not using steam
             myInfo.emblemData = new EmblemData();
-            SteamClient.Send(myInfo);
+            GameClient.Send(myInfo);
         }
         
         private void OnPlayerJoined(BasePacket p)

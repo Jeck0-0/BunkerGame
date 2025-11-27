@@ -7,8 +7,8 @@ public class NetworkTest : MonoBehaviour
 {
     private void Start()
     {
-        SteamServer.Subscribe<STC_JoinResponse>(Respond);
-        SteamClient.Subscribe<STC_JoinResponse>(ReceiveResponse);
+        GameServer.Subscribe<STC_JoinResponse>(Respond);
+        GameClient.Subscribe<STC_JoinResponse>(ReceiveResponse);
     }
 
     private void Update()
@@ -17,7 +17,7 @@ public class NetworkTest : MonoBehaviour
         {
             //CLIENT sends test packet
             var factionInfoPacket = new STC_JoinResponse(55);
-            SteamClient.Send(factionInfoPacket);
+            GameClient.Send(factionInfoPacket);
         }
     }
     
@@ -27,7 +27,7 @@ public class NetworkTest : MonoBehaviour
         STC_JoinResponse packet = p as STC_JoinResponse;
         
         var responsePacket = new STC_JoinResponse(66);
-        SteamServer.SendTo(playerId, responsePacket);
+        GameServer.SendTo(playerId, responsePacket);
     }
 
     private void ReceiveResponse(BasePacket p)
