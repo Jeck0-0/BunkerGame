@@ -56,13 +56,13 @@ namespace Client
 
         protected override void Awake()
         {
-            NetworkManager.Client.Subscribe<STC_UpdateResources>(OnUpdateResources);
+            SteamClient.Subscribe<STC_UpdateResources>(OnUpdateResources);
             base.Awake();
         }
 
         private void OnDestroy()
         {
-            NetworkManager.Client?.Unsubscribe<STC_UpdateResources>(OnUpdateResources);
+            SteamClient.Unsubscribe<STC_UpdateResources>(OnUpdateResources);
         }
 
         private void OnUpdateResources(BasePacket p)

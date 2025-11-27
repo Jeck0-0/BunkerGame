@@ -42,10 +42,10 @@ namespace Server
             }
 
             // Wait for all votes or timer end
-            NetworkManager.Server.Subscribe<CTS_VoteOnDilemma>(ReceiveVote);
+            SteamServer.Subscribe<CTS_VoteOnDilemma>(ReceiveVote);
             float endTime = Time.time + CurrentDilemma.TimeToResolve;
             yield return new WaitUntil(() => votes.Count >= ServerPlayers.GetAll().Count() || Time.time > endTime);
-            NetworkManager.Server.Unsubscribe<CTS_VoteOnDilemma>(ReceiveVote);
+            SteamServer.Unsubscribe<CTS_VoteOnDilemma>(ReceiveVote);
 
             CalculateDilemmaResult();
             yield return new WaitForSeconds(dilemmaEndDelay);
@@ -68,7 +68,7 @@ namespace Server
 
             // Send Dilemma start packet
             STC_StartEmergency packet = new STC_StartEmergency(CurrentDilemma, DateTime.Now.Ticks);
-            NetworkManager.Server.SendToAll(packet);
+            SteamServer.SendToAll(packet);
 
             // Prepare to receive votes
             votes.Clear();
@@ -179,7 +179,7 @@ namespace Server
 
             // Send results
             STC_DilemmaResult result = new STC_DilemmaResult(winningOption, modifier);
-            NetworkManager.Server.SendToAll(result);
+            SteamServer.SendToAll(result);
         }
 
         private void ApplyKeywordChanges(Dilemma dilemma, bool yesWon)

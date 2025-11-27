@@ -1,6 +1,8 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Steamworks;
@@ -9,83 +11,97 @@ using UnityEngine;
 
 namespace Networking
 {
-    [CreateAssetMenu(menuName = "ScriptableVariables/Networking/SteamServer", fileName = "SteamServer")]
-    public class SteamServer : Server, ISocketManager
+    public class SteamServer : PersistentSingleton<SteamServer>, ISocketManager
     {
-        public bool IsRunning { get; private set; }
-        public int PlayerCount => _clients.Count;
+        public static bool IsRunning { get; private set; }
+        public static int PlayerCount => instance != null ? instance._connections.Count : 0;
 
+        public static event Action<uint> OnPlayerConnected;
+        public static event Action<uint> OnPlayerDisconnected;
+        public static event Action OnServerStarted;
+        
         private SocketManager _socketManager;
-        private Dictionary<uint, Connection> _clients = new(); // Connection.Id -> Connection
-        private Dictionary<uint, SteamId> _clientSteamIds = new(); // Connection.Id -> SteamId
+        private Dictionary<uint, ServerConnectionInfo> _connections = new(); // Connection.Id -> Connection
         private int maxClients;
 
-        public override void Connect(int maxPlayers)
+        protected override void Awake()
         {
-            StartServer();
+            base.Awake();
+            SteamManager.TryInitialize();
+            SteamMatchmaking.OnLobbyCreated += OnLobbyCreated;
+            SteamMatchmaking.OnLobbyMemberJoined += OnLobbyMemberJoined;
+            SteamMatchmaking.OnLobbyMemberLeave += OnLobbyMemberLeft;
         }
 
-        public async Task StartServer(int maxPlayers = 4)
+        private void OnApplicationQuit()
         {
-            if (!SteamManager.TryInitialize())
-            {
-                Debug.LogError("Steam not initialized!");
-                return;
-            }
+            Disconnect();
+            SteamMatchmaking.OnLobbyCreated -= OnLobbyCreated;
+            SteamMatchmaking.OnLobbyMemberJoined -= OnLobbyMemberJoined;
+            SteamMatchmaking.OnLobbyMemberLeave -= OnLobbyMemberLeft;
+        }
+        
+        protected void Update()
+        {
+            _socketManager?.Receive();
+        }
 
+        
+        public void Create(int maxPlayers)
+        {
             if (IsRunning)
             {
                 Debug.LogWarning("Server already running!");
                 return;
             }
-
+            
             _socketManager = SteamNetworkingSockets.CreateRelaySocket(0, this);
-
-            IsRunning = true;
             Debug.Log("[SERVER] Server started (relay mode)");
-
-            bool created = await SteamLobby.Create(maxPlayers);
+            
             this.maxClients = maxPlayers;
-            if (!created)
+            StartCoroutine(StartLobbyCoroutine());
+            
+            IsRunning = true;
+            
+            
+            IEnumerator StartLobbyCoroutine()
             {
-                Debug.LogError("Failed to create lobby!");
-                IsRunning = false;
-                _socketManager.Close();
-                _socketManager = null;
-                return;
+                var task = SteamLobby.Create(maxClients);
+            
+                yield return new WaitUntil(() => task.IsCompleted);
+                
+                if (!task.Result)
+                {
+                    Debug.LogError("Failed to create lobby!");
+                    Disconnect();
+                }
+                
+                Debug.Log("[SERVER] Created Lobby");
+                // Add myself
+                _connections.Add(0, new ServerConnectionInfo(Steamworks.SteamClient.SteamId, new Connection()));
+                OnPlayerConnected?.Invoke(0);
             }
-
-            SteamMatchmaking.OnLobbyCreated += OnLobbyCreated;
-            SteamMatchmaking.OnLobbyMemberJoined += OnLobbyMemberJoined;
-            SteamMatchmaking.OnLobbyMemberLeave += OnLobbyMemberLeft;
         }
 
-        public override void Disconnect()
+
+        public void Disconnect()
         {
-            if (!IsRunning)
-                return;
+            if (!IsRunning) return;
+            Debug.Log("[SERVER] Stopping server...");
 
-            foreach (var connection in _clients.Values)
-                connection.Close();
+            foreach (var connection in _connections.Values)
+                connection.connection.Close();
 
-            _clients.Clear();
-            _clientSteamIds.Clear();
+            _connections.Clear();
             _socketManager = null;
             IsRunning = false;
             SteamLobby.Leave();
-
-            SteamMatchmaking.OnLobbyCreated += OnLobbyCreated;
-            SteamMatchmaking.OnLobbyMemberJoined += OnLobbyMemberJoined;
-            SteamMatchmaking.OnLobbyMemberLeave += OnLobbyMemberLeft;
-
+            
             Debug.Log("[SERVER] Server stopped");
         }
 
-        public override void Update()
-        {
-            _socketManager?.Receive();
-        }
 
+#region Lobby
         private void OnLobbyCreated(Result result, Lobby lobby)
         {
             Debug.Log($"[SERVER] Lobby created! ID: {lobby.Id}");
@@ -107,29 +123,28 @@ namespace Networking
             Debug.Log($"[SERVER] {friend.Name} left lobby");
 
             // Find and disconnect their socket connection
-            foreach (var kvp in _clientSteamIds)
+            foreach (var kvp in _connections)
             {
-                if (kvp.Value == friend.Id)
+                if (kvp.Value.SteamId == friend.Id)
                 {
-                    if (_clients.TryGetValue(kvp.Key, out var connection))
+                    if (_connections.TryGetValue(kvp.Key, out var connection))
                     {
-                        connection.Close();
-                        _clients.Remove(kvp.Key);
-                        _clientSteamIds.Remove(kvp.Key);
+                        connection.connection.Close();
+                        _connections.Remove(kvp.Key);
                     }
-
                     break;
                 }
             }
         }
+#endregion
 
-
+#region ISocketManager
 
         public void OnConnecting(Connection connection, ConnectionInfo info)
         {
             Debug.Log($"[SERVER] Client connecting: {info.Identity.SteamId}");
 
-            if (_clients.Count >= maxClients)
+            if (_connections.Count >= maxClients)
             {
                 Debug.LogWarning("[SERVER] Server full! Rejecting connection.");
                 connection.Close();
@@ -139,16 +154,7 @@ namespace Networking
             // Check if they're in the lobby
             if (SteamLobby.IsInLobby)
             {
-                bool inLobby = false;
-                foreach (var member in SteamLobby.CurrentLobby!.Value.Members)
-                {
-                    if (member.Id == info.Identity.SteamId)
-                    {
-                        inLobby = true;
-                        break;
-                    }
-                }
-
+                bool inLobby = SteamLobby.CurrentLobby!.Value.Members.Any(x=>x.Id == info.Identity.SteamId);
                 if (!inLobby)
                 {
                     Debug.LogWarning($"[SERVER] {info.Identity.SteamId} not in lobby! Rejecting.");
@@ -156,6 +162,8 @@ namespace Networking
                     return;
                 }
             }
+
+            connection.Accept();
         }
 
         public void OnConnected(Connection connection, ConnectionInfo info)
@@ -163,30 +171,29 @@ namespace Networking
             uint connectionId = connection.Id;
             SteamId steamId = info.Identity.SteamId;
 
-            _clients[connectionId] = connection;
-            _clientSteamIds[connectionId] = steamId;
+            _connections[connectionId] = new ServerConnectionInfo(steamId, connection);
+            OnPlayerConnected?.Invoke(connectionId);
 
             Debug.Log($"[SERVER] Client connected: {steamId} (Connection ID: {connectionId})");
-            Debug.Log($"[SERVER] Total clients: {_clients.Count}");
+            Debug.Log($"[SERVER] Total clients: {_connections.Count}");
         }
 
         public void OnDisconnected(Connection connection, ConnectionInfo info)
         {
             uint connectionId = connection.Id;
 
-            if (_clientSteamIds.TryGetValue(connectionId, out var steamId))
+            if (_connections.TryGetValue(connectionId, out var connectionInfo))
             {
-                Debug.Log($"[SERVER] Client disconnected: {steamId} (Reason: {info.EndReason})");
-                _clientSteamIds.Remove(connectionId);
+                Debug.Log($"[SERVER] Client disconnected: {connectionInfo} (Reason: {info.EndReason})");
+                _connections.Remove(connectionId);
+                OnPlayerDisconnected?.Invoke(connectionId);
             }
 
-            _clients.Remove(connectionId);
-            Debug.Log($"[SERVER] Total clients: {_clients.Count}");
+            Debug.Log($"[SERVER] Total clients: {_connections.Count}");
         }
 
         public void OnMessage(Connection connection, NetIdentity identity, IntPtr data, int size, long messageNum,
-            long recvTime,
-            int channel)
+            long recvTime, int channel)
         {
             byte[] buffer = new byte[size];
             Marshal.Copy(data, buffer, 0, size);
@@ -200,57 +207,113 @@ namespace Networking
                 HandlePacket(connection.Id, packet);
             }
         }
+#endregion
 
-
-
-        public override void SendTo(uint connectionId, BasePacket packet)
+#region Sending Data
+        public static void SendTo(uint connectionId, BasePacket packet)
         {
-
-            if (!_clients.TryGetValue(connectionId, out var connection))
+            if (!HasInstance || !instance._connections.ContainsKey(connectionId))
             {
                 Debug.LogWarning($"Connection {connectionId} not found!");
                 return;
             }
-
-            using var ms = new MemoryStream();
-            using var bw = new BinaryWriter(ms);
-            packet.Serialize(bw);
-
-            byte[] data = ms.ToArray();
-            connection.SendMessage(data, SendType.Reliable);
+            instance.SendMessage(new[] { connectionId }, packet);
         }
 
-        public override void SendToAll(BasePacket packet)
+        public static void SendToAll(BasePacket packet)
+        {
+            instance?.SendMessage(instance._connections.Keys, packet);
+        }
+        
+        public static void SendToAllExcept(uint excludeConnectionId, BasePacket packet)
+        {
+            instance?.SendMessage(instance._connections
+                .Where(x => x.Key != excludeConnectionId)
+                .Select(x => x.Key), 
+                packet);
+        }
+
+
+        protected byte[] GetData(BasePacket packet)
         {
             using var ms = new MemoryStream();
             using var bw = new BinaryWriter(ms);
             packet.Serialize(bw);
 
-            byte[] data = ms.ToArray();
-
-            foreach (var connection in _clients.Values)
-            {
-                connection.SendMessage(data, SendType.Reliable);
-            }
+            return ms.ToArray();
         }
 
-
-
-        public override void SendToAllExcept(uint excludeConnectionId, BasePacket packet)
+        protected void SendMessage(IEnumerable<uint> connectionId, BasePacket packet)
         {
-            using var ms = new MemoryStream();
-            using var bw = new BinaryWriter(ms);
-            packet.Serialize(bw);
-
-            byte[] data = ms.ToArray();
-
-            foreach (var kvp in _clients)
+            var data = GetData(packet);
+            foreach (var id in connectionId)
             {
-                if (kvp.Key != excludeConnectionId)
+                if (id == 0)
                 {
-                    kvp.Value.SendMessage(data, SendType.Reliable);
+                    SteamClient.instance.HandlePacket(packet);
+                    continue;
                 }
+                
+                _connections[id].connection.SendMessage(data, SendType.Reliable);
             }
         }
+#endregion
+
+#region Receiving Data
+
+        protected static Dictionary<Type, List<Action<uint, BasePacket>>> _subscribers = new();
+        protected static List<Action<uint, BasePacket>> _subscribedToAll = new();
+
+        public static void Subscribe<T>(Action<uint, BasePacket> callback) where T : BasePacket
+        {
+            var type = typeof(T);
+
+            if (type.ToString().StartsWith("STC"))
+                Debug.LogWarning("Subscribed to packet type " + type + " in Server, but that should be a Server To Client packet.", instance);
+
+            if (!_subscribers.ContainsKey(type) || _subscribers[type] == null)
+                _subscribers[type] = new();
+            _subscribers[type].Add(callback);
+        }
+
+        public static void SubscribeToAll(Action<uint, BasePacket> callback)
+        {
+            _subscribedToAll.Add(callback);
+        }
+
+        public static void Unsubscribe<T>(Action<uint, BasePacket> callback) where T : BasePacket
+        {
+            var type = typeof(T);
+            if (_subscribers.ContainsKey(type))
+                _subscribers[type].Remove(callback);
+        }
+
+        public static void UnsubscribeFromAll(Action<uint, BasePacket> callback)
+        {
+            _subscribedToAll.Remove(callback);
+        }
+
+        internal void HandlePacket(uint connectionId, BasePacket packet)
+        {
+            Debug.Log($"[SERVER] Received packet from {connectionId}: {packet.Type}");
+
+            if (_subscribers.TryGetValue(packet.GetType(), out var callbacks))
+                foreach (var callback in callbacks)
+                    callback?.Invoke(connectionId, packet);
+
+            foreach (var callback in _subscribedToAll)
+                callback?.Invoke(connectionId, packet);
+        }
+#endregion
+
+        protected class ServerConnectionInfo
+        {
+            public SteamId SteamId;
+            public Connection connection;
+            public ServerConnectionInfo() {}
+            public ServerConnectionInfo(SteamId steamId, Connection connection)
+                { SteamId = steamId; this.connection = connection; }
+        }
+
     }
 }

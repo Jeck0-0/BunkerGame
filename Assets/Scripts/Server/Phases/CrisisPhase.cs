@@ -27,10 +27,10 @@ namespace Server
             StartRandomCrisis();
             
             // Wait for all contributions or timer end
-            NetworkManager.Server.Subscribe<CTS_ContributeToCrisis>(ReceiveContribution);
+            SteamServer.Subscribe<CTS_ContributeToCrisis>(ReceiveContribution);
             float endTime = Time.time + CurrentEmergency.TimeToResolve;
             yield return new WaitUntil(() => contributions.Count >= ServerPlayers.GetAll().Count() || Time.time > endTime);
-            NetworkManager.Server.Unsubscribe<CTS_ContributeToCrisis>(ReceiveContribution);
+            SteamServer.Unsubscribe<CTS_ContributeToCrisis>(ReceiveContribution);
             
             CalculateCrisisResult();
         }
@@ -43,7 +43,7 @@ namespace Server
             
             // Send crisis start packet
             STC_StartEmergency packet = new STC_StartEmergency(CurrentEmergency, DateTime.Now.Ticks);
-            NetworkManager.Server.SendToAll(packet);
+            SteamServer.SendToAll(packet);
             
             // Prepare to receive contributions
             contributions.Clear();
@@ -123,7 +123,7 @@ namespace Server
                 ServerPlayers.Get(id).resources.ModifyMaterials(CurrentEmergency.HighestBidderReward);
 
                 STC_CrisisResult result = new STC_CrisisResult(true, CurrentEmergency.SuccessReward, CurrentEmergency.SuccessTrackMod);
-                NetworkManager.Server.SendToAll(result);
+                SteamServer.SendToAll(result);
             }
             else 
             {
@@ -146,7 +146,7 @@ namespace Server
                 ServerPlayers.Get(id).resources.ModifyMaterials(CurrentEmergency.LowestBidderPenalty);
 
                 STC_CrisisResult result = new STC_CrisisResult(false, 0, CurrentEmergency.FailureTrackMod);
-                NetworkManager.Server.SendToAll(result);
+                SteamServer.SendToAll(result);
             }
         }
     }

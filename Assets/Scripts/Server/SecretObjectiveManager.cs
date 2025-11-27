@@ -27,7 +27,7 @@ namespace Server
                 players[i].SecretObjective = pool[i];
 
                 // Send objective
-                NetworkManager.Server.SendTo(players[i].id, new STC_SecretObjective(pool[i]));
+                SteamServer.SendTo(players[i].id, new STC_SecretObjective(pool[i]));
             }
 
             Debug.Log("All secret objectives assigned");

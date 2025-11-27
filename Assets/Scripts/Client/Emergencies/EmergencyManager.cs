@@ -1,3 +1,4 @@
+using System;
 using Networking;
 using Packets;
 using UnityEngine;
@@ -10,9 +11,16 @@ namespace Client
         
         private void Start()
         {
-            NetworkManager.Client.Subscribe<STC_StartEmergency>(OnCrisisStart);
-            NetworkManager.Client.Subscribe<STC_CrisisResult>(OnCrisisResult);
-            NetworkManager.Client.Subscribe<STC_DilemmaResult>(OnDilemmaResult);
+            SteamClient.Subscribe<STC_StartEmergency>(OnCrisisStart);
+            SteamClient.Subscribe<STC_CrisisResult>(OnCrisisResult);
+            SteamClient.Subscribe<STC_DilemmaResult>(OnDilemmaResult);
+        }
+
+        private void OnDestroy()
+        {
+            SteamClient.Unsubscribe<STC_StartEmergency>(OnCrisisStart);
+            SteamClient.Unsubscribe<STC_CrisisResult>(OnCrisisResult);
+            SteamClient.Unsubscribe<STC_DilemmaResult>(OnDilemmaResult);
         }
 
         protected void OnCrisisStart(BasePacket p)

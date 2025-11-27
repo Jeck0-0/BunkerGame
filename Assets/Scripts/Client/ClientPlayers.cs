@@ -21,16 +21,16 @@ namespace Client
         protected override void Awake()
         {
             base.Awake();
-            NetworkManager.Client.Subscribe<STC_PlayerJoined>(OnPlayerJoined);
-            NetworkManager.Client.Subscribe<STC_JoinResponse>(OnJoinResponse);
-            NetworkManager.Client.Subscribe<STC_PlayerDisconected>(OnPlayerDisconected);
+            SteamClient.Subscribe<STC_PlayerJoined>(OnPlayerJoined);
+            SteamClient.Subscribe<STC_JoinResponse>(OnJoinResponse);
+            SteamClient.Subscribe<STC_PlayerDisconected>(OnPlayerDisconected);
         }
 
         private void OnDestroy()
         {
-            NetworkManager.Client?.Unsubscribe<STC_PlayerJoined>(OnPlayerJoined);
-            NetworkManager.Client?.Unsubscribe<STC_JoinResponse>(OnJoinResponse);
-            NetworkManager.Client.Unsubscribe<STC_PlayerDisconected>(OnPlayerDisconected);
+            SteamClient.Unsubscribe<STC_PlayerJoined>(OnPlayerJoined);
+            SteamClient.Unsubscribe<STC_JoinResponse>(OnJoinResponse);
+            SteamClient.Unsubscribe<STC_PlayerDisconected>(OnPlayerDisconected);
         }
 
         private void OnJoinResponse(BasePacket p)

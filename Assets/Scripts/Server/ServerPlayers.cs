@@ -20,20 +20,17 @@ namespace Server
         protected override void Awake()
         {
             base.Awake();
-            NetworkManager.Server.OnPlayerConnected += PlayerConnected;
-            NetworkManager.Server.OnPlayerDisconnected += PlayerDisconnected;
-            NetworkManager.Server.Subscribe<CTS_PlayerInformation>(GetPlayerInformation);
+            SteamServer.OnPlayerConnected += PlayerConnected;
+            SteamServer.OnPlayerDisconnected += PlayerDisconnected;
+            SteamServer.Subscribe<CTS_PlayerInformation>(GetPlayerInformation);
         }
 
 
         private void OnDestroy()
         {
-            if (NetworkManager.Server != null)
-            {
-                NetworkManager.Server.OnPlayerConnected -= PlayerConnected;
-                NetworkManager.Server.OnPlayerDisconnected -= PlayerDisconnected;
-                NetworkManager.Server.Unsubscribe<CTS_PlayerInformation>(GetPlayerInformation);
-            }
+            SteamServer.OnPlayerConnected -= PlayerConnected;
+            SteamServer.OnPlayerDisconnected -= PlayerDisconnected;
+            SteamServer.Unsubscribe<CTS_PlayerInformation>(GetPlayerInformation);
         }
         
         protected void PlayerConnected(uint id)
@@ -49,11 +46,11 @@ namespace Server
             players[id].spot = i;
             occupiedSpots.Add(i);
             
-            NetworkManager.Server.SendTo(id, new STC_JoinResponse(players[id].spot));
+            SteamServer.SendTo(id, new STC_JoinResponse(players[id].spot));
 
             foreach (var player in GetAll())
                 if(player.id != id)
-                    NetworkManager.Server.SendTo(id, new STC_PlayerJoined(player.id, player.username, player.spot, player.emblemData));
+                    SteamServer.SendTo(id, new STC_PlayerJoined(player.id, player.username, player.spot, player.emblemData));
             
             //TODO ?disconnect if doesn't send PlayerInformation within 2 seconds
         }
@@ -70,7 +67,7 @@ namespace Server
             CTS_PlayerInformation playerInfo = (CTS_PlayerInformation)p;
             players[id].emblemData = playerInfo.emblemData;
             players[id].username = playerInfo.username;
-            NetworkManager.Server.SendToAllExcept(id, new STC_PlayerJoined(id, players[id].username, players[id].spot, players[id].emblemData));
+            SteamServer.SendToAllExcept(id, new STC_PlayerJoined(id, players[id].username, players[id].spot, players[id].emblemData));
         }
         
         

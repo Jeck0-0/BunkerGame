@@ -12,8 +12,13 @@ namespace Networking
         public static bool IsInLobby => CurrentLobby != null;
         public static bool IsOwner => IsInLobby && CurrentLobby.Value.Owner.Id == Steamworks.SteamClient.SteamId;
 
+        
+        private static bool isInitialized;
         public static void Initialize()
         {
+            if (isInitialized) return;
+            isInitialized = true;
+            
             SteamMatchmaking.OnLobbyCreated += LobbyCreatedCallback;
             SteamMatchmaking.OnLobbyEntered += LobbyEnteredCallback;
             SteamMatchmaking.OnLobbyMemberJoined += OnLobbyMemberJoinedCallback;
@@ -21,7 +26,6 @@ namespace Networking
             SteamMatchmaking.OnLobbyDataChanged += OnLobbyDataChangedCallback;
             SteamMatchmaking.OnLobbyInvite += OnLobbyInviteCallback;
             SteamFriends.OnGameLobbyJoinRequested += OnGameLobbyJoinRequestedCallback;
-            Application.quitting += OnDestroy;
         }
 
 
@@ -46,7 +50,7 @@ namespace Networking
                 CurrentLobby = result;
                 CurrentLobby.Value.SetPublic();
                 CurrentLobby.Value.SetJoinable(true);
-                CurrentLobby.Value.SetData("game_version", Application.version);
+                //CurrentLobby.Value.SetData("game_version", Application.version);
 
                 //OVERLAY
                 SteamFriends.OpenGameInviteOverlay(CurrentLobby.Value.Id);
@@ -87,10 +91,11 @@ namespace Networking
         {
             if (IsInLobby)
             {
-                CurrentLobby!.Value.Leave();
+                CurrentLobby?.Leave();
                 CurrentLobby = null;
                 Debug.Log("Left lobby");
             }
+            Dispose();
         }
 
         public static void OpenInviteOverlay()
@@ -166,8 +171,10 @@ namespace Networking
             await Join(lobby.Id);
         }
 
-        private static void OnDestroy()
+        private static void Dispose()
         {
+            isInitialized = false;
+            Debug.Log("Destroying lobby");
             SteamMatchmaking.OnLobbyCreated -= LobbyCreatedCallback;
             SteamMatchmaking.OnLobbyEntered -= LobbyEnteredCallback;
             SteamMatchmaking.OnLobbyMemberJoined -= OnLobbyMemberJoinedCallback;
@@ -175,7 +182,6 @@ namespace Networking
             SteamMatchmaking.OnLobbyDataChanged -= OnLobbyDataChangedCallback;
             SteamMatchmaking.OnLobbyInvite -= OnLobbyInviteCallback;
             SteamFriends.OnGameLobbyJoinRequested -= OnGameLobbyJoinRequestedCallback;
-            Application.quitting -= OnDestroy;
         }
 
     }
