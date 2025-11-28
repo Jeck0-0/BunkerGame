@@ -35,6 +35,13 @@ public class DebugShortcuts : MonoBehaviour
 
         if(Input.GetKey(KeyCode.LeftControl))
         {
+            //open console
+            if(Input.GetKeyDown(KeyCode.Q))
+            {
+                Debug.developerConsoleVisible = !Debug.developerConsoleVisible;
+                if(Debug.developerConsoleVisible)
+                    Debug.LogError("Console opened");
+            }
             
             //lower volume
             if (Input.GetKeyDown(KeyCode.Comma))

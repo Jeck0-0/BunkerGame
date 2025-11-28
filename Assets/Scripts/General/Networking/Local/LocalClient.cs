@@ -22,6 +22,11 @@ namespace Networking
             socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         }
 
+        private void OnApplicationQuit()
+        {
+            Disconnect();
+        }
+
         void Update()
         {
             if (!isConnected)

@@ -29,6 +29,11 @@ namespace Networking
             ReceivePackets();
         }
 
+        private void OnApplicationQuit()
+        {
+            Disconnect();
+        }
+
         protected void AcceptNewConnection()
         {
             try
@@ -77,12 +82,20 @@ namespace Networking
         
         public override void Create(int maxPlayers)
         {
+            if (IsRunning)
+            {
+                Debug.LogWarning("Server is already running", gameObject);
+                return;
+            }
+            
             this.MaxPlayers = maxPlayers;
             serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             serverSocket.Blocking = false;
             serverSocket.Bind(new IPEndPoint(IPAddress.Any, port));
             serverSocket.Listen(5);
             IsRunning = true;
+            
+            LocalClient.instance.Connect(null);
         }
 
         public override void Disconnect()
