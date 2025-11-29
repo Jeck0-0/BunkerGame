@@ -27,6 +27,8 @@ namespace Networking
         
         public abstract void Disconnect();
         
+        public abstract void Kick(uint playerId);
+        
 
 #region Sending Data
 

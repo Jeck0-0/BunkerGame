@@ -110,6 +110,18 @@ namespace Networking
             SteamLobby.CurrentLobby?.SetJoinable(open);
         }
 
+        public override void Kick(uint playerId)
+        {
+            Debug.Log("[Server] Kicking player: " + playerId);
+            if (_connections.ContainsKey(playerId))
+            {
+                _connections[playerId].connection.Close();
+                _connections.Remove(playerId);
+            }
+            _connectedIds.Remove(playerId);
+            InvokeOnPlayerDisconnected(playerId);
+        }
+
         protected override void SendMessage(IEnumerable<uint> connectionId, BasePacket packet)
         {
             var data = GetData(packet);
