@@ -7,10 +7,6 @@ public class ComputerUI : Singleton<ComputerUI>
     [SerializeField] GameObject LobbyUI;
     [SerializeField] GameObject FactionDesignerUI;
 
-    private void Start()
-    {
-        DeactivateAllUI();
-    }
     public void PauseMenu()
     {
         DeactivateAllUI();
@@ -42,5 +38,13 @@ public class ComputerUI : Singleton<ComputerUI>
         MainMenuUI.SetActive(false);
         LobbyUI.SetActive(false);
         FactionDesignerUI.SetActive(false);
+    }
+    public void QuitGame()
+    {
+        #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+        #else
+            Application.Quit();
+        #endif
     }
 }

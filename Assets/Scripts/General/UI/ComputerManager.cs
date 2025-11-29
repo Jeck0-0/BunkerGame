@@ -35,8 +35,8 @@ public class ComputerManager : Singleton<ComputerManager>
 
     private void Start()
     {
-        computer.transform.position = downPosition.position;
-        computer.SetActive(false);
+        computer.transform.position = upPosition.position;
+        BringComputerDown();
     }
     public void BringComputerUP()
     {

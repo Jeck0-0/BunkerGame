@@ -1,8 +1,10 @@
 using UnityEngine;
+using System.Collections;
 
 public class LookCamera : MonoBehaviour
 {
     [Header("Look Settings")]
+    [SerializeField] bool lockCamera = false;
     [SerializeField] float sensitivity = 50f;
     [SerializeField] float returnSpeed = 6f;
 
@@ -12,22 +14,35 @@ public class LookCamera : MonoBehaviour
     [SerializeField] float minPitch = -30f;
     [SerializeField] float maxPitch = 45f;
 
+    [Header("Zoom Out")]
+    [SerializeField] Transform zoomInPos;
+    [SerializeField] Transform zoomOutPos;
+    [SerializeField] float zoomOutDuration = 1f;
+    [SerializeField] AnimationCurve zoomOutCurve;
+
     private Quaternion originalRotation;
     private float yaw;
     private float pitch;
     public bool IsLooking { get; private set; }
     private bool isReturning;
+    private bool zoomedOut = false;
 
     void Start()
     {
+        if (lockCamera) return;
+
         originalRotation = transform.localRotation;
         Vector3 originalRot = transform.localEulerAngles;
         yaw = originalRot.y;
         pitch = originalRot.x;
+
+        SetZoomedOut(true);
     }
 
     void Update()
     {
+        if (!zoomedOut) return;
+
         if (Input.GetMouseButtonDown(1))
         {
             IsLooking = true;
@@ -82,5 +97,42 @@ public class LookCamera : MonoBehaviour
             pitch = originalRotation.eulerAngles.x;
             isReturning = false;
         }
+    }
+
+    public void SetZoomedOut(bool state)
+    {
+        StopAllCoroutines();
+        StartCoroutine(Zoom(state));
+    }
+
+    private IEnumerator Zoom(bool zoomOut)
+    {
+        if (!zoomOut) zoomedOut = false;
+
+        Transform start = zoomOut ? zoomInPos : zoomOutPos;
+        Vector3 startPos = start.position;
+        Quaternion startRot = start.rotation;
+
+        Transform target = zoomOut ? zoomOutPos : zoomInPos;
+        Vector3 targetPos = target.position;
+        Quaternion targetRot = target.rotation;
+
+        float t = 0f;
+
+        while (t < zoomOutDuration)
+        {
+            t += Time.deltaTime;
+            float lerp = zoomOutCurve.Evaluate(t / zoomOutDuration);
+
+            transform.position = Vector3.Lerp(startPos, targetPos, lerp);
+            transform.rotation = Quaternion.Slerp(startRot, targetRot, lerp);
+
+            yield return null;
+        }
+
+        transform.position = targetPos;
+        transform.rotation = targetRot;
+
+        if (zoomOut) zoomedOut = true;
     }
 }

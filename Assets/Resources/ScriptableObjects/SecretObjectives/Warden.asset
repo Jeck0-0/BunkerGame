@@ -10,49 +10,32 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: edb7b876f26bc504c975948cc219a2e0, type: 3}
-  m_Name: Farmer
+  m_Name: Warden
   m_EditorClassIdentifier: Assembly-CSharp::SecretObjective
-  RoleName: Farmer
-  Description: You want to keep population growing, while having a stable supply
-    of food. But you despise the technologies.
+  RoleName: The Warden
+  Description: 
   Greedy: 0
-  PositiveTracks: 0102
+  PositiveTracks: 0001020304
   PositiveTable:
   - Level: 1
     Points: 0
   - Level: 2
-    Points: 1
-  - Level: 3
-    Points: 3
-  - Level: 4
-    Points: 6
-  - Level: 5
-    Points: 10
-  - Level: 6
-    Points: 15
-  - Level: 7
-    Points: 21
-  - Level: 8
-    Points: 28
-  - Level: 9
-    Points: 35
-  NegativeTracks: 04
-  NegativeTable:
-  - Level: 1
-    Points: 45
-  - Level: 2
-    Points: 30
-  - Level: 3
-    Points: 15
-  - Level: 4
-    Points: 6
-  - Level: 5
-    Points: 3
-  - Level: 6
-    Points: 2
-  - Level: 7
-    Points: 2
-  - Level: 8
-    Points: 1
-  - Level: 9
     Points: 0
+  - Level: 3
+    Points: 0
+  - Level: 4
+    Points: 0
+  - Level: 5
+    Points: 0
+  - Level: 6
+    Points: 1
+  - Level: 7
+    Points: 2
+  - Level: 8
+    Points: 4
+  - Level: 9
+    Points: 6
+  - Level: 10
+    Points: 9
+  NegativeTracks: 
+  NegativeTable: []
