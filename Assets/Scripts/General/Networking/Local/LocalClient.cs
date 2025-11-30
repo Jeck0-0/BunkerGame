@@ -9,7 +9,7 @@ namespace Networking
     public class LocalClient : GameClient
     {
         private Socket socket;
-        private int port = 3000;
+        private int port = 6969;
         
         protected override bool isConnected {
             get => socket.Connected;
@@ -52,10 +52,7 @@ namespace Networking
         public override void Connect(object args)
         {
             if (isConnected)
-            {
-                Debug.LogWarning("[Client] Already connected");
                 return;
-            }
 
             var connectToIp = "127.0.0.1";
             var connectToPort = port;

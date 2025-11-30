@@ -14,11 +14,11 @@ namespace Networking
         public override int PlayerCount { get; protected set; }
         public override int MaxPlayers { get; protected set; }
 
-        [ShowInInspector, ReadOnly, DoNotSerialize] protected Dictionary<uint, Socket> _connectionInfos = new();
+        [ShowInInspector, ReadOnly, DoNotSerialize] protected Dictionary<uint, Socket> connectionInfos = new();
         protected static uint idCounter;
 
         Socket serverSocket;
-        int port = 3000;
+        int port = 6969;
         
         public void Update()
         {
@@ -40,7 +40,7 @@ namespace Networking
             {
                 var newSocket = serverSocket.Accept();
                 var newId = idCounter++;
-                _connectionInfos.Add(newId, newSocket);
+                connectionInfos.Add(newId, newSocket);
                 _connectedIds.Add(newId);
                 InvokeOnPlayerConnected(newId);
                 Debug.Log("[Server] Local client connected");
@@ -56,7 +56,7 @@ namespace Networking
         {
             try
             {
-                foreach (var kvp in _connectionInfos)
+                foreach (var kvp in connectionInfos)
                 {
                     while (kvp.Value.Available > 0)
                     {
@@ -100,33 +100,18 @@ namespace Networking
 
         public override void Disconnect()
         {
-            foreach (var connection in _connectionInfos.Values)
+            foreach (var connection in connectionInfos.Values)
                 connection.Close();
             serverSocket?.Close();
-            _connectionInfos.Clear();
+            connectionInfos.Clear();
             _connectedIds.Clear();
             IsRunning = false;
-        }
-        
-        public override void Kick(uint playerId)
-        {
-            Debug.Log("[Server] Kicking player: " + playerId);
-            if (_connectionInfos.ContainsKey(playerId))
-            {
-                _connectionInfos[playerId].Close();
-                _connectionInfos.Remove(playerId);
-            }
-            if (_connectedIds.Contains(playerId))
-            {
-                _connectedIds.Remove(playerId);
-                InvokeOnPlayerDisconnected(playerId);
-            }
         }
 
         protected override void SendMessage(IEnumerable<uint> connectionId, BasePacket packet)
         {
             foreach (uint connection in connectionId)
-                _connectionInfos[connection].Send(GetData(packet));
+                connectionInfos[connection].Send(GetData(packet));
         }
     }
 }
