@@ -1,6 +1,7 @@
 using Networking;
 using Packets;
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,8 +15,10 @@ public class SecretObjectivelUI : MonoBehaviour
     [SerializeField] GameObject trackIconPrefab;
     [SerializeField] TextMeshProUGUI objectiveHeader;
     [SerializeField] TextMeshProUGUI objectiveDescription;
-    [SerializeField] Transform positiveTracksParent;
-    [SerializeField] Transform negativeTracksParent;
+    [SerializeField] Transform tracksParent;
+    [SerializeField] GameObject positiveTrackPrefab;
+    [SerializeField] GameObject neutralTrackPrefab;
+    [SerializeField] GameObject negativeTrackPrefab;
     [SerializeField] SignatureDrawer signature;
 
     [Header("Resource Icons")]
@@ -26,6 +29,7 @@ public class SecretObjectivelUI : MonoBehaviour
     [SerializeField] Sprite moraleSprite;
 
     [Header("Slide in/Out")]
+    [SerializeField] float slideInDelay = 1f;
     [SerializeField] Transform tablePosition;
     [SerializeField] Vector3 offScreenPosition;
     [SerializeField] float slideDuration = 1.2f;
@@ -66,34 +70,26 @@ public class SecretObjectivelUI : MonoBehaviour
         objectiveHeader.text = objective.RoleName;
         objectiveDescription.text = objective.Description;
 
-        foreach (TrackType track in objective.PositiveTracks)
+        if (objective.PositiveTracks.Count > 0)
         {
-            Sprite trackSprite = orderSprite;
-
-            switch (track)
-            {
-                case TrackType.Order:
-                    trackSprite = orderSprite;
-                    break;
-                case TrackType.Population:
-                    trackSprite = populationSprite;
-                    break;
-                case TrackType.Food:
-                    trackSprite = foodSprite;
-                    break;
-                case TrackType.Energy:
-                    trackSprite = energySprite;
-                    break;
-                case TrackType.Moral:
-                    trackSprite = moraleSprite;
-                    break;
-            }
-
-            var trackObj = Instantiate(trackIconPrefab, positiveTracksParent);
-            trackObj.GetComponent<Image>().sprite = trackSprite;
+            var positiveTrackParent = Instantiate(positiveTrackPrefab, tracksParent);
+            SetIcons(objective.PositiveTracks, positiveTrackParent.transform);
         }
+        if (objective.NeutralTracks.Count > 0)
+        {
+            var neutralTrackParent = Instantiate(neutralTrackPrefab, tracksParent);
+            SetIcons(objective.NeutralTracks, neutralTrackParent.transform);
+        }
+        if (objective.NegativeTracks.Count > 0)
+        {
+            var negativeTrackParent = Instantiate(negativeTrackPrefab, tracksParent);
+            SetIcons(objective.NegativeTracks, negativeTrackParent.transform);
+        }
+    }
 
-        foreach (TrackType track in objective.NegativeTracks)
+    private void SetIcons(List<TrackType> tracks, Transform parent)
+    {
+        foreach (TrackType track in tracks)
         {
             Sprite trackSprite = orderSprite;
 
@@ -116,7 +112,7 @@ public class SecretObjectivelUI : MonoBehaviour
                     break;
             }
 
-            var trackObj = Instantiate(trackIconPrefab, negativeTracksParent);
+            var trackObj = Instantiate(trackIconPrefab, parent);
             trackObj.GetComponent<Image>().sprite = trackSprite;
         }
     }
@@ -173,7 +169,11 @@ public class SecretObjectivelUI : MonoBehaviour
 
     private IEnumerator Slide(GameObject ui, bool visible)
     {
-        if (visible) ui.SetActive(true);
+        if (visible)
+        {
+            new WaitForSecondsRealtime(slideInDelay);
+            ui.SetActive(true);
+        }
 
         Vector3 start = visible ? offScreenPosition : ui.transform.position;
         Vector3 end = visible ? tablePosition.position : offScreenPosition;

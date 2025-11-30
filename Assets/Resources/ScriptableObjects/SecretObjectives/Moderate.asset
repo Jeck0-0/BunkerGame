@@ -15,8 +15,10 @@ MonoBehaviour:
   RoleName: The Modarate
   Description: COMMUNISM!!!!!!!
   Greedy: 0
-  PositiveTracks: 0001020304
-  PositiveTable:
+  PositiveTracks: 
+  PositiveTable: []
+  NeutralTracks: 0001020304
+  NeutralTable:
   - Level: 1
     Points: 0
   - Level: 2
@@ -24,11 +26,11 @@ MonoBehaviour:
   - Level: 3
     Points: 1
   - Level: 4
-    Points: 3
+    Points: 5
   - Level: 5
-    Points: 6
+    Points: 10
   - Level: 6
-    Points: 3
+    Points: 5
   - Level: 7
     Points: 1
   - Level: 8

@@ -21,6 +21,7 @@ public class TrackUI : Singleton<TrackUI>
             track.slider.maxValue = ClientTracks.Instance.maxValue;
 
             track.upIcon.SetActive(false);
+            track.neutralIcon.SetActive(false);
             track.downIcon.SetActive(false);
         }
 
@@ -41,6 +42,12 @@ public class TrackUI : Singleton<TrackUI>
         {
             if (tracks.TryGetValue(track, out var element))
                 element.upIcon.SetActive(true);
+        }
+
+        foreach (var track in objective.NeutralTracks)
+        {
+            if (tracks.TryGetValue(track, out var element))
+                element.neutralIcon.SetActive(true);
         }
 
         foreach (var track in objective.NegativeTracks)
@@ -79,5 +86,6 @@ public class TrackUIElement
     public Slider slider;
     public TextMeshProUGUI label;
     public GameObject upIcon;
+    public GameObject neutralIcon;
     public GameObject downIcon;
 }

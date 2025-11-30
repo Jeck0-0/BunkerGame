@@ -22,10 +22,6 @@ public class ComputerManager : Singleton<ComputerManager>
     [SerializeField] Transform rightOpenPosition;
     [SerializeField] float openingDuration = 1f;
 
-    [Header("Audio")]
-    [SerializeField] AudioClip computerSlidingClip;
-    [SerializeField] AudioClip doorsOpeningClip;
-
     private Coroutine coroutine;
     private bool computerIsUp = false;
     private bool canMoveComputer = true;

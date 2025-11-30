@@ -7,27 +7,39 @@ namespace Server
 {
     public class SecretObjectiveManager : Singleton<SecretObjectiveManager>
     {
-        [SerializeField] SecretObjective[] objectives;
+        [SerializeField] SecretObjective[] essentialObjectives;
+        [SerializeField] SecretObjective[] randomObjectives;
 
         public void SetSecretObjectives()
         {
             var players = ServerPlayers.GetAll().ToList();
 
-            if (objectives.Length < players.Count)
+            if (essentialObjectives.Length + randomObjectives.Length < players.Count)
             {
                 Debug.LogError("Not enough secret objectives for all players");
                 return;
             }
 
-            // random objectives
-            var pool = objectives.OrderBy(x => Random.value).ToList();
+            var shuffledPlayers = players.OrderBy(x => Random.value).ToList();
+            var essentialPool = essentialObjectives.OrderBy(x => Random.value).ToList();
+            var randomPool = randomObjectives.OrderBy(x => Random.value).ToList();
 
-            for (int i = 0; i < players.Count; i++)
+            int playerIndex = 0;
+
+            foreach (var essential in essentialPool)
             {
-                players[i].SecretObjective = pool[i];
+                if (playerIndex >= shuffledPlayers.Count) break;
 
-                // Send objective
-                GameServer.SendTo(players[i].id, new STC_SecretObjective(pool[i]));
+                shuffledPlayers[playerIndex].SecretObjective = essential;
+                GameServer.SendTo(shuffledPlayers[playerIndex].id, new STC_SecretObjective(essential));
+                playerIndex++;
+            }
+
+            for (int i = 0; i < players.Count - essentialObjectives.Length; i++)
+            {
+                shuffledPlayers[playerIndex].SecretObjective = randomPool[i];
+                GameServer.SendTo(shuffledPlayers[playerIndex].id, new STC_SecretObjective(randomPool[i]));
+                playerIndex++;
             }
 
             Debug.Log("All secret objectives assigned");

@@ -14,6 +14,9 @@ public class EnviromentManager : MonoBehaviour
     private void Awake()
     {
         GameClient.Subscribe<STC_StartEmergency>(OnStartEmergency);
+        dilemmaLights.SetActive(false);
+        crisisLights.SetActive(false);
+        StartCoroutine(TurnLightOn());
     }
 
     private void OnDestroy()
@@ -64,16 +67,23 @@ public class EnviromentManager : MonoBehaviour
         crisisLights.SetActive(true);
         if (siren) AudioManager.Instance.PlaySound(siren, 0.2f, null, true);
     }
-    // for testing
-    private void Update()
+    private IEnumerator TurnLightOn()
     {
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            OnCrisis();
-        }
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            OnDilemma();
-        }
+        yield return new WaitForSeconds(0.5f);
+
+        dilemmaLights.SetActive(true);
+        yield return new WaitForSeconds(0.03f);
+        dilemmaLights.SetActive(false);
+        yield return new WaitForSeconds(0.1f);
+        dilemmaLights.SetActive(true);
+        yield return new WaitForSeconds(0.03f);
+        dilemmaLights.SetActive(false);
+        yield return new WaitForSeconds(0.07f);
+        dilemmaLights.SetActive(true);
+        yield return new WaitForSeconds(0.03f);
+        dilemmaLights.SetActive(false);
+        yield return new WaitForSeconds(0.05f);
+        dilemmaLights.SetActive(true);
+
     }
 }

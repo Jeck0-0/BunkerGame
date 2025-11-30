@@ -13,6 +13,9 @@ public class SecretObjective : ScriptableObject
     public List<TrackType> PositiveTracks;
     public List<LevelVP> PositiveTable;
 
+    public List<TrackType> NeutralTracks;
+    public List<LevelVP> NeutralTable;
+
     public List<TrackType> NegativeTracks;
     public List<LevelVP> NegativeTable;
 }

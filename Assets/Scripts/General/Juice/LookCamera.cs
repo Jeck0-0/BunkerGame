@@ -29,6 +29,7 @@ public class LookCamera : MonoBehaviour
 
     void Start()
     {
+        transform.position = zoomInPos.position;
         if (lockCamera) return;
 
         originalRotation = transform.localRotation;
