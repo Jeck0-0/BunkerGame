@@ -13,13 +13,15 @@ MonoBehaviour:
   m_Name: The Signs
   m_EditorClassIdentifier: Assembly-CSharp::Client.Crisis
   Title: The Signs
-  Description: test test test crisis 1
+  Description: People around the bunker starting to notice the signs... Something
+    is coming.
   TimeToResolve: 120
   HiddenContributions: 1
   Repeatable: 0
+  Keyword: 
   requiredMaterials: 0
-  BunkerDamageOnFail: 1
-  HighestBidderReward: 0
+  BunkerDamageOnFail: 0
+  HighestBidderReward: 6
   SuccessReward: 0
   SuccessTrackMod:
     order: 0
@@ -27,6 +29,8 @@ MonoBehaviour:
     food: 0
     moral: 0
     energy: 0
+  SuccessKeywordsToAdd:
+  - They are coming
   LowestBidderPenalty: 0
   FailurePenalty: 0
   FailureTrackMod:
@@ -35,3 +39,5 @@ MonoBehaviour:
     food: 0
     moral: 0
     energy: 0
+  FailureKeywordsToAdd:
+  - They are coming

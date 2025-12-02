@@ -12,7 +12,7 @@ namespace Server
 {
     public class CrisisPhase : MonoBehaviour
     {
-        public Crisis[] crisisPool;
+        private Crisis[] crisisPool;
 
         protected Dictionary<uint, int> contributions = new ();
         protected Crisis CurrentEmergency;
@@ -120,7 +120,7 @@ namespace Server
 
                 // HighestBidderReward
                 foreach (var id in highestContributors)
-                ServerPlayers.Get(id).resources.ModifyMaterials(CurrentEmergency.HighestBidderReward);
+                ServerPlayers.Get(id).resources.ModifyInfluence(CurrentEmergency.HighestBidderReward);
 
                 STC_CrisisResult result = new STC_CrisisResult(true, CurrentEmergency.SuccessReward, CurrentEmergency.SuccessTrackMod);
                 GameServer.SendToAll(result);
@@ -137,7 +137,7 @@ namespace Server
                     {
                         var player = ServerPlayers.Get(kv.Key);
                         if (player != null)
-                            player.resources.ModifyMaterials(-CurrentEmergency.FailurePenalty);
+                            player.resources.ModifyInfluence(-CurrentEmergency.FailurePenalty);
                     }
                 }
 

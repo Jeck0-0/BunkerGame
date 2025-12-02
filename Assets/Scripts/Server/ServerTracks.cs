@@ -31,8 +31,8 @@ namespace Server
             foreach (var mod in amount.GetAll())
                 ModifyResource(mod.Key, mod.Value);
 
-            // STC_UpdateTracks packet = new STC_UpdateTracks();
-            // NetworkManager.Server.SendToAll(packet);
+            STC_UpdateTracks packet = new STC_UpdateTracks(amount);
+            GameServer.SendToAll(packet);
         }
 
         protected void ModifyResource(TrackType type, int amount)

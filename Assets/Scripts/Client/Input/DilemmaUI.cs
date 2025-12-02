@@ -152,8 +152,6 @@ public class DilemmaUI : Singleton<DilemmaUI>
 
         resultText.text = "Winning Option: " + descriptionText;
         resultText.text += "\n\nTrack changes: " + trackText;
-
-        ClientTracks.Instance.ApplyModifier(result.TrackModifier);
         SlideIn(resultUI);
         resultBeingShown = true;
     }

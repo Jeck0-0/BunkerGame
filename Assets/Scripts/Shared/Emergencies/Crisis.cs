@@ -6,7 +6,9 @@ namespace Client
     public class Crisis : Emergency
     {
         public override EmergencyType Type => EmergencyType.Crisis;
-        
+
+        public string Keyword = "";
+
         [Tooltip("Amount of materials needed for resolving this crisis")]
         public int requiredMaterials;
 
@@ -16,13 +18,16 @@ namespace Client
        
         
         //to rebalance
-        [Header("Rewards/Penalties")] 
+        [Header("Success")] 
         public int HighestBidderReward;
         public int SuccessReward;
         public TrackAmount SuccessTrackMod;
+        public string[] SuccessKeywordsToAdd;
+
+        [Header("Failure")]
         public int LowestBidderPenalty;
-        
         public int FailurePenalty;
         public TrackAmount FailureTrackMod;
+        public string[] FailureKeywordsToAdd;
     }
 }

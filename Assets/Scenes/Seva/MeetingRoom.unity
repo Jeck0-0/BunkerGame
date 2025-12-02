@@ -15627,7 +15627,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09734c01d0824c2fb558960b90a5c507, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Server.CrisisPhase
-  crisisPool: []
 --- !u!114 &1804365635
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15653,8 +15652,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f914562278484972b819b35f359e3119, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Server.PhaseManager
-  crisisPhase: {fileID: 0}
-  dilemmaPhase: {fileID: 0}
+  crisisPhase: {fileID: 1804365634}
+  dilemmaPhase: {fileID: 1804365635}
   startOnAwake: 1
   startDelay: 8
   totalCrises: 5
@@ -15662,7 +15661,7 @@ MonoBehaviour:
   baseCrisisChance: 0.2
   crisisChanceGrowth: 0.15
   maxCrisisChance: 1
-  economyDuration: 5
+  economyDuration: 4
   emergencyDelay: 5
 --- !u!114 &1804365637
 MonoBehaviour:
