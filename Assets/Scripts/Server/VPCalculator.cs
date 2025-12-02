@@ -15,6 +15,7 @@ namespace Server
 
             var obj = player.SecretObjective;
             int total = 0;
+            total += player.VP;
 
             // Positive tracks
             foreach (TrackType track in obj.PositiveTracks)

@@ -19,8 +19,9 @@ namespace Client
         
         //to rebalance
         [Header("Success")] 
-        public int HighestBidderReward;
-        public int SuccessReward;
+        public int HighestBidderInfluenceReward;
+        public int HighestBidderVPReward;
+        public int SuccessInfluenceReward;
         public TrackAmount SuccessTrackMod;
         public string[] SuccessKeywordsToAdd;
 

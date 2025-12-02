@@ -120,9 +120,13 @@ namespace Server
 
                 // HighestBidderReward
                 foreach (var id in highestContributors)
-                ServerPlayers.Get(id).resources.ModifyInfluence(CurrentEmergency.HighestBidderReward);
+                {
+                    var player = ServerPlayers.Get(id);
+                    player.resources.ModifyInfluence(CurrentEmergency.HighestBidderInfluenceReward);
+                    player.VP += CurrentEmergency.HighestBidderVPReward;
+                }
 
-                STC_CrisisResult result = new STC_CrisisResult(true, CurrentEmergency.SuccessReward, CurrentEmergency.SuccessTrackMod);
+                STC_CrisisResult result = new STC_CrisisResult(true, CurrentEmergency.SuccessInfluenceReward, CurrentEmergency.SuccessTrackMod);
                 GameServer.SendToAll(result);
             }
             else 
