@@ -10,35 +10,36 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 210b644c3c204376a4252bbb4530c528, type: 3}
-  m_Name: TheDreamingChild
+  m_Name: ScratchingInTheWalls
   m_EditorClassIdentifier: Assembly-CSharp::Client.Dilemma
-  Title: The Dreaming Child
-  Description: "A child is seeing visions: corridors collapsing, people with no skin
-    on their faces. Rumors spread that she\u2019s touched by the anomalies. Her family
-    stands firm and warns they won\u2019t back down."
+  Title: Scratching In The Walls
+  Description: Rats tore through food stores, all of them are slaughtered, but the
+    loss is severe. We can hide it by cooking rats into rations, at the risk of poisoning
+    people.
   TimeToResolve: 120
   HiddenContributions: 1
   Repeatable: 0
   Keyword: 
-  YesDescription: Kill her and her family to ease out the panic.
+  YesDescription: Disgasting! No.
   YesTrackModifier:
-    order: 1
-    population: -1
-    food: 0
-    moral: 1
+    order: 0
+    population: 0
+    food: -2
+    moral: 0
     energy: 0
   YesMaterialsModifier: 0
   YesInfluenceModifier: 0
   YesKeywordsToAdd: []
   YesKeywordsToRemove: []
-  NoDescription: Let them live and forbid any further intervention.
+  NoDescription: Cook the rats.
   NoTrackModifier:
-    order: -1
-    population: 0
+    order: 1
+    population: -1
     food: 0
-    moral: -1
+    moral: 0
     energy: 0
   NoMaterialsModifier: 0
   NoInfluenceModifier: 0
-  NoKeywordsToAdd: []
+  NoKeywordsToAdd:
+  - Ilness
   NoKeywordsToRemove: []

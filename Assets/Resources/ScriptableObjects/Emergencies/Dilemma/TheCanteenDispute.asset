@@ -10,33 +10,32 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 210b644c3c204376a4252bbb4530c528, type: 3}
-  m_Name: TheDreamingChild
+  m_Name: TheCanteenDispute
   m_EditorClassIdentifier: Assembly-CSharp::Client.Dilemma
-  Title: The Dreaming Child
-  Description: "A child is seeing visions: corridors collapsing, people with no skin
-    on their faces. Rumors spread that she\u2019s touched by the anomalies. Her family
-    stands firm and warns they won\u2019t back down."
+  Title: The Canteen Dispute
+  Description: A fight breaks out in the canteen over the last portions of food.
+    The crowd is on edge.
   TimeToResolve: 120
   HiddenContributions: 1
   Repeatable: 0
   Keyword: 
-  YesDescription: Kill her and her family to ease out the panic.
+  YesDescription: Send guards to restore order.
   YesTrackModifier:
-    order: 1
+    order: 2
     population: -1
     food: 0
-    moral: 1
+    moral: -1
     energy: 0
   YesMaterialsModifier: 0
   YesInfluenceModifier: 0
   YesKeywordsToAdd: []
   YesKeywordsToRemove: []
-  NoDescription: Let them live and forbid any further intervention.
+  NoDescription: Distribute extra rations to calm them.
   NoTrackModifier:
-    order: -1
+    order: 1
     population: 0
-    food: 0
-    moral: -1
+    food: -2
+    moral: 1
     energy: 0
   NoMaterialsModifier: 0
   NoInfluenceModifier: 0
