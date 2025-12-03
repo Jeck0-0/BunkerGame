@@ -21,6 +21,7 @@ public class ComputerManager : Singleton<ComputerManager>
     [SerializeField] Transform leftOpenPosition;
     [SerializeField] Transform rightOpenPosition;
     [SerializeField] float openingDuration = 1f;
+    [SerializeField] float startDelay = 0.5f;
 
     private Coroutine coroutine;
     private bool computerIsUp = false;
@@ -32,6 +33,11 @@ public class ComputerManager : Singleton<ComputerManager>
     private void Start()
     {
         computer.transform.position = upPosition.position;
+        StartCoroutine(StartDelay());
+    }
+    private IEnumerator StartDelay()
+    {
+        yield return new WaitForSeconds(startDelay);
         BringComputerDown();
     }
     public void BringComputerUP()

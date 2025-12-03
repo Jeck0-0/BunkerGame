@@ -63,6 +63,7 @@ public class EnviromentManager : MonoBehaviour
         dilemmaLights.SetActive(false);
         MusicManager.Instance.BlockMusic(true);
         AudioManager.Instance.StopSoundGradually(AudioStorage.Instance.GetFlickeringLightClip(), 0.01f);
+        AudioManager.Instance.PlaySound(AudioStorage.Instance.GetPowerShutdownClip(), 0.8f);
 
         yield return new WaitForSeconds(1.5f);
 

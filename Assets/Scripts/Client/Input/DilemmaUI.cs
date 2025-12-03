@@ -167,8 +167,16 @@ public class DilemmaUI : Singleton<DilemmaUI>
 
         resultText.text = "Winning Option: " + descriptionText;
         resultText.text += "\n\nTrack changes: " + trackText;
-        SlideIn(resultUI);
         resultBeingShown = true;
+
+        if (votingUI.activeSelf && documentIsOut)
+        {
+            StartCoroutine(SlideOutThenIn(votingUI, resultUI));
+        }
+        else
+        {
+            SlideIn(resultUI);
+        }
     }
 
     private void ResetUI()
@@ -192,6 +200,12 @@ public class DilemmaUI : Singleton<DilemmaUI>
     {
         if (signedOne.OnSignatureComplete())
             other.ClearSignature();
+    }
+
+    private IEnumerator SlideOutThenIn(GameObject outUI, GameObject inUI)
+    {
+        yield return StartCoroutine(Slide(outUI, false));
+        SlideIn(inUI);
     }
 
     private void SlideIn(GameObject ui)
