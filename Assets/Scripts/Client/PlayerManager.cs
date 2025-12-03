@@ -12,7 +12,7 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private Transform RMap;
 
     public int MaxPlayers = 6;
-    private ClientPlayers playerRegistry = ClientPlayers.Instance;
+    private ClientPlayers playerRegistry => ClientPlayers.Instance;
     private int mySpot = 0;
     private bool KnowMe = false;
 
@@ -107,7 +107,7 @@ public class PlayerManager : MonoBehaviour
     {
         int Pcount = ClientPlayers.Instance.GetAll().Count();
 
-        if (Pcount >= MaxPlayers)
+        if (Pcount > MaxPlayers)
         {
             Debug.LogWarning($"max players reached {Pcount} out of {MaxPlayers}.");
             return;

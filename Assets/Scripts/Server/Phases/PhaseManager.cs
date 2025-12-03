@@ -1,7 +1,10 @@
+using Client;
 using Networking;
 using Packets;
+using Server;
 using Sirenix.OdinInspector;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -13,7 +16,7 @@ namespace Server
         public DilemmaPhase dilemmaPhase;
         public bool startOnAwake = true;
         public float startDelay = 5f; //temporary
-        
+
         [Header("Game Settings")]
         public int totalCrises = 5;
         public int minTurnsBetweenCrises = 1;
@@ -59,7 +62,7 @@ namespace Server
         private void OnDestroy()
         {
             if (ServerTracks.Instance != null)
-            ServerTracks.Instance.ResourceReachedZero -= OnTrackReachedZero;
+                ServerTracks.Instance.ResourceReachedZero -= OnTrackReachedZero;
         }
 
         private void OnTrackReachedZero(TrackType t)
@@ -136,6 +139,22 @@ namespace Server
 
         void EndGame()
         {
+            List<PlayerResult> _results = new List<PlayerResult>();
+
+            foreach (ServerPlayers.Player player in ServerPlayers.GetAll())
+            {
+                int vp = VPCalculator.Instance.CalculatePlayerVP(player);
+
+                _results.Add(new PlayerResult
+                {
+                    Player = player.id,
+                    VP = vp
+                });
+            }
+
+            _results.Sort((a, b) => b.VP.CompareTo(a.VP));
+
+            Networking.GameServer.SendToAll(new STC_GameResault(_results));
             Debug.Log("Game ended");
         }
     }

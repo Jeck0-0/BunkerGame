@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class TrackUI : Singleton<TrackUI>
 {
     [SerializeField] List<TrackUIElement> trackReferences;
-    private Dictionary<TrackType, TrackUIElement> tracks;
+    private Dictionary<TrackType, TrackUIElement> tracks = new();
 
     void Start()
     {
@@ -21,7 +21,7 @@ public class TrackUI : Singleton<TrackUI>
             track.slider.maxValue = ClientTracks.Instance.maxValue;
 
             track.upIcon.SetActive(false);
-            track.neutralIcon.SetActive(false);
+            //track.neutralIcon.SetActive(false);
             track.downIcon.SetActive(false);
         }
 

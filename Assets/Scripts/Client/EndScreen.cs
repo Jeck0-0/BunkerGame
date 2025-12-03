@@ -1,7 +1,9 @@
 using UnityEngine;
-using Server;
 using System.Collections.Generic;
 using TMPro;
+using Client;
+using Networking;
+using Packets;
 
 public class EndScreen : MonoBehaviour
 {
@@ -10,62 +12,32 @@ public class EndScreen : MonoBehaviour
     [SerializeField] private TMP_Text textPrefab;
     [SerializeField] private GameObject EndUI;
 
-    private List<PlayerResult> _results = new List<PlayerResult>();
-
-    public void Start()
+    
+    public void Awake()
     {
         EndUI.SetActive(false);
+
+        GameClient.Subscribe<STC_GameResault>(Spawn);
     }
 
-    public void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            GetPlayerPoints();
-        }
-    }
-
-    public void GetPlayerPoints()
+    void Spawn(BasePacket p)
     {
         EndUI.SetActive(true);
 
-        _results.Clear();
-
-        foreach (var player in ServerPlayers.GetAll())
-        {
-            int vp = VPCalculator.Instance.CalculatePlayerVP(player);
-
-            _results.Add(new PlayerResult { Player = player,
-                                            VP = vp });
-        }
-        Orderpoints();
-
-        Spawn();
-    }
-
-    void Orderpoints()
-    {
-        _results.Sort((a, b) => b.VP.CompareTo(a.VP));
-    }
-
-    void Spawn()
-    {
+        STC_GameResault packet = p as STC_GameResault;
+        
         foreach (Transform child in EndScreenArea)
         {
             Destroy(child.gameObject);
         }
 
-        foreach (var result in _results)
+        foreach (var result in packet._results)
         {
             TMP_Text txt = Instantiate(textPrefab, EndScreenArea);
 
-            txt.text = $"{result.Player.username}  {result.VP}";
+            txt.text = $"{ClientPlayers.Instance.Get(result.Player).username}  {result.VP}";
         }
     }
 }
 
-public struct PlayerResult
-{
-    public ServerPlayers.Player Player;
-    public int VP;
-}
+

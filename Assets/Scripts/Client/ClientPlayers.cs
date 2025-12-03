@@ -13,7 +13,7 @@ namespace Client
         [ShowInInspector, ReadOnly] protected Player myself;
         public event Action OnSpotReceived;
 
-        public Player Get(uint playerId) => Players[playerId];
+        public Player Get(uint playerId) => myself.id == playerId ? myself : Players[playerId];
         public IEnumerable<Player> GetOthers() => Players.Values;
         public IEnumerable<Player> GetAll() => Players.Values.Append(myself);
         public Player Myself => myself;
