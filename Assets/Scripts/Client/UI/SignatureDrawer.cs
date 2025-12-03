@@ -51,7 +51,7 @@ public class SignatureDrawer : MonoBehaviour
 
                 if (inputTime >= audioClipsSpace)
                 {
-                    AudioManager.Instance.PlayRandomSound(AudioStorage.Instance.GetWritingClips(), 0.9f);
+                    AudioManager.Instance.PlayRandomSound(AudioStorage.Instance.GetWritingClips(), 0.8f);
                     inputTime = 0f;
                 }
 

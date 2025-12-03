@@ -1,4 +1,6 @@
+using Networking;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ComputerUI : Singleton<ComputerUI>
 {
@@ -38,6 +40,15 @@ public class ComputerUI : Singleton<ComputerUI>
         MainMenuUI.SetActive(false);
         LobbyUI.SetActive(false);
         FactionDesignerUI.SetActive(false);
+    }
+    public void GoToMainMenu()
+    {
+        if (SceneLoader.Instance != null)
+        {
+            SceneLoader.Instance.LoadScene("MainMenu");
+            return;
+        }
+        SceneManager.LoadScene("MainMenu");
     }
     public void QuitGame()
     {

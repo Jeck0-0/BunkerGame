@@ -131,6 +131,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: AudioBundle
       objectReference: {fileID: 0}
+    - target: {fileID: 3285522486761149763, guid: dba821ced23cbc3478e6783112ea4d53, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8308779999553726515, guid: dba821ced23cbc3478e6783112ea4d53, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

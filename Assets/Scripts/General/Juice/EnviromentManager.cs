@@ -65,25 +65,25 @@ public class EnviromentManager : MonoBehaviour
         AudioManager.Instance.StopSoundGradually(AudioStorage.Instance.GetFlickeringLightClip(), 0.01f);
         AudioManager.Instance.PlaySound(AudioStorage.Instance.GetPowerShutdownClip(), 0.8f);
 
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(2f);
 
         crisisLights.SetActive(true);
         if (siren) AudioManager.Instance.PlaySound(siren, 0.2f, null, true);
     }
     private IEnumerator TurnLightOn()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.3f);
 
         dilemmaLights.SetActive(true);
-        yield return new WaitForSeconds(0.03f);
+        yield return new WaitForSeconds(0.04f);
         dilemmaLights.SetActive(false);
         yield return new WaitForSeconds(0.1f);
         dilemmaLights.SetActive(true);
-        yield return new WaitForSeconds(0.03f);
+        yield return new WaitForSeconds(0.04f);
         dilemmaLights.SetActive(false);
         yield return new WaitForSeconds(0.07f);
         dilemmaLights.SetActive(true);
-        yield return new WaitForSeconds(0.03f);
+        yield return new WaitForSeconds(0.04f);
         dilemmaLights.SetActive(false);
         yield return new WaitForSeconds(0.05f);
         dilemmaLights.SetActive(true);

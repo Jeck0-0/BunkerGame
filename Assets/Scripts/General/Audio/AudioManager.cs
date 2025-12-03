@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Audio;
 
 public class AudioManager : Singleton<AudioManager>
 {
@@ -9,7 +8,6 @@ public class AudioManager : Singleton<AudioManager>
     private List<AudioSource> audioPool = new List<AudioSource>();
 
     [SerializeField] AudioSource soundFXPrefab;
-    [SerializeField] AudioMixerGroup SFXGroup;
     [SerializeField] int maxSoundsPlaying = 25;
     private int currentSoundsPlaying = 0;
 
@@ -21,7 +19,6 @@ public class AudioManager : Singleton<AudioManager>
     public void PlayPooledSound(AudioClip clip, float volume = 1f, float pitch = 1f) // for sounds that should be played instantly
     {
         AudioSource audioSource = GetPooledAudioSource();
-        audioSource.outputAudioMixerGroup = SFXGroup;
         audioSource.clip = clip;
         audioSource.volume = volume;
         audioSource.pitch = pitch;
@@ -68,7 +65,6 @@ public class AudioManager : Singleton<AudioManager>
         spawn = transform; // Default to this object's transform
         AudioSource audioSource = Instantiate(soundFXPrefab, spawn.position, Quaternion.identity);
 
-        audioSource.outputAudioMixerGroup = SFXGroup;
         audioSource.clip = audioClip;
         audioSource.volume = volume;
         audioSource.loop = loop;
@@ -95,7 +91,6 @@ public class AudioManager : Singleton<AudioManager>
         spawn = transform; // Default to this object's transform
         AudioSource audioSource = Instantiate(soundFXPrefab, spawn.position, Quaternion.identity);
 
-        audioSource.outputAudioMixerGroup = SFXGroup;
         audioSource.clip = audioClip[R];
         audioSource.volume = volume;
         audioSource.loop = loop;
