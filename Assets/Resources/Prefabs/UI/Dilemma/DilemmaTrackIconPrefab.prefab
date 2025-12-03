@@ -58,7 +58,7 @@ MonoBehaviour:
   hint: {fileID: 1971811986183632669}
   orderSprite: {fileID: -148552434, guid: c855d7720a1d4b14a8e4b9538c6c0ad8, type: 3}
   populationSprite: {fileID: 21300000, guid: f5272ed075208254aa77896de927bc58, type: 3}
-  foodSprite: {fileID: 21300000, guid: 37845fdf175fb4845a5ba99bbd683958, type: 3}
+  foodSprite: {fileID: 21300000, guid: 2e27cbd0a7d574942a63d0fd27e60ed1, type: 3}
   energySprite: {fileID: 21300000, guid: cfe3bd78ecd8a2b4aa856e4924421723, type: 3}
   moraleSprite: {fileID: 21300000, guid: cf6629177f5befd40998f9133f142370, type: 3}
 --- !u!222 &3696769308921565854

@@ -72,18 +72,18 @@ public class EnviromentManager : MonoBehaviour
     }
     private IEnumerator TurnLightOn()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.3f);
 
         dilemmaLights.SetActive(true);
-        yield return new WaitForSeconds(0.03f);
+        yield return new WaitForSeconds(0.04f);
         dilemmaLights.SetActive(false);
         yield return new WaitForSeconds(0.1f);
         dilemmaLights.SetActive(true);
-        yield return new WaitForSeconds(0.03f);
+        yield return new WaitForSeconds(0.04f);
         dilemmaLights.SetActive(false);
         yield return new WaitForSeconds(0.07f);
         dilemmaLights.SetActive(true);
-        yield return new WaitForSeconds(0.03f);
+        yield return new WaitForSeconds(0.04f);
         dilemmaLights.SetActive(false);
         yield return new WaitForSeconds(0.05f);
         dilemmaLights.SetActive(true);
