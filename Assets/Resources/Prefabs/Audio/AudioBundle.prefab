@@ -107,8 +107,10 @@ MonoBehaviour:
   - {fileID: 8300000, guid: f0c88434d2e909b47a8a110beb9eda44, type: 3}
   - {fileID: 8300000, guid: b219e530282640440abd16a375761963, type: 3}
   - {fileID: 8300000, guid: 758cfe290acea2d4f92a9eb3e0d1914b, type: 3}
-  computerSlidingClip: {fileID: 0}
-  computerDoorsClip: {fileID: 0}
+  computerSlidingClip: {fileID: 8300000, guid: dbce6ac56b8cea84784a786126090477, type: 3}
+  computerDoorsClip: {fileID: 8300000, guid: 6b3d91f655ac8dc4eba9c60dc8b8f04e, type: 3}
+  flickeringLightClip: {fileID: 8300000, guid: 2c2b91bd80ce054429a82afe2094b516, type: 3}
+  powerShutdownClip: {fileID: 8300000, guid: 2714cc47688165240ae8c11be14c4ca0, type: 3}
   ambientClip: {fileID: 8300000, guid: 0f201b718cff67140a1830f6c4477adb, type: 3}
 --- !u!1 &8118699385957837770
 GameObject:
