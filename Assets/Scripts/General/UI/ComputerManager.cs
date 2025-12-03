@@ -103,7 +103,7 @@ public class ComputerManager : Singleton<ComputerManager>
         Vector3 leftEnd = open ? leftOpenPosition.position : leftDoor.transform.parent.position;
         Vector3 rightEnd = open ? rightOpenPosition.position : rightDoor.transform.parent.position;
 
-        AudioManager.Instance.PlaySound(AudioStorage.Instance.GetComputerDoorsClip(), 0.8f);
+        AudioManager.Instance.PlaySound(AudioStorage.Instance.GetComputerDoorsClip(), 0.6f);
 
         float t = 0f;
 
@@ -121,7 +121,7 @@ public class ComputerManager : Singleton<ComputerManager>
     private IEnumerator Move(bool up)
     {
         computer.SetActive(true);
-        AudioManager.Instance.PlaySound(AudioStorage.Instance.GetComputerSlidingClip(), 0.6f);
+        AudioManager.Instance.PlaySound(AudioStorage.Instance.GetComputerSlidingClip(), 0.2f);
 
         Vector3 startPos = computer.transform.position;
         Vector3 endPos = up ? upPosition.position : downPosition.position;

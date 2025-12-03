@@ -213,7 +213,7 @@ public class DilemmaUI : Singleton<DilemmaUI>
         activeUI = ui;
         documentIsOut = false;
         ui.transform.rotation = Quaternion.identity;
-        AudioManager.Instance.PlayRandomSound(AudioStorage.Instance.GetPaperClips(), 0.8f);
+        AudioManager.Instance.PlayRandomSound(AudioStorage.Instance.GetPaperClips(), 0.6f);
 
         if (ui == resultUI)
         {
@@ -231,7 +231,7 @@ public class DilemmaUI : Singleton<DilemmaUI>
     {
         if (activeUI == ui) activeUI = null;
         documentIsOut = false;
-        AudioManager.Instance.PlayRandomSound(AudioStorage.Instance.GetPaperClips(), 0.8f);
+        AudioManager.Instance.PlayRandomSound(AudioStorage.Instance.GetPaperClips(), 0.6f);
 
         if (ui == resultUI)
         {
@@ -270,6 +270,7 @@ public class DilemmaUI : Singleton<DilemmaUI>
     private char OnlyDigits(string text, int charIndex, char addedChar)
     {
         // only digits
+        AudioManager.Instance.PlayRandomSound(AudioStorage.Instance.GetWritingClips(), 0.8f);
         return char.IsDigit(addedChar) ? addedChar : '\0';
     }
 

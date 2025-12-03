@@ -8,6 +8,9 @@ public class AudioStorage : Singleton<AudioStorage>
     [SerializeField] AudioClip[] UIButtonClips;
     public AudioClip[] GetUIButtonClips() => UIButtonClips;
 
+    [SerializeField] AudioClip[] UIHoverClips;
+    public AudioClip[] GetUIHoverClips() => UIHoverClips;
+
     [SerializeField] AudioClip[] paperClips;
     public AudioClip[] GetPaperClips() => paperClips;
 
@@ -24,10 +27,5 @@ public class AudioStorage : Singleton<AudioStorage>
     public AudioClip GetPowerShutdownClip() => powerShutdownClip;
 
     [SerializeField] AudioClip ambientClip;
-
-
-    private void Start()
-    {
-       if (ambientClip) AudioManager.Instance.PlaySound(ambientClip, 0.6f, null, true);
-    }
+    public AudioClip GetAmbientClip() => ambientClip;
 }

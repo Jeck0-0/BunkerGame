@@ -65,7 +65,7 @@ public class EnviromentManager : MonoBehaviour
         AudioManager.Instance.StopSoundGradually(AudioStorage.Instance.GetFlickeringLightClip(), 0.01f);
         AudioManager.Instance.PlaySound(AudioStorage.Instance.GetPowerShutdownClip(), 0.8f);
 
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(2f);
 
         crisisLights.SetActive(true);
         if (siren) AudioManager.Instance.PlaySound(siren, 0.2f, null, true);
