@@ -10,33 +10,33 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 210b644c3c204376a4252bbb4530c528, type: 3}
-  m_Name: TheDreamingChild
+  m_Name: ForcedLabor
   m_EditorClassIdentifier: Assembly-CSharp::Client.Dilemma
-  Title: The Dreaming Child
-  Description: "A child is seeing visions: corridors collapsing, people with no skin
-    on their faces. Rumors spread that she\u2019s touched by the anomalies. Her family
-    stands firm and warns they won\u2019t back down."
+  Title: Forced Labor
+  Description: The starving people in the mines are working without payment or rest.
+    Rumors of revolt are spreading through the corridors.
   TimeToResolve: 120
   HiddenContributions: 1
   Repeatable: 0
   Keyword: 
-  YesDescription: Kill her and her family to ease out the panic.
+  YesDescription: Ignore their cries.
   YesTrackModifier:
-    order: 1
-    population: -1
-    food: 0
-    moral: 1
-    energy: 0
-  YesMaterialsModifier: 0
-  YesInfluenceModifier: 0
-  YesKeywordsToAdd: []
-  YesKeywordsToRemove: []
-  NoDescription: Let them live and forbid any further intervention.
-  NoTrackModifier:
-    order: -1
+    order: 0
     population: 0
     food: 0
-    moral: -1
+    moral: -2
+    energy: 0
+  YesMaterialsModifier: 1
+  YesInfluenceModifier: 0
+  YesKeywordsToAdd:
+  - Revolt
+  YesKeywordsToRemove: []
+  NoDescription: Improve conditions.
+  NoTrackModifier:
+    order: 1
+    population: 0
+    food: -2
+    moral: 1
     energy: 0
   NoMaterialsModifier: 0
   NoInfluenceModifier: 0

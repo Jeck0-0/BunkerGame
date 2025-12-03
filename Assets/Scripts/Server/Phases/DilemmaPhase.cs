@@ -141,7 +141,6 @@ namespace Server
             }
         }
 
-
         protected void CalculateDilemmaResult()
         {
             if (sideTotal.Count == 0)
@@ -150,14 +149,22 @@ namespace Server
                 sideTotal[1] = 0;
             }
 
+            int winningOption = WinningOption();
+            ApplyDilemmaEffects(winningOption);
+
+            var trackModifier = winningOption == 0 ? CurrentDilemma.YesTrackModifier : CurrentDilemma.NoTrackModifier;
+            GameServer.SendToAll(new STC_DilemmaResult(winningOption, trackModifier));
+        }
+
+        private int WinningOption()
+        {
             int bestValue = -1;
-            List<int> bestOptions = new();
+            List<int> bestOptions = new(2);
 
             for (int i = 0; i < 2; i++)
             {
-                if (!sideTotal.ContainsKey(i)) sideTotal[i] = 0;
+                int value = sideTotal.TryGetValue(i, out int v) ? v : 0;
 
-                int value = sideTotal[i];
                 if (value > bestValue)
                 {
                     bestValue = value;
@@ -170,16 +177,34 @@ namespace Server
                 }
             }
 
-            int winningOption = bestOptions.Count > 1 ? TieBreaker(bestOptions) : bestOptions[0];
+            return bestOptions.Count > 1 ? TieBreaker(bestOptions) : bestOptions[0];
+        }
 
-            // Apply modifiers
-            TrackAmount modifier = winningOption == 0 ? CurrentDilemma.YesTrackModifier  : CurrentDilemma.NoTrackModifier;
-            ServerTracks.Instance.ApplyModifier(modifier);
-            ApplyKeywordChanges(CurrentDilemma, winningOption == 0);
+        private void ApplyDilemmaEffects(int winningOption)
+        {
+            bool yesWon = winningOption == 0;
 
-            // Send results
-            STC_DilemmaResult result = new STC_DilemmaResult(winningOption, modifier);
-            GameServer.SendToAll(result);
+            TrackAmount track = yesWon ? CurrentDilemma.YesTrackModifier : CurrentDilemma.NoTrackModifier;
+
+            ServerTracks.Instance.ApplyModifier(track);
+
+            ApplyResourceChanges(yesWon);
+            ApplyKeywordChanges(CurrentDilemma, yesWon);
+        }
+
+        private void ApplyResourceChanges(bool yesWon)
+        {
+            var players = ServerPlayers.GetAll();
+            int mat = yesWon ? CurrentDilemma.YesMaterialsModifier : CurrentDilemma.NoMaterialsModifier;
+            int inf = yesWon ? CurrentDilemma.YesInfluenceModifier : CurrentDilemma.NoInfluenceModifier;
+
+            if (mat == 0 && inf == 0) return;
+
+            foreach (var player in players)
+            {
+                player.resources.ModifyMaterials(mat);
+                player.resources.ModifyInfluence(inf);
+            }
         }
 
         private void ApplyKeywordChanges(Dilemma dilemma, bool yesWon)

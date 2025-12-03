@@ -26,9 +26,6 @@ public class DilemmaManager : Singleton<DilemmaManager>
 
             currentDillemma = packet;
             resultReceived = true;
-
-            // Apply track modifiers immediately
-            ClientTracks.Instance.ApplyModifier(packet.TrackModifier);
         }
 
         GameClient.Subscribe<STC_DilemmaResult>(OnDilemmaResult);

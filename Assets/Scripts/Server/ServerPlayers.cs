@@ -81,6 +81,7 @@ namespace Server
             public EmblemData emblemData = new EmblemData();
             public PlayerResources resources = new PlayerResources();
             public SecretObjective SecretObjective;
+            public int VP;
 
             public Player(uint id)
             {

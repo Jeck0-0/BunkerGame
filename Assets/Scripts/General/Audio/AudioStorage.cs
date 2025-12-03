@@ -17,7 +17,14 @@ public class AudioStorage : Singleton<AudioStorage>
     [SerializeField] AudioClip computerDoorsClip;
     public AudioClip GetComputerDoorsClip() => computerDoorsClip;
 
+    [SerializeField] AudioClip flickeringLightClip;
+    public AudioClip GetFlickeringLightClip() => flickeringLightClip;
+
+    [SerializeField] AudioClip powerShutdownClip;
+    public AudioClip GetPowerShutdownClip() => powerShutdownClip;
+
     [SerializeField] AudioClip ambientClip;
+
 
     private void Start()
     {

@@ -35,10 +35,6 @@ namespace Client
 
                 currentResult = packet;
                 resultReceived = true;
-
-                // Apply resources immediately
-                ClientTracks.Instance.ApplyModifier(packet.TrackMod);
-                ClientResources.Instance.ModifyMaterials(packet.materialsMod);
             }
 
             GameClient.Subscribe<STC_CrisisResult>(OnCrisisResult);

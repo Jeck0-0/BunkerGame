@@ -186,7 +186,7 @@ Transform:
   m_GameObject: {fileID: 4043080540597619582}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.21, z: 1.184}
+  m_LocalPosition: {x: 0, y: 0.34, z: 0.84}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -201,6 +201,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3543354897578538733}
+  - component: {fileID: 6947424900561311261}
   m_Layer: 0
   m_Name: Joint
   m_TagString: Untagged
@@ -224,6 +225,52 @@ Transform:
   - {fileID: 2842003564250689906}
   m_Father: {fileID: 1324133472125722535}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6947424900561311261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4143736147100517928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3d3da3a2eb511140ba35b75f61ce17c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LookCamera
+  lockCamera: 0
+  sensitivity: 35
+  returnSpeed: 6
+  minYaw: -70
+  maxYaw: 70
+  minPitch: -30
+  maxPitch: 45
+  zoomInPos: {fileID: 3213967668260942328}
+  zoomOutPos: {fileID: 601558123698644646}
+  zoomOutDuration: 1.2
+  zoomOutCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &5362584309573962599
 GameObject:
   m_ObjectHideFlags: 0
@@ -403,7 +450,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1324133472125722535}
   - component: {fileID: 571128122235590268}
-  - component: {fileID: 6865061135225392082}
   m_Layer: 0
   m_Name: CameraHolder
   m_TagString: Untagged
@@ -446,49 +492,3 @@ MonoBehaviour:
   maxYaw: 45
   minPitch: -10
   maxPitch: 25
---- !u!114 &6865061135225392082
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8695557785949993898}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3d3da3a2eb511140ba35b75f61ce17c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::LookCamera
-  lockCamera: 0
-  sensitivity: 35
-  returnSpeed: 6
-  minYaw: -70
-  maxYaw: 70
-  minPitch: -30
-  maxPitch: 45
-  zoomInPos: {fileID: 3213967668260942328}
-  zoomOutPos: {fileID: 601558123698644646}
-  zoomOutDuration: 1.2
-  zoomOutCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4

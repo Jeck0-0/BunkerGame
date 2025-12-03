@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edb7b876f26bc504c975948cc219a2e0, type: 3}
   m_Name: Reformer
   m_EditorClassIdentifier: Assembly-CSharp::SecretObjective
-  RoleName: The Reformer
+  RoleName: The Revoultioner
   Description: 
   Greedy: 0
   PositiveTracks: 0103
@@ -37,6 +37,8 @@ MonoBehaviour:
     Points: 10
   - Level: 10
     Points: 15
+  NeutralTracks: 
+  NeutralTable: []
   NegativeTracks: 00
   NegativeTable:
   - Level: 1

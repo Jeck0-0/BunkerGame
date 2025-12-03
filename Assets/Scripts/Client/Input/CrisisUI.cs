@@ -144,8 +144,6 @@ public class CrisisUI : Singleton<CrisisUI>
     {
         string result = success ? "<color=green>SUCCESS</color>" : "<color=red>FAILURE</color>";
         resultText.text = $"Crisis Result: {result}";
-
-        ClientTracks.Instance.ApplyModifier(trackMod);
         resultBeingShown = true;
         SlideIn(resultUI);
     }

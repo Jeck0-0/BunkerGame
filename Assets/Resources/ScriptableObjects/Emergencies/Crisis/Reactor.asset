@@ -10,19 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9a2dabf179d640ca88e5a45a0aaa4248, type: 3}
-  m_Name: The Signs
+  m_Name: Reactor
   m_EditorClassIdentifier: Assembly-CSharp::Client.Crisis
-  Title: The Signs
-  Description: People around the bunker starting to notice the signs... Something
-    is coming.
+  Title: Reactor Coolant Leak
+  Description: "A leak in the reactor\u2019s coolant pipes threatens to trigger a
+    meltdown if not fixed fast."
   TimeToResolve: 120
   HiddenContributions: 1
   Repeatable: 0
   Keyword: 
-  requiredMaterials: 0
-  BunkerDamageOnFail: 0
-  HighestBidderInfluenceReward: 4
-  HighestBidderVPReward: 0
+  requiredMaterials: 2
+  BunkerDamageOnFail: 1
+  HighestBidderInfluenceReward: 1
+  HighestBidderVPReward: 1
   SuccessInfluenceReward: 0
   SuccessTrackMod:
     order: 0
@@ -30,9 +30,8 @@ MonoBehaviour:
     food: 0
     moral: 0
     energy: 0
-  SuccessKeywordsToAdd:
-  - They are coming
-  LowestBidderPenalty: 0
+  SuccessKeywordsToAdd: []
+  LowestBidderPenalty: 1
   FailurePenalty: 0
   FailureTrackMod:
     order: 0
@@ -40,5 +39,4 @@ MonoBehaviour:
     food: 0
     moral: 0
     energy: 0
-  FailureKeywordsToAdd:
-  - They are coming
+  FailureKeywordsToAdd: []

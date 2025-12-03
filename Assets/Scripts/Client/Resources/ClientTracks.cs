@@ -1,6 +1,8 @@
-using System.Collections.Generic;
-using System;
+using Networking;
+using Packets;
 using Sirenix.OdinInspector;
+using System;
+using System.Collections.Generic;
 
 namespace Client
 {
@@ -21,13 +23,27 @@ namespace Client
             values.Add(TrackType.Order, startValue);
             values.Add(TrackType.Population, startValue);
             base.Awake();
+
+            GameClient.Subscribe<STC_UpdateTracks>(ReceivePacket);
         }
 
+        private void OnDestroy()
+        {
+            GameClient.Unsubscribe<STC_UpdateTracks>(ReceivePacket);
+        }
+
+        private void ReceivePacket(BasePacket p)
+        {
+            var packet = (STC_UpdateTracks)p;
+            ApplyModifier(packet.Change);
+        }
 
         public void ApplyModifier(TrackAmount amount)
         {
             foreach (var mod in amount.GetAll())
                 ModifyResource(mod.Key, mod.Value);
+
+            TrackUI.Instance.UpdateAllTracks();
         }
         
         public void ModifyResource(TrackType type, int amount)

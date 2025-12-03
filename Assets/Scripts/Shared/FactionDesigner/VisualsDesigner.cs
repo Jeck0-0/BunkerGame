@@ -655,6 +655,9 @@ public class VisualsDesigner : MonoBehaviour
     {
         if (!canFinishFaction) return;
 
+        EmblemData packet = BuildEmblemPacket();
+        EmblemSaveSystem.Save(packet.FactionName, packet);
+        Debug.Log("Faction emblem saved!");
     }
 
     #region Utilities

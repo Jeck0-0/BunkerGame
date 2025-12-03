@@ -13,11 +13,18 @@ public class DilemmaUI : Singleton<DilemmaUI>
     [SerializeField] TextMeshProUGUI votingHeader;
     [SerializeField] TextMeshProUGUI descriptionText;
     [SerializeField] TMP_InputField influenceField;
+    [SerializeField] SignatureDrawer signature;
+    [SerializeField] GameObject trackHintPrefab;
+
+    [Header("Yes UI")]
     [SerializeField] TextMeshProUGUI yesText;
     [SerializeField] SignatureDrawer yesCheckBox;
+    [SerializeField] Transform yesContainer;
+
+    [Header("No UI")]
     [SerializeField] TextMeshProUGUI noText;
     [SerializeField] SignatureDrawer noCheckBox;
-    [SerializeField] SignatureDrawer signature;
+    [SerializeField] Transform noContainer;
 
     [Header("Result UI")]
     [SerializeField] GameObject resultUI;
@@ -38,6 +45,7 @@ public class DilemmaUI : Singleton<DilemmaUI>
     [SerializeField] Vector3 pauseRotation = new Vector3(50f, 0f, 0f);
     [SerializeField] float lookAroundSpeed = 5f;
 
+    private List<DilemmaUITrackHint> trackHints = new();
     private bool documentIsOut = false;
     private bool resultBeingShown = false;
     private bool votingLocked;
@@ -110,7 +118,7 @@ public class DilemmaUI : Singleton<DilemmaUI>
 
     public void DisplayDilemma(Dilemma dilemma)
     {
-        ClearUI();
+        ResetUI();
 
         currentDilema = dilemma;
         votingUI.SetActive(true);
@@ -118,6 +126,13 @@ public class DilemmaUI : Singleton<DilemmaUI>
         descriptionText.text = dilemma.Description;
         yesText.text = dilemma.YesDescription;
         noText.text = dilemma.NoDescription;
+
+        foreach (var hint in trackHints)
+        Destroy(hint.gameObject);
+        trackHints.Clear();
+
+        CreateTrackHints(dilemma.YesTrackModifier, yesContainer);
+        CreateTrackHints(dilemma.NoTrackModifier, noContainer);
 
         SlideIn(votingUI);
     }
@@ -152,13 +167,19 @@ public class DilemmaUI : Singleton<DilemmaUI>
 
         resultText.text = "Winning Option: " + descriptionText;
         resultText.text += "\n\nTrack changes: " + trackText;
-
-        ClientTracks.Instance.ApplyModifier(result.TrackModifier);
-        SlideIn(resultUI);
         resultBeingShown = true;
+
+        if (votingUI.activeSelf && documentIsOut)
+        {
+            StartCoroutine(SlideOutThenIn(votingUI, resultUI));
+        }
+        else
+        {
+            SlideIn(resultUI);
+        }
     }
 
-    private void ClearUI()
+    private void ResetUI()
     {
         resultTime = 0f;
         votingLocked = false;
@@ -179,6 +200,12 @@ public class DilemmaUI : Singleton<DilemmaUI>
     {
         if (signedOne.OnSignatureComplete())
             other.ClearSignature();
+    }
+
+    private IEnumerator SlideOutThenIn(GameObject outUI, GameObject inUI)
+    {
+        yield return StartCoroutine(Slide(outUI, false));
+        SlideIn(inUI);
     }
 
     private void SlideIn(GameObject ui)
@@ -263,5 +290,21 @@ public class DilemmaUI : Singleton<DilemmaUI>
         return parts.Count == 0
             ? "None"
             : string.Join(", ", parts);
+    }
+
+    private void CreateTrackHints(TrackAmount amount, Transform container)
+    {
+        foreach (var pair in amount.GetAll())
+        {
+            int value = pair.Value;
+            if (value == 0) continue;
+
+            GameObject obj = Instantiate(trackHintPrefab, container);
+            var hint = obj.GetComponent<DilemmaUITrackHint>();
+
+            bool up = value > 0;
+            hint.InitializeHint(pair.Key, up);
+            trackHints.Add(hint);
+        }
     }
 }

@@ -17,6 +17,7 @@ public class UIToPaint : MonoBehaviour
 
     private void Start()
     {
+        if (UIPainter.Instance != null)
         UIPainter.Instance.RegisterUIElement(this);
     }
 

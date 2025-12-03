@@ -38,7 +38,6 @@ namespace Client
         {
             var me = ClientPlayers.Instance.Myself;
             PlaceInLobby(me.id, me.username);
-            Debug.LogError(me.id + me.username);
 
             AddPlayers();
         }
