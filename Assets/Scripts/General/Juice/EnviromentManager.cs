@@ -51,7 +51,7 @@ public class EnviromentManager : MonoBehaviour
         if (!Crisis) return;
 
         if (siren) AudioManager.Instance.StopSoundGradually(siren, 0f);
-        AudioManager.Instance.PlaySound(AudioStorage.Instance.GetFlickeringLightClip(), 0.8f, null, true);
+        AudioManager.Instance.PlaySound(AudioStorage.Instance.GetFlickeringLightClip(), 1f, null, true);
         MusicManager.Instance.BlockMusic(false);
         crisisLights.SetActive(false);
         dilemmaLights.SetActive(true);
@@ -68,7 +68,7 @@ public class EnviromentManager : MonoBehaviour
         yield return new WaitForSeconds(2f);
 
         crisisLights.SetActive(true);
-        if (siren) AudioManager.Instance.PlaySound(siren, 0.2f, null, true);
+        if (siren) AudioManager.Instance.PlaySound(siren, 0.15f, null, true);
     }
     private IEnumerator TurnLightOn()
     {
