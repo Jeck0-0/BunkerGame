@@ -46,7 +46,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _ColorMask: 15
-    - _Dither_Opacity: 0.15
+    - _Dither_Opacity: 0.1
     - _Stencil: 0
     - _StencilComp: 8
     - _StencilOp: 0
@@ -54,7 +54,7 @@ Material:
     - _StencilWriteMask: 255
     - _TextureAlpha: 1
     - _TextureOpacity: 1
-    - _TilingOffsetModifier: 0.75
+    - _TilingOffsetModifier: 1.5
     - _UIMaskSoftnessX: 1
     - _UIMaskSoftnessY: 1
     m_Colors:

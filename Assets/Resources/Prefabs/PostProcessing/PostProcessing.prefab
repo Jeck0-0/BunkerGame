@@ -45,6 +45,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3373845216278486201}
+  - component: {fileID: 2124943588571943052}
   - component: {fileID: 604552729516262843}
   - component: {fileID: 2185203756531137434}
   - component: {fileID: 3709547048303893547}
@@ -75,6 +76,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &2124943588571943052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2574948769833146281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3f7bf7998b223643a48180916c68c66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ScaleTextureWithScreen
+  textureToScale: {fileID: 8400000, guid: f004ede568e5b8142a45b712ff0d398a, type: 2}
+  scaleFactor: 0.7
 --- !u!223 &604552729516262843
 Canvas:
   m_ObjectHideFlags: 0

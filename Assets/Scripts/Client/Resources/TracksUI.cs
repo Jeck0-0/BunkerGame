@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class TrackUI : Singleton<TrackUI>
 {
     [SerializeField] List<TrackUIElement> trackReferences;
-    private Dictionary<TrackType, TrackUIElement> tracks;
+    private Dictionary<TrackType, TrackUIElement> tracks = new();
 
     void Start()
     {
