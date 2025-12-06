@@ -123,13 +123,18 @@ public class PlayerManager : MonoBehaviour
 
         Transform seat = seats[Seat];
         GameObject obj = Instantiate(PlayerObj, seat.position, seat.rotation);
+        var playerInfo = ClientPlayers.Instance.GetAll().First(p => p.spot == otherSpot);
+
+        var namePlate = obj.GetComponentInChildren<NamePlate>();
+        namePlate.Initialize(playerInfo.id, playerInfo.username);
 
         PlayerInstance instance = new PlayerInstance
         {
-            info = ClientPlayers.Instance.GetAll().First(p => p.spot == otherSpot),
+            info = playerInfo,
             obj = obj
         };
         PlayerGNS.Add(otherSpot, instance);
+        NamePlatesUI.Instance.RegisterPlayerObj(instance);
         //Debug.Log($"spawning {otherSpot} at {Seat}");
     }
     public void RemovePlayerObject(int spot)

@@ -133,6 +133,7 @@ public class DilemmaUI : Singleton<DilemmaUI>
 
         CreateTrackHints(dilemma.YesTrackModifier, yesContainer);
         CreateTrackHints(dilemma.NoTrackModifier, noContainer);
+        if (NamePlatesUI.Instance != null) NamePlatesUI.Instance.AwatingVote();
 
         SlideIn(votingUI);
     }
@@ -164,6 +165,7 @@ public class DilemmaUI : Singleton<DilemmaUI>
         
         string descriptionText = result.WinningOption == 0 ? currentDilema.YesDescription : currentDilema.NoDescription;
         string trackText = result.WinningOption == 0 ? TrackToString(currentDilema.YesTrackModifier) : TrackToString(currentDilema.NoTrackModifier);
+        if (NamePlatesUI.Instance != null) NamePlatesUI.Instance.NoVoting();
 
         resultText.text = "Winning Option: " + descriptionText;
         resultText.text += "\n\nTrack changes: " + trackText;

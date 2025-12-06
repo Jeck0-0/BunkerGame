@@ -21,7 +21,8 @@ namespace Networking
         STC_PlayerDisconected = 107,
         STC_GameStart = 108,
         STC_SecretObjective = 109,
-        STC_GameResault =110
+        STC_GameResault = 110,
+        STC_PlayerVoted = 111
     }
 
     public abstract class BasePacket
@@ -52,6 +53,7 @@ namespace Networking
                 case PacketType.STC_GameStart: return new STC_GameStart().Deserialize(br);
                 case PacketType.STC_SecretObjective: return new STC_SecretObjective().Deserialize(br);
                 case PacketType.STC_GameResault: return new STC_GameResault().Deserialize(br);
+                case PacketType.STC_PlayerVoted: return new STC_PlayerVoted().Deserialize(br);
 
                 default: Debug.LogError("Unknown packet type: " + type);
                 return null;
