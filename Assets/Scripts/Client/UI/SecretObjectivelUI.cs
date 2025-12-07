@@ -66,7 +66,7 @@ public class SecretObjectivelUI : MonoBehaviour
 
     private void DisplaySecretObjective()
     {
-        TrackUI.Instance.SetObjective(objective);
+        TracksUI.Instance.SetObjective(objective);
         objectiveHeader.text = objective.RoleName;
         objectiveDescription.text = objective.Description;
 

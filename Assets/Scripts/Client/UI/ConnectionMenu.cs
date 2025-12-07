@@ -9,6 +9,9 @@ public class ConnectionMenu : MonoBehaviour
     [SerializeField] Transform LobbyParent;
     [SerializeField] GameObject hostLobby;
     [SerializeField] GameObject clientLobby;
+
+    public string loadScene = "MeetingRoom";
+    
     private GameObject conectionInstance;
 
     private void Awake()
@@ -39,6 +42,6 @@ public class ConnectionMenu : MonoBehaviour
 
     protected void StartGame(object _)
     {
-        SceneManager.LoadScene("MeetingRoom");
+        SceneManager.LoadScene(loadScene);
     }
 }
