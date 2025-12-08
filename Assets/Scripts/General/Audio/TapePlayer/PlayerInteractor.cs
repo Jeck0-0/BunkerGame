@@ -1,11 +1,12 @@
 using UnityEngine;
 
-public class TapePlayerInteractor : MonoBehaviour // for testing
+public class PlayerInteractor : MonoBehaviour // for testing
 {
     [SerializeField] Camera playerCamera;
 
     private TapePlayerButton hoveredButton;
     private TapeObject hoveredTape;
+    private YourNamePlate hoveredPlate;
 
     private void Awake()
     {
@@ -19,6 +20,7 @@ public class TapePlayerInteractor : MonoBehaviour // for testing
         {
             TapePlayerButton button = hit.collider.GetComponent<TapePlayerButton>();
             TapeObject tape = hit.collider.GetComponent<TapeObject>();
+            YourNamePlate plate = hit.collider.GetComponent <YourNamePlate>();
 
             if (button != null)
             {
@@ -33,6 +35,13 @@ public class TapePlayerInteractor : MonoBehaviour // for testing
 
                 if (Input.GetMouseButtonDown(0))
                 tape.InsertTape();
+            }
+            else if (plate != null)
+            {
+                HandlePlateHover(plate);
+
+                if(Input.GetMouseButtonDown(0))
+                    plate.ShowObjective();
             }
             else
             {
@@ -59,6 +68,12 @@ public class TapePlayerInteractor : MonoBehaviour // for testing
             hoveredTape.OnHoverExit();
             hoveredTape = null;
         }
+
+        if (hoveredPlate != null)
+        {
+            hoveredPlate.OnHoverExit();
+            hoveredPlate = null;
+        }
     }
 
     private void HandleTapeHover(TapeObject tape)
@@ -75,6 +90,34 @@ public class TapePlayerInteractor : MonoBehaviour // for testing
             hoveredButton.OnHoverExit();
             hoveredButton = null;
         }
+
+        if (hoveredPlate != null)
+        {
+            hoveredPlate.OnHoverExit();
+            hoveredPlate = null;
+        }
+    }
+
+    private void HandlePlateHover(YourNamePlate plate)
+    {
+        if (hoveredPlate != plate)
+        {
+            hoveredPlate?.OnHoverExit();
+            hoveredPlate = plate;
+            hoveredPlate.OnHoverEnter();
+        }
+
+        if (hoveredButton != null)
+        {
+            hoveredButton.OnHoverExit();
+            hoveredButton = null;
+        }
+
+        if (hoveredTape != null)
+        {
+            hoveredTape.OnHoverExit();
+            hoveredTape = null;
+        }
     }
 
     private void ClearHover()
@@ -89,6 +132,12 @@ public class TapePlayerInteractor : MonoBehaviour // for testing
         {
             hoveredTape.OnHoverExit();
             hoveredTape = null;
+        }
+
+        if (hoveredPlate != null)
+        {
+            hoveredPlate.OnHoverExit();
+            hoveredPlate = null;
         }
     }
 }

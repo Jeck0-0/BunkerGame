@@ -14,7 +14,6 @@ public class TapeObject : MonoBehaviour
     private Color defaultColor;
 
     private Material mat;
-    private Color _currentColor;
 
     private void Awake()
     {

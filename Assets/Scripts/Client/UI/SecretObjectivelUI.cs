@@ -6,7 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SecretObjectivelUI : MonoBehaviour
+public class SecretObjectivelUI : Singleton<SecretObjectivelUI>
 {
     private SecretObjective objective;
 
@@ -19,7 +19,6 @@ public class SecretObjectivelUI : MonoBehaviour
     [SerializeField] GameObject positiveTrackPrefab;
     [SerializeField] GameObject neutralTrackPrefab;
     [SerializeField] GameObject negativeTrackPrefab;
-    [SerializeField] SignatureDrawer signature;
 
     [Header("Resource Icons")]
     [SerializeField] Sprite orderSprite;
@@ -34,16 +33,22 @@ public class SecretObjectivelUI : MonoBehaviour
     [SerializeField] Vector3 offScreenPosition;
     [SerializeField] float slideDuration = 1.2f;
     [SerializeField] AnimationCurve slideCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
+    [SerializeField] float delayBeforeRemoving = 1f;
 
     [Header("Look Around")]
     [SerializeField] Vector3 pauseOffset = new Vector3(0, -1.8f, -0.8f);
     [SerializeField] Vector3 pauseRotation = new Vector3(10f, 0f, 0f);
     [SerializeField] float lookAroundSpeed = 5f;
 
-    private bool disable = false;
+    [Header("Name Plate")]
+    [SerializeField] YourNamePlate namePlate;
 
-    private void Awake()
+    private bool documentIsOut = false;
+    private float showTime;
+
+    protected override void Awake()
     {
+        base.Awake();
         GameClient.Subscribe<STC_SecretObjective>(ReceiveObjective);
         GameClient.Subscribe<STC_GameStart>(GameStart);
     }
@@ -56,6 +61,11 @@ public class SecretObjectivelUI : MonoBehaviour
 
     private void GameStart(BasePacket p) => SlideOut();
 
+    public void ShowObjective()
+    {
+        SlideIn();
+    }
+
     private void ReceiveObjective(BasePacket p)
     {
         var packet = (STC_SecretObjective)p;
@@ -66,7 +76,10 @@ public class SecretObjectivelUI : MonoBehaviour
 
     private void DisplaySecretObjective()
     {
-        TrackUI.Instance.SetObjective(objective);
+        if (namePlate) namePlate.SetObjective(objective.RoleName);
+        else Debug.LogWarning("Assign the nameplate to secret objective UI");
+
+            TrackUI.Instance.SetObjective(objective);
         objectiveHeader.text = objective.RoleName;
         objectiveDescription.text = objective.Description;
 
@@ -119,16 +132,13 @@ public class SecretObjectivelUI : MonoBehaviour
 
     private void Update()
     {
-        if (disable) return;
-        DocumentDown();
+        if (documentIsOut) DocumentDown();
 
-        // if (ComputerManager.Instance.GetComputerUp()) return;
-        // if (signature.OnSignatureComplete()) SubmitDocument();
-    }
-
-    private void SubmitDocument()
-    {
-        SlideOut();
+        if (Input.GetMouseButtonDown(0) && showTime >= delayBeforeRemoving)
+        {
+            SlideOut();
+            showTime = 0f;
+        }
     }
 
     private void DocumentDown()
@@ -154,6 +164,7 @@ public class SecretObjectivelUI : MonoBehaviour
     private void SlideIn()
     {
         UI.transform.rotation = Quaternion.identity;
+        documentIsOut = true;
 
         StopAllCoroutines();
         StartCoroutine(Slide(UI, true));
@@ -161,8 +172,7 @@ public class SecretObjectivelUI : MonoBehaviour
 
     private void SlideOut()
     {
-        disable = true;
-
+        documentIsOut = false;
         StopAllCoroutines();
         StartCoroutine(Slide(UI, false));
     }
