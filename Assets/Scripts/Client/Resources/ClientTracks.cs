@@ -43,7 +43,7 @@ namespace Client
             foreach (var mod in amount.GetAll())
                 ModifyResource(mod.Key, mod.Value);
 
-            TrackUI.Instance.UpdateAllTracks();
+            TracksUI.Instance.UpdateAllTracks();
         }
         
         public void ModifyResource(TrackType type, int amount)
