@@ -14,15 +14,10 @@ namespace Client
         [FoldoutGroup("References")] public Slider backSlider;
         [FoldoutGroup("References")] public Image frontSliderFill;
         [FoldoutGroup("References")] public Image backSliderFill;
-        [FoldoutGroup("References")] public TextMeshProUGUI currentValueText;
-        [FoldoutGroup("References")] public TextMeshProUGUI diffText;
-        [FoldoutGroup("References")] public TextMeshProUGUI trackNameText;
+        [FoldoutGroup("References")] public TextMeshProUGUI label;
         [FoldoutGroup("References")] public GameObject upIcon;
         [FoldoutGroup("References")] public GameObject neutralIcon;
         [FoldoutGroup("References")] public GameObject downIcon;
-        [FoldoutGroup("References")] public Image upRange;
-        [FoldoutGroup("References")] public Image neutralRange;
-        [FoldoutGroup("References")] public Image downRange;
 
         [FoldoutGroup("Colors")] public Color neutralColor;
         [FoldoutGroup("Colors")] public Color positiveColor;
@@ -39,8 +34,6 @@ namespace Client
             upIcon.SetActive(false);
             neutralIcon.SetActive(false);
             downIcon.SetActive(false);
-            
-            trackNameText.text = type.ToString();
         }
 
         private void Start()
@@ -55,18 +48,9 @@ namespace Client
         {
             switch (objective)
             {
-                case 0:
-                    downIcon.SetActive(true);
-                    downRange.gameObject.SetActive(true); 
-                    break;
-                case 1: 
-                    neutralIcon.SetActive(true); 
-                    neutralRange.gameObject.SetActive(true); 
-                    break;
-                case 2: 
-                    upIcon.SetActive(true); 
-                    upRange.gameObject.SetActive(true); 
-                    break;
+                case 0: downIcon.SetActive(true); break;
+                case 1: neutralIcon.SetActive(true); break;
+                case 2: upIcon.SetActive(true); break;
             }
         }
 
@@ -77,23 +61,7 @@ namespace Client
                 lastValue = value;
             
             var diff = value - lastValue;
-            lastValue = value;
-            
-            frontSlider.value = value;
-            
-            currentValueText.text = value.ToString();
-            diffText.text = diff.ToString();
-            
-            diffText.gameObject.SetActive(true);
-            if(diff == 0)
-                diffText.gameObject.SetActive(false);
-            else if(diff > 0)
-                diffText.color = positiveColor;
-            else 
-                diffText.color = negativeColor;
-            
-            
-            /*if (diff <= 0)
+            if (diff <= 0)
             {
                 backSlider.value = lastValue;
                 backSliderFill.color = negativeColor;
@@ -106,7 +74,9 @@ namespace Client
                 backSliderFill.color = positiveColor;
                 frontSlider.value = lastValue;
                 frontSliderFill.color = neutralColor;
-            }*/
+            }
+            
+            label.text = value.ToString();
         }
     }
 }
