@@ -18539,7 +18539,7 @@ MonoBehaviour:
   dilemmaPhase: {fileID: 1804365635}
   startOnAwake: 1
   startDelay: 8
-  totalCrises: 5
+  totalCrises: 3
   minTurnsBetweenCrises: 1
   baseCrisisChance: 0.2
   crisisChanceGrowth: 0.15
