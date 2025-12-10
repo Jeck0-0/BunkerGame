@@ -7,7 +7,6 @@ public class ComputerUI : Singleton<ComputerUI>
     [SerializeField] GameObject pauseMenuUI;
     [SerializeField] GameObject MainMenuUI;
     [SerializeField] GameObject LobbyUI;
-    [SerializeField] GameObject FactionDesignerUI;
 
     public void PauseMenu()
     {
@@ -24,11 +23,6 @@ public class ComputerUI : Singleton<ComputerUI>
         DeactivateAllUI();
         LobbyUI.SetActive(true);
     }
-    public void FactionDesigner()
-    {
-        DeactivateAllUI();
-        FactionDesignerUI.SetActive(true);
-    }
     public void TurnComputerOff()
     {
         DeactivateAllUI();
@@ -39,7 +33,6 @@ public class ComputerUI : Singleton<ComputerUI>
         pauseMenuUI.SetActive(false);
         MainMenuUI.SetActive(false);
         LobbyUI.SetActive(false);
-        FactionDesignerUI.SetActive(false);
     }
     public void GoToMainMenu()
     {
