@@ -79,7 +79,7 @@ public class SecretObjectivelUI : Singleton<SecretObjectivelUI>
         if (namePlate) namePlate.SetObjective(objective.RoleName);
         else Debug.LogWarning("Assign the nameplate to secret objective UI");
 
-            TrackUI.Instance.SetObjective(objective);
+            TracksUI.Instance.SetObjective(objective);
         objectiveHeader.text = objective.RoleName;
         objectiveDescription.text = objective.Description;
 
