@@ -155,6 +155,7 @@ namespace Server
             _results.Sort((a, b) => b.VP.CompareTo(a.VP));
 
             Networking.GameServer.SendToAll(new STC_GameResault(_results));
+            ComputerManager.Instance.BringComputerUP();
             Debug.Log("Game ended");
         }
     }
