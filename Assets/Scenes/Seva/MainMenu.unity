@@ -1681,7 +1681,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &299407402
 Transform:
   m_ObjectHideFlags: 0
@@ -6235,7 +6235,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1317929615
 Transform:
   m_ObjectHideFlags: 0
@@ -7080,6 +7080,7 @@ MonoBehaviour:
   LobbyParent: {fileID: 458474362}
   hostLobby: {fileID: 2050123179045558349, guid: 477fac5767a0396429f6b2e7c5a9392b, type: 3}
   clientLobby: {fileID: 1296392756403966326, guid: cf8e9b5cf9129854fa75d0947c82528c, type: 3}
+  loadScene: MeetingRoom
 --- !u!1 &1668928741
 GameObject:
   m_ObjectHideFlags: 0
