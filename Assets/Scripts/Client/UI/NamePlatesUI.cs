@@ -27,7 +27,7 @@ public class NamePlatesUI : Singleton<NamePlatesUI>
 
 
         if (platesByPlayer.TryGetValue(p.PlayerId, out var plate))
-            plate.DisplayVote($"<color=white>Voted: {p.OptionIndex + 1}</color>");
+            plate.DisplayVote($"<color=white>Voted: {p.Influence} influence spent</color>");
     }
 
     public void NoVoting()

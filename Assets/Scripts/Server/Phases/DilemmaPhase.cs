@@ -129,7 +129,7 @@ namespace Server
                 Withheld = withheld
             };
 
-            GameServer.SendToAll(new STC_PlayerVoted(player, votePacket.OptionIndex));
+            GameServer.SendToAll(new STC_PlayerVoted(player, votePacket.OptionIndex, votePacket.InfluenceSpent));
 
             // Add to side total
             if (!withheld)
