@@ -17,7 +17,7 @@ MonoBehaviour:
     Rumors of revolt are spreading through the corridors.
   TimeToResolve: 120
   HiddenContributions: 1
-  Repeatable: 0
+  Repeatable: 1
   Keyword: 
   YesDescription: Ignore their cries.
   YesTrackModifier:
