@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: Moderate
   m_EditorClassIdentifier: Assembly-CSharp::SecretObjective
   RoleName: The Modarate
-  Description: COMMUNISM!!!!!!!
+  Description: Extremes invite collapse. Keep every system near the middle. Avoid
+    bold solutions, accept controlled losses, and delay disaster for as long as possible.
+    Balance is the only mercy left.
   Greedy: 0
   PositiveTracks: 
   PositiveTable: []

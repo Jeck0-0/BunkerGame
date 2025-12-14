@@ -82,7 +82,7 @@ namespace Server
             foreach (var contribution in contributions.Values)
                 totalContributions += contribution;
 
-            bool success = totalContributions >= CurrentEmergency.requiredMaterials;
+            bool success = totalContributions >= CurrentEmergency.requiredMaterials * ServerPlayers.GetAll().Count();
 
             // highest and lowest bidders
             int highestContribution = contributions.Count > 0 ? contributions.Values.Max() : 0;

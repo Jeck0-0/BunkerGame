@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using Client;
 using Networking;
 using Packets;
@@ -107,7 +108,7 @@ public class CrisisUI : Singleton<CrisisUI>
         crisisHeader.text = crisis.Title;
         resultHeader.text = crisis.Title;
         descriptionText.text = crisis.Description;
-        infoText.text =  $"Required Materials: {crisis.requiredMaterials}\n" + $"Bunker Damage on Fail: {crisis.BunkerDamageOnFail}";
+        infoText.text =  $"Required Materials: {crisis.requiredMaterials * ClientPlayers.Instance.GetAll().Count()}\n" + $"Bunker Damage on Fail: {crisis.BunkerDamageOnFail}";
 
         SlideIn(crisisUI);
     }

@@ -10,52 +10,36 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: edb7b876f26bc504c975948cc219a2e0, type: 3}
-  m_Name: Greedy
+  m_Name: Moderate 2
   m_EditorClassIdentifier: Assembly-CSharp::SecretObjective
-  RoleName: The Buisnessman
-  Description: CAPITALISM!!!!!!! HATE COMMUNISM!!!
-  Greedy: 1
-  PositiveTracks: 0204
-  PositiveTable:
+  RoleName: The Modarate
+  Description: Extremes invite collapse. Keep every system near the middle. Avoid
+    bold solutions, accept controlled losses, and delay disaster for as long as possible.
+    Balance is the only mercy left.
+  Greedy: 0
+  PositiveTracks: 
+  PositiveTable: []
+  NeutralTracks: 0001020304
+  NeutralTable:
   - Level: 1
     Points: 0
   - Level: 2
     Points: 0
   - Level: 3
-    Points: 0
-  - Level: 4
-    Points: 0
-  - Level: 5
-    Points: 0
-  - Level: 6
     Points: 1
-  - Level: 7
-    Points: 2
-  - Level: 8
-    Points: 3
-  - Level: 9
-    Points: 4
-  - Level: 10
-    Points: 6
-  NegativeTracks: 03
-  NegativeTable:
-  - Level: 1
-    Points: 7
-  - Level: 2
+  - Level: 4
     Points: 5
-  - Level: 3
-    Points: 3
-  - Level: 4
-    Points: 1
   - Level: 5
-    Points: 0
+    Points: 10
   - Level: 6
-    Points: 0
+    Points: 5
   - Level: 7
-    Points: 0
+    Points: 1
   - Level: 8
     Points: 0
   - Level: 9
     Points: 0
   - Level: 10
     Points: 0
+  NegativeTracks: 
+  NegativeTable: []

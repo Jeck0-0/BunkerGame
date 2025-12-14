@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: Warden
   m_EditorClassIdentifier: Assembly-CSharp::SecretObjective
   RoleName: The Warden
-  Description: 
+  Description: Stability is survival. All systems must rise and stay high. Hoard
+    resources, suppress weakness, and accept cruelty if it preserves strength. A
+    strong bunker does not ask for forgiveness.
   Greedy: 0
   PositiveTracks: 0001020304
   PositiveTable:
@@ -37,5 +39,7 @@ MonoBehaviour:
     Points: 6
   - Level: 10
     Points: 9
+  NeutralTracks: 
+  NeutralTable: []
   NegativeTracks: 
   NegativeTable: []

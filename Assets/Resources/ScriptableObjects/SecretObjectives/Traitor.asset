@@ -13,10 +13,14 @@ MonoBehaviour:
   m_Name: Traitor
   m_EditorClassIdentifier: Assembly-CSharp::SecretObjective
   RoleName: The Whispered
-  Description: 
+  Description: The bunker is a wound that must reopen. Lower every system. Let order
+    rot and hope decay. The cult waits for the Fall to finish what the war began.
+    Do not falter.
   Greedy: 0
   PositiveTracks: 
   PositiveTable: []
+  NeutralTracks: 
+  NeutralTable: []
   NegativeTracks: 0001020304
   NegativeTable:
   - Level: 1

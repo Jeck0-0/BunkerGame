@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: Reformer
   m_EditorClassIdentifier: Assembly-CSharp::SecretObjective
   RoleName: The Revoultioner
-  Description: 
+  Description: "Break order, raise morale. People must believe before they rebel.
+    When authority crumbles, they will choose new leaders. Make sure it isn\u2019t
+    the old ones."
   Greedy: 0
   PositiveTracks: 0103
   PositiveTable:
